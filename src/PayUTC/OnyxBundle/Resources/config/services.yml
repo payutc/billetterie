@@ -1,0 +1,7 @@
+parameters:
+#    pay_utc_onyx.example.class: PayUTC\OnyxBundle\Example
+
+services:
+#    pay_utc_onyx.example:
+#        class: %pay_utc_onyx.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

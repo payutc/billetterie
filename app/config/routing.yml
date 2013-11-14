@@ -1,0 +1,3 @@
+pay_utc_onyx:
+    resource: "@PayUTCOnyxBundle/Resources/config/routing.yml"
+    prefix:   /

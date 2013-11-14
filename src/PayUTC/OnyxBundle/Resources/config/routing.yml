@@ -1,0 +1,3 @@
+pay_utc_onyx_homepage:
+    pattern:  /
+    defaults: { _controller: PayUTCOnyxBundle:Home/Home:index }
