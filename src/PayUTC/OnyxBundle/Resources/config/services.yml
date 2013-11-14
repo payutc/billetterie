@@ -1,6 +1,0 @@
-parameters:
-    cas_user_provider.class: Payutc\OnyxBundle\CAS\CASUserProvider
-
-services:
-    cas_user_provider:
-        class: "%cas_user_provider.class%"
