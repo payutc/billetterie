@@ -1,13 +1,13 @@
 <?php
 
-namespace PayUTC\OnyxBundle\Controller\Home;
+namespace Payutc\OnyxBundle\Controller\Home;
 
-use PayUTC\OnyxBundle\Controller\FrontController;
+use Payutc\OnyxBundle\Controller\FrontController;
 
 class HomeController extends FrontController
 {
     public function indexAction()
     {
-        return $this->render('PayUTCOnyxBundle:Home:index.html.twig');
+        return $this->render('PayutcOnyxBundle:Home:index.html.twig');
     }
 }

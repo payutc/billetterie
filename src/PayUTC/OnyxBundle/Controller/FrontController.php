@@ -1,6 +1,6 @@
 <?php
 
-namespace PayUTC\OnyxBundle\Controller;
+namespace Payutc\OnyxBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

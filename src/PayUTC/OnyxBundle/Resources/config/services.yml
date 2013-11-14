@@ -1,7 +1,6 @@
 parameters:
-#    pay_utc_onyx.example.class: PayUTC\OnyxBundle\Example
+    cas_user_provider.class: Payutc\OnyxBundle\CAS\CASUserProvider
 
 services:
-#    pay_utc_onyx.example:
-#        class: %pay_utc_onyx.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    cas_user_provider:
+        class: "%cas_user_provider.class%"

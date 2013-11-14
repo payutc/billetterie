@@ -12,6 +12,14 @@
 
 {% block body %}
 	<section id='app-onyx-wrapper' class='container'>
+		{% if app.session.flashbag.all %}
+			{% for message, type in app.session.flashbag.all %}
+				<div class='alert alert-{{ type }}'>
+					<p>{{ message }}</p>
+				</div>
+			{% endfor %}
+		{% endif %}
+		<div class='row'></div>
 		{% block app_content %}{% endblock %}
 	</section>
 {% endblock %}

@@ -1,6 +1,6 @@
 <?php
 
-namespace PayUTC\OnyxBundle\DependencyInjection;
+namespace Payutc\OnyxBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

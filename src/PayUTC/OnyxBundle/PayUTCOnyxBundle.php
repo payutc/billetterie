@@ -1,9 +1,9 @@
 <?php
 
-namespace PayUTC\OnyxBundle;
+namespace Payutc\OnyxBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class PayUTCOnyxBundle extends Bundle
+class PayutcOnyxBundle extends Bundle
 {
 }

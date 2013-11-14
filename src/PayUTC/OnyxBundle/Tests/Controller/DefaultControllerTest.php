@@ -1,6 +1,6 @@
 <?php
 
-namespace PayUTC\OnyxBundle\Tests\Controller;
+namespace Payutc\OnyxBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
