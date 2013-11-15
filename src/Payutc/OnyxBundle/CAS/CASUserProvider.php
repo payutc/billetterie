@@ -27,7 +27,7 @@ class CASUserProvider implements UserProviderInterface
 
     public function refreshUser(UserInterface $user)
     {
-        if (!$user instanceof CASUser) {
+        if (!$this->supportsClass(get_class($user))) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
         }
 
@@ -37,5 +37,6 @@ class CASUserProvider implements UserProviderInterface
     public function supportsClass($class)
     {
         return $class === 'Payutc\Onyx\CAS\CASUser';
+        // return ($class instanceof CASUser || $class === 'Payutc\Onyx\CAS\CASUser' || is_subclass_of($class, 'Payutc\Onyx\CAS\CASUser'));
     }
 }
