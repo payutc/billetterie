@@ -1,0 +1,63 @@
+security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        Payutc\OnyxBundle\Entity\User:
+            algorithm:            pbkdf2
+            hash_algorithm:       sha512
+            encode_as_base64:     true
+            iterations:           1000
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        static:
+            memory:
+                users:
+                    login:
+                        password: password
+                        roles: [ 'ROLE_USER' ]
+        local:
+            entity:
+                class: Payutc\OnyxBundle\Entity\User
+                property: login
+        cas:
+            id: cas_user_provider
+
+        full_provider:
+            chain:
+                providers: [static, local, cas]
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        login:
+            pattern: ^/login$
+            anonymous: ~
+
+        front_area:
+            pattern: ^/
+            provider: full_provider
+            anonymous: ~
+            form_login:
+                login_path: pay_utc_onyx_login_page
+                check_path: pay_utc_onyx_login_check_page
+                post_only: true
+                remember_me: true
+            logout:
+                path: pay_utc_onyx_logout_page
+                target: /
+                invalidate_session: false
+            remember_me:
+                key: payutc_s3cre3t
+                name: payutc-user-remember
+                lifetime: 86400
+                always_remember_me: true
+                remember_me_parameter: _remember_me
+
+
+    access_control:
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
