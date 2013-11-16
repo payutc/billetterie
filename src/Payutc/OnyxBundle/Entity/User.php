@@ -87,21 +87,6 @@ class User implements UserInterface, \Serializable
         return $this->getFirstname() . ' ' . $this->getName();
     }
 
-    public function toArray($recursive = false)
-    {
-        $objectAsArray = get_object_vars($this);
-
-        if ($recursive) {
-            foreach ($objectAsArray as &$var) {
-                if ((is_object($var)) && (method_exists($var, 'toArray'))) {
-                    $var = $var->toArray($recursive);
-                }
-            }
-        }
-
-        return $objectAsArray;
-    }
-
     /**
      * @inheritDoc
      */

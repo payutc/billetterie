@@ -33,12 +33,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             $user = $qb->getQuery()->getSingleResult();
         }
         catch (NoResultException $e) {
-            throw new UsernameNotFoundException(
-                sprintf(
-                    'Ce nom d\'utilisateur est inconnu : "%s".',
-                    $username
-                ), 0, $e
-            );
+            throw new UsernameNotFoundException(sprintf('Ce nom d\'utilisateur est inconnu : "%s".', $username), 0, $e);
         }
 
         return $user;
@@ -47,12 +42,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     public function refreshUser(UserInterface $user)
     {
         if (!$this->supportsClass(get_class($user))) {
-            throw new UnsupportedUserException(
-                sprintf(
-                    'Instances of "%s" are not supported.',
-                    $user
-                )
-            );
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user));
         }
 
         return $this->find($user->getId());
