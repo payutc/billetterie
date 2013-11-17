@@ -1,5 +1,7 @@
 {% extends 'PayutcAdminBundle::base.html.twig' %}
 
+{% block admin_nav_content %}{% endblock %}
+
 {% block app_content %}
 	<div class='well'>
 		{% if error %}
@@ -7,7 +9,7 @@
 				<p><strong>Erreur !</strong> <span>{{ error.message }}</span></p>
 			</div>
 		{% endif %}
-		<form action='{{ path('pay_utc_onyx_login_check_page') }}' method='post' class='form-horizontal'>
+		<form action='{{ path('pay_utc_admin_login_check') }}' method='post' class='form-horizontal'>
 			<div class='form-group'>
 				<label for='username' class='control-label col-sm-2'>Utilisateur</label>
 				<div class='col-sm-10'>

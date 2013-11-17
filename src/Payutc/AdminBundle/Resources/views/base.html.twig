@@ -28,27 +28,29 @@
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class='collapse navbar-collapse' id='nav-content'>
-				<ul class='nav navbar-nav'>
-					<li class='dropdown'>
-						<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Evènements <b class='caret'></b></a>
-						<ul class='dropdown-menu'>
-							<li><a href='{{ path('pay_utc_admin_events') }}'>Lister les évènements</a></li>
-							<li><a href='{{ path('pay_utc_admin_event_new') }}'>Ajouter un évènement</a></li>
-						</ul>
-					</li>
-					{#
-					<li class='dropdown'>
-						<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Associations <b class='caret'></b></a>
-						<ul class='dropdown-menu'>
-							<li><a href='#'>Lister les associations</a></li>
-							<li><a href='#'>Ajouter un association</a></li>
-						</ul>
-					</li>
-					#}
-				</ul>
-				<div class='nav navbar-right'>
-					<a class='navbar-brand' href='{{ path('pay_utc_admin_logout') }}'><span class='glyphicon glyphicon-off'></span></a>
-				</div>
+				{% block admin_nav_content %}
+					<ul class='nav navbar-nav'>
+						<li class='dropdown'>
+							<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Evènements <b class='caret'></b></a>
+							<ul class='dropdown-menu'>
+								<li><a href='{{ path('pay_utc_admin_events') }}'>Lister les évènements</a></li>
+								<li><a href='{{ path('pay_utc_admin_event_new') }}'>Ajouter un évènement</a></li>
+							</ul>
+						</li>
+						{#
+						<li class='dropdown'>
+							<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Associations <b class='caret'></b></a>
+							<ul class='dropdown-menu'>
+								<li><a href='#'>Lister les associations</a></li>
+								<li><a href='#'>Ajouter un association</a></li>
+							</ul>
+						</li>
+						#}
+					</ul>
+					<div class='nav navbar-right'>
+						<a class='navbar-brand' href='{{ path('pay_utc_admin_logout') }}'><span class='glyphicon glyphicon-off'></span></a>
+					</div>
+				{% endblock %}
 			</div>
 		</div>
 	</nav>
