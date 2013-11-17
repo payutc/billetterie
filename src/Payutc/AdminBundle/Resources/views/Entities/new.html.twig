@@ -1,0 +1,18 @@
+{% extends 'PayutcAdminBundle::base.html.twig' %}
+
+{% form_theme form 'PayutcAdminBundle:Form:bootstrap.html.twig' %}
+
+{% block app_content %}
+	<h1>{% block entity_title %}{% endblock %}</h1>
+	
+	{% block form_new %}
+		<form {% block entity_create_path %}{% endblock %} method='post' {{ form_enctype(form) }}>
+			{{ form_widget(form) }}
+			<div class='link-wrapper'>
+				<input class='btn btn-success' type='submit' name='submit' value='Créer' />
+				<input class='btn btn-warning' type='reset' name='reset' value='Annuler' />
+				<a class='btn btn-info' {% block entity_list_path %}{% endblock %}>Revenir à la liste</a>
+			</div>
+		</form>
+	{% endblock %}
+{% endblock %}

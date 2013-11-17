@@ -5,7 +5,7 @@ namespace Payutc\OnyxBundle\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
-use Payutc\OnyxBundle\Entity\Deletable\DeletableEntity;
+use Payutc\OnyxBundle\Entity\Base\BaseEntity;
 
 /**
  * Event
@@ -14,7 +14,7 @@ use Payutc\OnyxBundle\Entity\Deletable\DeletableEntity;
  * @ORM\Entity(repositoryClass="Payutc\OnyxBundle\Entity\EventRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Event extends DeletableEntity
+class Event extends BaseEntity
 {
     /**
      * @var integer
@@ -78,7 +78,7 @@ class Event extends DeletableEntity
     /**
      * @Assert\File(maxSize="3000000")
      */
-    private $thumbnailFile;
+    public $thumbnailFile;
 
     /**
      * @var string
@@ -90,7 +90,7 @@ class Event extends DeletableEntity
     /**
      * @Assert\File(maxSize="3000000")
      */
-    private $headerPictureFile;
+    public $headerPictureFile;
 
     /**
      * @var string
@@ -101,12 +101,24 @@ class Event extends DeletableEntity
 
     public function __construct()
     {
-        parent::__construct();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+        $this->isDeleted = false;
         $this->isHidden = false;
         $now = new \DateTime();
         $this->dueAt = $now->add(new \DateInterval('P1W'));
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
+
+    public function toString()
+    {
+        return $this->title;
     }
 
 
@@ -118,6 +130,52 @@ class Event extends DeletableEntity
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Event
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Event
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 
     /**
@@ -141,6 +199,39 @@ class Event extends DeletableEntity
     public function getIsHidden()
     {
         return $this->isHidden;
+    }
+
+    /**
+     * Set isDeleted
+     *
+     * @param boolean $isDeleted
+     * @return Event
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+
+        return $this;
+    }
+
+    /**
+     * Get isDeleted
+     *
+     * @return boolean 
+     */
+    public function getIsDeleted()
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * Get isDeleted (alias)
+     *
+     * @return boolean 
+     */
+    public function isDeleted()
+    {
+        return $this->isDeleted;
     }
 
     /**
@@ -356,7 +447,7 @@ class Event extends DeletableEntity
             // s'il y a une erreur lors du déplacement du fichier, une exception
             // va automatiquement être lancée par la méthode move(). Cela va empêcher
             // proprement l'entité d'être persistée dans la base de données en cas d'erreur.
-            $this->thumbnailFile->move($this->getThumbnailUploadRootDir(), $this->thumbnailFile);
+            $this->thumbnailFile->move($this->getThumbnailUploadRootDir(), $this->thumbnail);
 
             unset($this->thumbnailFile);
         }
@@ -364,7 +455,7 @@ class Event extends DeletableEntity
             // s'il y a une erreur lors du déplacement du fichier, une exception
             // va automatiquement être lancée par la méthode move(). Cela va empêcher
             // proprement l'entité d'être persistée dans la base de données en cas d'erreur.
-            $this->headerPictureFile->move($this->getHeaderPictureUploadRootDir(), $this->headerPictureFile);
+            $this->headerPictureFile->move($this->getHeaderPictureUploadRootDir(), $this->headerPicture);
 
             unset($this->headerPictureFile);
         }

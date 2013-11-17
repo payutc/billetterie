@@ -56,7 +56,7 @@ class EventRepository extends EntityRepository implements DeletableEntityReposit
 	/**
      * Find one entity by id that have is_deleted and is_hidden property set up to false.
      *
-     * @return array
+     * @return Event
      */
 	public function findOneActive(int $id)
 	{

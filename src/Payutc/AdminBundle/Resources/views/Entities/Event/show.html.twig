@@ -1,0 +1,54 @@
+{% extends 'PayutcAdminBundle:Entities:show.html.twig' %}
+
+
+
+{% block entity_title %}Evènement{% endblock %}
+
+{% block entity_table %}
+	<tr>
+		<th>Id</th>
+		<td>{{ entity.id }}</td>
+	</tr>
+	<tr>
+		<th>Créé le</th>
+		<td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+	</tr>
+	<tr>
+		<th>Modifié le</th>
+		<td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
+	</tr>
+	<tr>
+		<th>Actif ?</th>
+		<td>{{ entity.isHidden }}</td>
+	</tr>
+	<tr>
+		<th>Supprimé ?</th>
+		<td>{{ entity.isDeleted }}</td>
+	</tr>
+	<tr>
+		<th>Titre</th>
+		<td>{{ entity.title }}</td>
+	</tr>
+	<tr>
+		<th>Date</th>
+		<td>{{ entity.dueAt|date('Y-m-d H:i:s') }}</td>
+	</tr>
+	<tr>
+		<th>Miniature</th>
+		<td>{{ entity.thumbnail }}</td>
+	</tr>
+	<tr>
+		<th>Image d'en-tête</th>
+		<td>{{ entity.headerPicture }}</td>
+	</tr>
+	<tr>
+		<th>Contenu</th>
+		<td>{{ entity.content }}</td>
+	</tr>
+{% endblock %}
+		
+{% block entity_list_path %}href="{{ path('pay_utc_admin_events') }}"{% endblock %}
+
+{% block entity_edit_path %}href="{{ path('pay_utc_admin_event_edit', { 'id': entity.id }) }}"{% endblock %}
+
+{% block entity_delete_path %}action="{{ path('pay_utc_admin_event_delete', { 'id': entity.id }) }}"{% endblock %}

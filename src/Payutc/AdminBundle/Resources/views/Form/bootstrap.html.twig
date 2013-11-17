@@ -1,0 +1,96 @@
+{% block form_row %}
+{% spaceless %}
+	<div class='form-group'>
+		{{ form_label(form) }}
+		{{ form_errors(form) }}
+		{{ form_widget(form) }}
+	</div>
+{% endspaceless %}
+{% endblock form_row %}
+
+{% block form_widget_simple %}
+{% spaceless %}
+	{% set type = type|default('text') %}
+	<input type='{{ type }}'{% if type != 'file' %} class='form-control'{% endif %} {{ block('widget_attributes') }}{% if value is not empty %}value='{{ value }}' {% endif %} />
+{% endspaceless %}
+{% endblock form_widget_simple %}
+
+{% block textarea_widget %}
+{% spaceless %}
+	<textarea {{ block('widget_attributes') }} class='form-control' rows='5'>{{ value }}</textarea>
+{% endspaceless %}
+{% endblock textarea_widget %}
+
+{% block checkbox_widget %}
+{% spaceless %}
+	<input type='checkbox' {{ block('widget_attributes') }}{% if value is defined %} value='{{ value }}'{% endif %}{% if checked %} checked='checked'{% endif %} />
+{% endspaceless %}
+{% endblock checkbox_widget %}
+
+{% block radio_widget %}
+{% spaceless %}
+	<input type='radio' {{ block('widget_attributes') }}{% if value is defined %} value='{{ value }}'{% endif %}{% if checked %} checked='checked'{% endif %} />
+{% endspaceless %}
+{% endblock radio_widget %}
+
+{% block file_widget %}
+	<div class='input-group'>
+		<span class='input-group-btn'>
+			<span class='btn btn-primary btn-file'>Parcourir <input {{ block('widget_attributes') }} type='file' multiple=''{% if value is not empty %}value='{{ value }}' {% endif %} /></span>
+		</span>
+		<input type='text' class='form-control' readonly='' />
+	</div>
+{% endblock %}
+
+{% block datetime_row %}
+{% spaceless %}
+	{{ form_label(form) }}
+	{{ form_errors(form) }}
+	<div class='input-group datetimepicker'>
+		{{ form_widget(form) }}
+		<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+	</div>
+{% endspaceless %}
+{% endblock datetime_row %}
+
+{% block date_row %}
+{% spaceless %}
+	{{ form_label(form) }}
+	{{ form_errors(form) }}
+	<div class='input-group datepicker'>
+		{{ form_widget(form) }}
+		<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+	</div>
+{% endspaceless %}
+{% endblock date_row %}
+
+{% block time_row %}
+{% spaceless %}
+	{{ form_label(form) }}
+	{{ form_errors(form) }}
+	<div class='input-group timepicker'>
+		{{ form_widget(form) }}
+		<span class='input-group-addon'><span class='glyphicon glyphicon-time'></span></span>
+	</div>
+{% endspaceless %}
+{% endblock time_row %}
+
+{% block checkbox_row %}
+{% spaceless %}
+	<div class='checkbox'>
+		{{ form_widget(form) }}
+		{{ form_label(form) }}
+		{{ form_errors(form) }}
+	</div>
+{% endspaceless %}
+{% endblock %}
+
+{% block radio_row %}
+{% spaceless %}
+	<div class='radio'>
+		{{ form_widget(form) }}
+		{{ form_label(form) }}
+		{{ form_errors(form) }}
+	</div>
+{% endspaceless %}
+{% endblock %}
