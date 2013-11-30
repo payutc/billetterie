@@ -1,13 +1,13 @@
 {% extends 'PayutcOnyxBundle::base.html.twig' %}
 
 {% block app_content %}
-	<div class='jumbotron'>
-		<h1>Onyx</h1>
-		{% if app.user %}
-			<p>Connecté en tant que : {{ app.user.username }}</p>
-			<a href='{{ path('pay_utc_onyx_logout_page') }}' class='btn btn-info'>Se déconnecter</a>
-		{% else %}
-			<a href='{{ path('pay_utc_onyx_login_page') }}' class='btn btn-info'>Se connecter</a>
-		{% endif %}
-	</div>
+    <div class='jumbotron'>
+        <h1>Onyx</h1>
+        {% if app.user %}
+            <p>Connecté en tant que : {{ app.user.username }}</p>
+            <a href='{{ path('pay_utc_onyx_logout_page') }}' class='btn btn-info'>Se déconnecter</a>
+        {% else %}
+            <a href='{{ path('pay_utc_onyx_login_page') }}' class='btn btn-info'>Se connecter</a>
+        {% endif %}
+    </div>
 {% endblock %}
