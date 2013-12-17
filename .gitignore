@@ -17,3 +17,8 @@ app/config/parameters.yml
 
 # .DS_Store
 *.DS_Store
+
+# Composer
+composer.phar
+composer.lock
+bin/*
