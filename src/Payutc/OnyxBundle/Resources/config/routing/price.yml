@@ -1,0 +1,30 @@
+prices:
+    pattern:  /
+    defaults: { _controller: "PayutcOnyxBundle:Price:index" }
+
+prices_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "PayutcOnyxBundle:Price:show" }
+
+prices_new:
+    pattern:  /new
+    defaults: { _controller: "PayutcOnyxBundle:Price:new" }
+
+prices_create:
+    pattern:  /create
+    defaults: { _controller: "PayutcOnyxBundle:Price:create" }
+    requirements: { _method: post }
+
+prices_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "PayutcOnyxBundle:Price:edit" }
+
+prices_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "PayutcOnyxBundle:Price:update" }
+    requirements: { _method: post|put }
+
+prices_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "PayutcOnyxBundle:Price:delete" }
+    requirements: { _method: post|delete }

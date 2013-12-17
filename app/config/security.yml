@@ -24,7 +24,7 @@ security:
         local:
             entity:
                 class: Payutc\OnyxBundle\Entity\User
-                property: login
+                property: email
         cas:
             id: cas_user_provider
 

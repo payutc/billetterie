@@ -1,4 +1,4 @@
-pay_utc_onyx_homepage:
+pay_utc_onyx_home_page:
     pattern:  /
     defaults:
         _controller: PayutcOnyxBundle:Home/Home:index
@@ -21,3 +21,27 @@ pay_utc_onyx_logout_page:
     pattern:  /logout
     requirements:
         _method: get
+
+pay_utc_onyx_users:
+    resource: "@PayutcOnyxBundle/Resources/config/routing/entities/users.yml"
+    prefix: /users
+
+PayutcOnyxBundle_users:
+    resource: "@PayutcOnyxBundle/Resources/config/routing/users.yml"
+    prefix:   /users
+
+PayutcOnyxBundle_usergroups:
+    resource: "@PayutcOnyxBundle/Resources/config/routing/usergroups.yml"
+    prefix:   /usergroups
+
+PayutcOnyxBundle_prices:
+    resource: "@PayutcOnyxBundle/Resources/config/routing/price.yml"
+    prefix:   /prices
+
+PayutcOnyxBundle_events:
+    resource: "@PayutcOnyxBundle/Resources/config/routing/event.yml"
+    prefix:   /events
+
+PayutcOnyxBundle_tickets:
+    resource: "@PayutcOnyxBundle/Resources/config/routing/ticket.yml"
+    prefix:   /tickets

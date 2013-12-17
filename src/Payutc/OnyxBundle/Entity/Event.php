@@ -40,18 +40,18 @@ class Event extends BaseEntity
     private $updatedAt;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="removed_at", type="datetime", nullable=true)
+     */
+    private $removedAt;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="is_hidden", type="boolean")
      */
     private $isHidden;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="is_deleted", type="boolean")
-     */
-    private $isDeleted;
 
     /**
      * @var string
@@ -64,9 +64,16 @@ class Event extends BaseEntity
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="due_at", type="datetime", nullable=true)
+     * @ORM\Column(name="start_at", type="datetime", nullable=true)
      */
-    private $dueAt;
+    private $startAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="end_at", type="datetime", nullable=true)
+     */
+    private $endAt;
 
     /**
      * @var string
@@ -99,12 +106,35 @@ class Event extends BaseEntity
      */
     private $content;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="capacity", type="integer")
+     */
+    private $capacity;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="max_places_for_user", type="integer")
+     */
+    private $maxPlacesForUser;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="fundation_id", type="integer")
+     * Payutc link
+     */
+    private $fundationId;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
-        $this->isDeleted = false;
         $this->isHidden = false;
+        $this->capacity = 1;
+        $this->maxPlacesForUser = 1;
         $now = new \DateTime();
         $this->dueAt = $now->add(new \DateInterval('P1W'));
 
@@ -199,29 +229,6 @@ class Event extends BaseEntity
     public function getIsHidden()
     {
         return $this->isHidden;
-    }
-
-    /**
-     * Set isDeleted
-     *
-     * @param boolean $isDeleted
-     * @return Event
-     */
-    public function setIsDeleted($isDeleted)
-    {
-        $this->isDeleted = $isDeleted;
-
-        return $this;
-    }
-
-    /**
-     * Get isDeleted
-     *
-     * @return boolean 
-     */
-    public function getIsDeleted()
-    {
-        return $this->isDeleted;
     }
 
     /**
@@ -472,5 +479,143 @@ class Event extends BaseEntity
         if ($headerPicture = $this->getHeaderPictureAbsolutePath()) {
             unlink($headerPicture);
         }
+    }
+
+    /**
+     * Set removedAt
+     *
+     * @param \DateTime $removedAt
+     * @return Event
+     */
+    public function setRemovedAt($removedAt)
+    {
+        $this->removedAt = $removedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get removedAt
+     *
+     * @return \DateTime 
+     */
+    public function getRemovedAt()
+    {
+        return $this->removedAt;
+    }
+
+    /**
+     * Set startAt
+     *
+     * @param \DateTime $startAt
+     * @return Event
+     */
+    public function setStartAt($startAt)
+    {
+        $this->startAt = $startAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get startAt
+     *
+     * @return \DateTime 
+     */
+    public function getStartAt()
+    {
+        return $this->startAt;
+    }
+
+    /**
+     * Set endAt
+     *
+     * @param \DateTime $endAt
+     * @return Event
+     */
+    public function setEndAt($endAt)
+    {
+        $this->endAt = $endAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get endAt
+     *
+     * @return \DateTime 
+     */
+    public function getEndAt()
+    {
+        return $this->endAt;
+    }
+
+    /**
+     * Set capacity
+     *
+     * @param integer $capacity
+     * @return Event
+     */
+    public function setCapacity($capacity)
+    {
+        $this->capacity = $capacity;
+    
+        return $this;
+    }
+
+    /**
+     * Get capacity
+     *
+     * @return integer 
+     */
+    public function getCapacity()
+    {
+        return $this->capacity;
+    }
+
+    /**
+     * Set fundationId
+     *
+     * @param integer $fundationId
+     * @return Event
+     */
+    public function setFundationId($fundationId)
+    {
+        $this->fundationId = $fundationId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fundationId
+     *
+     * @return integer 
+     */
+    public function getFundationId()
+    {
+        return $this->fundationId;
+    }
+
+    /**
+     * Set maxPlacesForUser
+     *
+     * @param integer $maxPlacesForUser
+     * @return Event
+     */
+    public function setMaxPlacesForUser($maxPlacesForUser)
+    {
+        $this->maxPlacesForUser = $maxPlacesForUser;
+    
+        return $this;
+    }
+
+    /**
+     * Get maxPlacesForUser
+     *
+     * @return integer 
+     */
+    public function getMaxPlacesForUser()
+    {
+        return $this->maxPlacesForUser;
     }
 }
