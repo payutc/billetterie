@@ -1,0 +1,80 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Event</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Removedat</th>
+                <td>{{ entity.removedAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Ishidden</th>
+                <td>{{ entity.isHidden }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ entity.title }}</td>
+            </tr>
+            <tr>
+                <th>Startat</th>
+                <td>{{ entity.startAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Endat</th>
+                <td>{{ entity.endAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Thumbnail</th>
+                <td>{{ entity.thumbnail }}</td>
+            </tr>
+            <tr>
+                <th>Headerpicture</th>
+                <td>{{ entity.headerPicture }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ entity.content }}</td>
+            </tr>
+            <tr>
+                <th>Capacity</th>
+                <td>{{ entity.capacity }}</td>
+            </tr>
+            <tr>
+                <th>Maxplacesforuser</th>
+                <td>{{ entity.maxPlacesForUser }}</td>
+            </tr>
+            <tr>
+                <th>Fundationid</th>
+                <td>{{ entity.fundationId }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('events') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('events_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

@@ -25,8 +25,8 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
         $qb->select('u')
             ->from('PayutcOnyxBundle:User', 'u')
-            ->where('u.login = :login')
-            ->setParameter('login', $username)
+            ->where('u.email = :email')
+            ->setParameter('email', $username)
         ;
 
         try {

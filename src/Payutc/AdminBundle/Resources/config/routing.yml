@@ -1,0 +1,27 @@
+pay_utc_admin_homepage:
+    pattern:  /
+    defaults:
+        _controller: PayutcAdminBundle:Home:index
+    requirements:
+        _method: get
+
+pay_utc_admin_login:
+    pattern:  /login
+    defaults:
+        _controller: PayutcAdminBundle:Authentication:login
+    requirements:
+        _method: get
+
+pay_utc_admin_login_check:
+    pattern:  /login_check
+    requirements:
+        _method: post
+
+pay_utc_admin_logout:
+    pattern:  /logout
+    requirements:
+        _method: get
+
+pay_utc_admin_crud_events:
+    resource: "@PayutcAdminBundle/Resources/config/routing/entities/events.yml"
+    prefix:   /events

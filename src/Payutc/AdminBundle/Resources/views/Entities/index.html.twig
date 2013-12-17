@@ -1,0 +1,34 @@
+{% extends 'PayutcAdminBundle::base.html.twig' %}
+
+{% block app_content %}
+	<h1>{% block entity_title %}{% endblock %}</h1>
+	
+	{% block entity_add_link %}
+		<div class='link-wrapper'>
+			<a class='btn btn-info' {% block entity_add_path %}{% endblock %}>{% block entity_add_label %}{% endblock %}</a>
+		</div>
+	{% endblock %}
+	
+	{% block extra_before_list %}{% endblock %}
+	<table class='records_list table table-bordered table-condensed table-stripped tablesorter'>
+		<thead>
+			<tr>
+				{% block entity_table_headers %}{% endblock %}
+			</tr>
+		</thead>
+		<tbody>
+		{% for entity in entities %}
+			<tr>
+				{% block entity_table_content %}{% endblock %}
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	{% block extra_after_list %}{% endblock %}
+
+	{% block entity_add_link_2 %}
+		<div class='link-wrapper'>
+			<a class='btn btn-info' {% block entity_add_path_2 %}{% endblock %}>{% block entity_add_label_2 %}{% endblock %}</a>
+		</div>
+	{% endblock %}
+{% endblock %}

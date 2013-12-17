@@ -1,0 +1,30 @@
+users:
+    pattern:  /
+    defaults: { _controller: "PayutcOnyxBundle:User:index" }
+
+users_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "PayutcOnyxBundle:User:show" }
+
+users_new:
+    pattern:  /new
+    defaults: { _controller: "PayutcOnyxBundle:User:new" }
+
+users_create:
+    pattern:  /create
+    defaults: { _controller: "PayutcOnyxBundle:User:create" }
+    requirements: { _method: post }
+
+users_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "PayutcOnyxBundle:User:edit" }
+
+users_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "PayutcOnyxBundle:User:update" }
+    requirements: { _method: post|put }
+
+users_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "PayutcOnyxBundle:User:delete" }
+    requirements: { _method: post|delete }
