@@ -1,0 +1,80 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Onyx administration{% endblock %}
+
+{% block stylesheets %}
+	<link rel='stylesheet' href='{{ asset('bundles/payutcadmin/css/vendor/bootstrap/bootstrap-3.0.0.min.css') }}' />
+	<link rel='stylesheet' href='{{ asset('bundles/payutcadmin/css/vendor/bootstrap/bootstrap-file-input.css') }}' />
+	<link rel='stylesheet' href='{{ asset('bundles/payutcadmin/css/vendor/bootstrap/bootstrap-datetimepicker.min.css') }}' />
+	<link rel='stylesheet' href='{{ asset('bundles/payutcadmin/css/admin.min.css') }}' />
+{% endblock %}
+
+{% block head_javascripts %}
+	<script src='{{ asset('bundles/payutconyx/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js') }}'></script>
+{% endblock %}
+
+{% block body %}
+	<nav class='navbar navbar-default' role='navigation'>
+		<div class='container'>
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class='navbar-header'>
+				<button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#nav-content'>
+					<span class='sr-only'>Navigation</span>
+					<span class='icon-bar'></span>
+					<span class='icon-bar'></span>
+					<span class='icon-bar'></span>
+				</button>
+				<a class='navbar-brand' href='{{ path('pay_utc_admin_homepage') }}'>Admin</a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class='collapse navbar-collapse' id='nav-content'>
+				{% block admin_nav_content %}
+					<ul class='nav navbar-nav'>
+						<li class='dropdown'>
+							<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Evènements <b class='caret'></b></a>
+							<ul class='dropdown-menu'>
+								<li><a href='{{ path('pay_utc_admin_events') }}'>Lister les évènements</a></li>
+								<li><a href='{{ path('pay_utc_admin_event_new') }}'>Ajouter un évènement</a></li>
+							</ul>
+						</li>
+						{#
+						<li class='dropdown'>
+							<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Associations <b class='caret'></b></a>
+							<ul class='dropdown-menu'>
+								<li><a href='#'>Lister les associations</a></li>
+								<li><a href='#'>Ajouter un association</a></li>
+							</ul>
+						</li>
+						#}
+					</ul>
+					<div class='nav navbar-right'>
+						<a class='navbar-brand' href='{{ path('pay_utc_admin_logout') }}'><span class='glyphicon glyphicon-off'></span></a>
+					</div>
+				{% endblock %}
+			</div>
+		</div>
+	</nav>
+	<section id='app-onyx-wrapper' class='container'>
+		{% for type, messages in app.session.flashbag.all %}
+			{% for message in messages %}
+				<div class='alert alert-{{ type }} alert-dismissable'>
+					<a href='#' class='close' data-dismiss='alert' aria-hidden='true'>&times;</a>
+					<strong>{{ type }}!</strong><span> {{ message }}</span>
+				</div>
+			{% endfor %}
+		{% endfor %}
+		{% block app_content %}{% endblock %}
+	</section>
+{% endblock %}
+
+{% block javascripts %}
+	<script src='{{ asset('bundles/payutcadmin/js/vendor/jquery-1.10.1.min.js') }}'></script>
+	<script src='{{ asset('bundles/payutcadmin/js/vendor/moment-2.3.1.js') }}'></script>
+	<script src='{{ asset('bundles/payutcadmin/js/vendor/bootstrap/bootstrap-3.0.0.min.js') }}'></script>
+	<script src='{{ asset('bundles/payutcadmin/js/vendor/bootstrap/bootstrap-file-input.js') }}'></script>
+	<script src='{{ asset('bundles/payutcadmin/js/vendor/bootstrap/bootstrap-datetimepicker.js') }}'></script>
+	<script src='{{ asset('bundles/payutcadmin/js/vendor/bootstrap/bootstrap-modal-manager.js') }}'></script>
+	<script src='{{ asset('bundles/payutcadmin/js/vendor/bootstrap/bootbox.min.js') }}'></script>
+	<script src='{{ asset('bundles/payutcadmin/js/plugins.js') }}'></script>
+	<script src='{{ asset('bundles/payutcadmin/js/admin.js') }}'></script>
+{% endblock %}

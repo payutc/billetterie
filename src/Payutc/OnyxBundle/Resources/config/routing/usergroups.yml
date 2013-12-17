@@ -1,0 +1,30 @@
+usergroups:
+    pattern:  /
+    defaults: { _controller: "PayutcOnyxBundle:UserGroup:index" }
+
+usergroups_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "PayutcOnyxBundle:UserGroup:show" }
+
+usergroups_new:
+    pattern:  /new
+    defaults: { _controller: "PayutcOnyxBundle:UserGroup:new" }
+
+usergroups_create:
+    pattern:  /create
+    defaults: { _controller: "PayutcOnyxBundle:UserGroup:create" }
+    requirements: { _method: post }
+
+usergroups_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "PayutcOnyxBundle:UserGroup:edit" }
+
+usergroups_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "PayutcOnyxBundle:UserGroup:update" }
+    requirements: { _method: post|put }
+
+usergroups_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "PayutcOnyxBundle:UserGroup:delete" }
+    requirements: { _method: post|delete }

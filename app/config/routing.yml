@@ -1,3 +1,7 @@
 pay_utc_onyx:
     resource: "@PayutcOnyxBundle/Resources/config/routing.yml"
     prefix:   /
+
+payutc_admin:
+    resource: "@PayutcAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin

@@ -32,9 +32,9 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="login", type="string", length=255, unique=true)
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
      */
-    private $login;
+    private $email;
 
     /**
      * @var string
@@ -65,16 +65,14 @@ class User implements UserInterface, \Serializable
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255)
+     * Magic constructor
      */
-    private $email;
-
     public function __construct()
     {
         $this->registredAt = new \DateTime();
         $this->salt = sha1(uniqid(null, true));
+
+        return $this;
     }
 
     public function __toString()
@@ -87,12 +85,26 @@ class User implements UserInterface, \Serializable
         return $this->getFirstname() . ' ' . $this->getName();
     }
 
+    public function encryptPassword($encoder) {
+        $this->setPassword($encoder->encodePassword($this->getPassword(), $this->getSalt()));
+    }
+
+    /**
+     * Get a list of the user's groups
+     *
+     * 
+     */
+    public function getMyGroups()
+    {
+        return array();
+    }
+
     /**
      * @inheritDoc
      */
     public function getUsername()
     {
-        return $this->login;
+        return $this->email;
     }
 
     /**
@@ -163,29 +175,29 @@ class User implements UserInterface, \Serializable
     public function getRegistredAt()
     {
         return $this->registredAt;
-    }
+    } 
 
     /**
-     * Set login
+     * Set email
      *
-     * @param string $login
+     * @param string $email
      * @return User
      */
-    public function setLogin($login)
+    public function setEmail($email)
     {
-        $this->login = $login;
+        $this->email = $email;
     
         return $this;
     }
 
     /**
-     * Get login
+     * Get email
      *
      * @return string 
      */
-    public function getLogin()
+    public function getEmail()
     {
-        return $this->login;
+        return $this->email;
     }
 
     /**
@@ -278,28 +290,5 @@ class User implements UserInterface, \Serializable
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string 
-     */
-    public function getEmail()
-    {
-        return $this->email;
     }
 }

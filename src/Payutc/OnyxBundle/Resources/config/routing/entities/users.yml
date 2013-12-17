@@ -1,0 +1,13 @@
+pay_utc_onyx_registration_page:
+    pattern:  /inscription
+    defaults:
+        _controller: PayutcOnyxBundle:Entities/User:registration
+    requirements:
+        _method: get
+
+pay_utc_onyx_registration_check_page:
+    pattern:  /inscription
+    defaults:
+        _controller: PayutcOnyxBundle:Entities/User:registrationCheck
+    requirements:
+        _method: post
