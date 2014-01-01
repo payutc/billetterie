@@ -592,8 +592,8 @@ class Event extends BaseEntity
     }
 
     /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
      */
     public function preUpload()
     {
@@ -606,8 +606,8 @@ class Event extends BaseEntity
     }
 
     /**
-     * @ORM\PostPersist
-     * @ORM\PostUpdate
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
      */
     public function upload()
     {
@@ -630,7 +630,7 @@ class Event extends BaseEntity
     }
 
     /**
-     * @ORM\PostRemove
+     * @ORM\PostRemove()
      */
     public function removeUpload()
     {
