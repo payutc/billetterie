@@ -1,12 +1,12 @@
 <?php
 
-namespace Payutc\OnyxBundle\Form;
+namespace Payutc\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class EventType extends AbstractType
+class UserGroupType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,19 +15,9 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('removedAt')
-            ->add('isHidden')
-            ->add('title')
-            ->add('startAt')
-            ->add('endAt')
-            ->add('thumbnail')
-            ->add('headerPicture')
-            ->add('content')
-            ->add('capacity')
-            ->add('maxPlacesForUser')
-            ->add('fundationId')
+            ->add('isHidden', 'checkbox', array('label' => 'Masqué ou non ?', 'required' => false))
+            ->add('title', 'text', array('label' => 'Nom du groupe', 'required' => true))
+            ->add('informations', 'textarea', array('label' => 'Informations for User:getMyGroups', 'required' => false))
         ;
     }
     
@@ -37,7 +27,7 @@ class EventType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Payutc\OnyxBundle\Entity\Event'
+            'data_class' => 'Payutc\OnyxBundle\Entity\UserGroup'
         ));
     }
 
@@ -46,6 +36,6 @@ class EventType extends AbstractType
      */
     public function getName()
     {
-        return 'payutc_onyxbundle_event';
+        return 'payutc_adminbundle_usergroup';
     }
 }

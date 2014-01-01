@@ -84,8 +84,6 @@ class Price extends BaseEntity
      * @var integer
      *
      * @ORM\Column(name="price", type="integer")
-     * 
-     * 
      */
     private $price;
 
@@ -165,6 +163,16 @@ class Price extends BaseEntity
     public function toString()
     {
         return $this->getTitle();
+    }
+
+    /**
+     * Entity has been removed or not ?
+     *
+     * @return boolean 
+     */
+    public function isDeleted()
+    {
+        return is_null($this->removedAt);
     }
 
     /**

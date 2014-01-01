@@ -111,6 +111,16 @@ class Ticket
     }
 
     /**
+     * Entity has been removed or not ?
+     *
+     * @return boolean 
+     */
+    public function isDeleted()
+    {
+        return is_null($this->removedAt);
+    }
+
+    /**
      * Get id
      *
      * @return integer 

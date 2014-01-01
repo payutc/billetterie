@@ -1,0 +1,62 @@
+payutc_admin_prices:
+    pattern:  /
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Price:index'
+    requirements:
+        _method: get
+
+payutc_admin_price_new:
+    pattern:  /new
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Price:new'
+    requirements:
+        _method: get
+
+payutc_admin_price_create:
+    pattern:  /create
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Price:create'
+    requirements:
+        _method: post
+
+payutc_admin_price_show:
+    pattern:  /{id}/show
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Price:show'
+    requirements:
+        _method: get
+
+payutc_admin_price_edit:
+    pattern:  /{id}/edit
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Price:edit'
+    requirements:
+        _method: get
+
+payutc_admin_price_activate:
+    pattern:  /{id}/activate
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Price:activate'
+    requirements:
+        _method: get
+
+payutc_admin_price_unactivate:
+    pattern:  /{id}/unactivate
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Price:unactivate'
+    requirements:
+        _method: get
+
+payutc_admin_price_update:
+    pattern:  /{id}/update
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Price:update'
+    requirements:
+        _method: post|put
+
+payutc_admin_price_remove:
+    pattern:  /{id}/remove
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Price:remove'
+    requirements:
+        _method: post|delete

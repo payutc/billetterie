@@ -1,0 +1,35 @@
+{% extends 'PayutcAdminBundle:Entities:index.html.twig' %}
+
+{% block entity_title %}Groupes d'utilisateurs{% endblock %}
+
+{% block entity_add_path %}href='{{ path('payutc_admin_usergroup_new') }}'{% endblock %}
+
+{% block entity_add_label %}Ajouter un groupe{% endblock %}
+
+{% block extra_before_list %}{% endblock %}
+
+{% block entity_table_headers %}
+    <th>Actif ?</th>
+    <th>Nom</th>
+    <th>Actions</th>
+{% endblock %}
+
+{% block entity_table_content %}
+    <td>{% if entity.isHidden %}Désactivé{% else %}Activé{% endif %}</td>
+    <td>{{ entity.title }}</td>
+    <td>
+        <div><a href='{{ path('payutc_admin_usergroup_show', { 'id': entity.id }) }}'>Détail</a></div>
+        <div><a href='{{ path('payutc_admin_usergroup_edit', { 'id': entity.id }) }}'>Editer</a></div>
+        {% if entity.isHidden %}
+            <div><a href='{{ path('payutc_admin_usergroup_activate', { 'id': entity.id }) }}'>Activer</a></div>
+        {% else %}
+            <div><a href='{{ path('payutc_admin_usergroup_unactivate', { 'id': entity.id }) }}'>Désactiver</a></div>
+        {% endif %}
+    </td>
+{% endblock %}
+
+{% block extra_after_list %}{% endblock %}
+
+{% block entity_add_path_2 %}href='{{ path('payutc_admin_usergroup_new') }}'{% endblock %}
+
+{% block entity_add_label_2 %}Ajouter un groupe{% endblock %}

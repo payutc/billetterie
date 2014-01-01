@@ -1,0 +1,84 @@
+{% extends 'PayutcAdminBundle:Entities:show.html.twig' %}
+
+{% block entity_title %}Tarif{% endblock %}
+
+{% block entity_table %}
+	<tr>
+		<th>Id</th>
+		<td>{{ entity.id }}</td>
+	</tr>
+	<tr>
+		<th>Créé le</th>
+		<td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+	</tr>
+	<tr>
+		<th>Modifié le</th>
+		<td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
+	</tr>
+	<tr>
+		<th>Actif ?</th>
+		<td>{{ entity.isHidden }}</td>
+	</tr>
+	<tr>
+		<th>Nom</th>
+		<td>{{ entity.title }}</td>
+	</tr>
+	<tr>
+		<th>Début de validité du tarif</th>
+		<td>{{ entity.startAt|date('Y-m-d H:i:s') }}</td>
+	</tr>
+	<tr>
+		<th>Fin de validité du tarif</th>
+		<td>{{ entity.endAt|date('Y-m-d H:i:s') }}</td>
+	</tr>
+	<tr>
+		<th>Description</th>
+		<td>{{ entity.description }}</td>
+	</tr>
+	<tr>
+		<th>Prix</th>
+		<td>{{ entity.price }}</td>
+	</tr>
+	<tr>
+		<th>Nominatif ?</th>
+		<td>{{ entity.isNominative }}</td>
+	</tr>
+	<tr>
+		<th>Nombre de places</th>
+		<td>{{ entity.capacity }}</td>
+	</tr>
+	<tr>
+		<th>Nombre de places par acheteur</th>
+		<td>{{ entity.maxPlacesForUser }}</td>
+	</tr>
+	<tr>
+		<th>Unique par acheteur ?</th>
+		<td>{{ entity.isUniqueForUser }}</td>
+	</tr>
+	<tr>
+		<th>PayutcId</th>
+		<td>{{ entity.payutcId }}</td>
+	</tr>
+	<tr>
+		<th>Evénement associé</th>
+		<td>{{ entity.event }}</td>
+	</tr>
+	<tr>
+		<th>Groupes d'utilisateur bénéficiant de ce tarif</th>
+		<td>
+			<ul>
+				{% for group in entity.userGroups %}
+					<li>{{ group }}</li>
+				{% else %}
+					<li class='warning'>Aucun groupe d'utilisateur ne bénéficie actuellement de ce tarif.</li>
+				{% endfor %}
+			</ul>
+		</td>
+	</tr>
+{% endblock %}
+		
+{% block entity_list_path %}href="{{ path('payutc_admin_prices') }}"{% endblock %}
+
+{% block entity_edit_path %}href="{{ path('payutc_admin_price_edit', { 'id': entity.id }) }}"{% endblock %}
+
+{% block entity_delete_path %}action="{{ path('payutc_admin_price_remove', { 'id': entity.id }) }}"{% endblock %}

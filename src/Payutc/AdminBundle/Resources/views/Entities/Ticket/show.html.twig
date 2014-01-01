@@ -1,6 +1,6 @@
 {% extends 'PayutcAdminBundle:Entities:show.html.twig' %}
 
-{% block entity_title %}Evènement{% endblock %}
+{% block entity_title %}Ticket{% endblock %}
 
 {% block entity_table %}
 	<tr>
@@ -20,40 +20,32 @@
 		<td>{{ entity.isHidden }}</td>
 	</tr>
 	<tr>
-		<th>Nom</th>
-		<td>{{ entity.title }}</td>
+		<th>Code bar</th>
+		<td>{{ entity.barcode }}</td>
 	</tr>
 	<tr>
-		<th>Début de l'évènement</th>
-		<td>{{ entity.startAt|date('Y-m-d H:i:s') }}</td>
+		<th>Prénom</th>
+		<td>{{ entity.firstname }}</td>
 	</tr>
 	<tr>
-		<th>Fin de l'évènement</th>
-		<td>{{ entity.endAt|date('Y-m-d H:i:s') }}</td>
+		<th>Nom de famille</th>
+		<td>{{ entity.lastname }}</td>
 	</tr>
 	<tr>
-		<th>Miniature</th>
-		<td>{{ entity.thumbnail }}</td>
+		<th>Payé le</th>
+		<td>{{ entity.paidAt|date('Y-m-d H:i:s') }}</td>
 	</tr>
 	<tr>
-		<th>Image d'en-tête</th>
-		<td>{{ entity.headerPicture }}</td>
+		<th>Prix payé</th>
+		<td>{{ entity.paidPrice }}</td>
 	</tr>
 	<tr>
-		<th>Nombre de places</th>
-		<td>{{ entity.capacity }}</td>
+		<th>Acheteur</th>
+		<td>{{ entity.user }}</td>
 	</tr>
 	<tr>
-		<th>Nombre de places par acheteur</th>
-		<td>{{ entity.maxPlacesForUser }}</td>
-	</tr>
-	<tr>
-		<th>FundationId</th>
-		<td>{{ entity.fundationId }}</td>
-	</tr>
-	<tr>
-		<th>Contenu</th>
-		<td>{{ entity.content }}</td>
+		<th>Tarif</th>
+		<td>{{ entity.price }}</td>
 	</tr>
 {% endblock %}
 		

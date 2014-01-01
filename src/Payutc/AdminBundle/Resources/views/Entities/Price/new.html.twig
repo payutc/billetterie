@@ -1,0 +1,7 @@
+{% extends 'PayutcAdminBundle:Entities:new.html.twig' %}
+
+{% block entity_title %}Ajout d'un tarif{% endblock %}
+
+{% block entity_create_path %}action='{{ path('payutc_admin_price_create') }}'{% endblock %}
+
+{% block entity_list_path %}href='{{ path('payutc_admin_prices') }}'{% endblock %}

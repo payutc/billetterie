@@ -1,0 +1,39 @@
+{% extends 'PayutcAdminBundle:Entities:index.html.twig' %}
+
+{% block entity_title %}Tarifs{% endblock %}
+
+{% block entity_add_path %}href='{{ path('payutc_admin_price_new') }}'{% endblock %}
+
+{% block entity_add_label %}Ajouter un tarif{% endblock %}
+
+{% block extra_before_list %}{% endblock %}
+
+{% block entity_table_headers %}
+    <th>Actif ?</th>
+    <th>Nom</th>
+    <th>Evènement</th>
+    <th>Prix</th>
+    <th>Actions</th>
+{% endblock %}
+
+{% block entity_table_content %}
+    <td>{% if entity.isHidden %}Désactivé{% else %}Activé{% endif %}</td>
+    <td>{{ entity.title }}</td>
+    <td>{{ entity.event }}</td>
+    <td>{{ entity.price }}</td>
+    <td>
+        <div><a href='{{ path('payutc_admin_price_show', { 'id': entity.id }) }}'>Détail</a></div>
+        <div><a href='{{ path('payutc_admin_price_edit', { 'id': entity.id }) }}'>Editer</a></div>
+        {% if entity.isHidden %}
+            <div><a href='{{ path('payutc_admin_price_activate', { 'id': entity.id }) }}'>Activer</a></div>
+        {% else %}
+            <div><a href='{{ path('payutc_admin_price_unactivate', { 'id': entity.id }) }}'>Désactiver</a></div>
+        {% endif %}
+    </td>
+{% endblock %}
+
+{% block extra_after_list %}{% endblock %}
+
+{% block entity_add_path_2 %}href='{{ path('payutc_admin_price_new') }}'{% endblock %}
+
+{% block entity_add_label_2 %}Ajouter un tarif{% endblock %}

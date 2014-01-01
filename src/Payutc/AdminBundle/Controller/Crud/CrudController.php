@@ -307,6 +307,48 @@ class CrudController extends Controller
     }
     
     /**
+     * CRUD Remove page
+     *
+     * @param Request   $request                    The current request
+     * @param string    $id                         The Entity id
+     * @param string    $entityName                 The Entity Name
+     * @param string    $entityRepositoryNamespace  The EntityRepository Namespace
+     * @param string    $redirection                The route to redirect when the creation is done
+     * @return Response
+     */
+    public function removeEntity($request, $id, $entityName, $entityRepositoryNamespace, $redirection, $additionnalParameters = array())
+    {
+        $form = $this->createDeleteForm($id);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository($entityRepositoryNamespace . ':' . $entityName)->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find ' . $entityName . ' entity.');
+            }
+
+            $entityDisplayName = $entity->__toString();
+
+            $entity->setRemovedAt(new \DateTime());
+            $em->persist($entity);
+            $em->flush();
+            $this->getRequest()->getSession()->getFlashBag()->add('success', 'L\'entité "' . $entityName . '": [' . $entityDisplayName . '] a bien été supprimée.');
+        } else {
+            $this->getRequest()->getSession()->getFlashBag()->add('error', 'L\'entité "' . $entityName . '": [' . $entity . '] n\'a pas pu être supprimée.');
+        }
+
+        if (array_key_exists('routeParams', $additionnalParameters)) {
+            $route = $this->generateUrl($redirection, array_merge($additionnalParameters['routeParams']));
+        } else {
+            $route = $this->generateUrl($redirection);
+        }
+
+        return $this->redirect($route);
+    }
+    
+    /**
      * CRUD Delete page
      *
      * @param Request   $request                    The current request
@@ -333,9 +375,9 @@ class CrudController extends Controller
 
             $em->remove($entity);
             $em->flush();
-            $this->getRequest()->getSession()->getFlashBag()->add('success', 'L\'entité "' . $entityName . '": [' . $entityDisplayName . '] a bien été supprimée.');
+            $this->getRequest()->getSession()->getFlashBag()->add('success', 'L\'entité "' . $entityName . '": [' . $entityDisplayName . '] a bien été supprimée de la base de données.');
         } else {
-            $this->getRequest()->getSession()->getFlashBag()->add('error', 'L\'entité "' . $entityName . '": [' . $entity . '] n\'a pas pu être supprimée.');
+            $this->getRequest()->getSession()->getFlashBag()->add('error', 'L\'entité "' . $entityName . '": [' . $entity . '] n\'a pas pu être supprimée de la base de données.');
         }
 
         if (array_key_exists('routeParams', $additionnalParameters)) {

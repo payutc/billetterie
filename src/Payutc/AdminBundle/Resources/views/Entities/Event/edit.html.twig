@@ -2,10 +2,10 @@
 
 {% block entity_title %}Edition d'un événement{% endblock %}
 
-{% block entity_update_path %}action='{{ path('pay_utc_admin_event_update', { 'id': entity.id }) }}'{% endblock %}
+{% block entity_update_path %}action='{{ path('payutc_admin_event_update', { 'id': entity.id }) }}'{% endblock %}
 
-{% block entity_list_path %}href='{{ path('pay_utc_admin_events') }}'{% endblock %}
+{% block entity_list_path %}href='{{ path('payutc_admin_events') }}'{% endblock %}
 
-{% block entity_show_path %}href='{{ path('pay_utc_admin_event_show', { 'id': entity.id }) }}'{% endblock %}
+{% block entity_show_path %}href='{{ path('payutc_admin_event_show', { 'id': entity.id }) }}'{% endblock %}
 
-{% block entity_delete_path %}action='{{ path('pay_utc_admin_event_delete', { 'id': entity.id }) }}'{% endblock %}
+{% block entity_delete_path %}action='{{ path('payutc_admin_event_remove', { 'id': entity.id }) }}'{% endblock %}
