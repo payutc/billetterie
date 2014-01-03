@@ -8,6 +8,7 @@
             <a href='{{ path('pay_utc_onyx_logout_page') }}' class='btn btn-info'>Se déconnecter</a>
         {% else %}
             <a href='{{ path('pay_utc_onyx_login_page') }}' class='btn btn-info'>Se connecter</a>
+            <a href='{{ CAS_url }}' class='btn btn-info'>Login CAS</a>
         {% endif %}
     </div>
 {% endblock %}
