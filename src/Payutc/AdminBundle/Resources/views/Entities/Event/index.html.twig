@@ -2,7 +2,7 @@
 
 {% block entity_title %}Evènements{% endblock %}
 
-{% block entity_add_path %}href='{{ path('pay_utc_admin_event_new') }}'{% endblock %}
+{% block entity_add_path %}href='{{ path('payutc_admin_event_new') }}'{% endblock %}
 
 {% block entity_add_label %}Ajouter un événement{% endblock %}
 
@@ -10,28 +10,30 @@
 
 {% block entity_table_headers %}
     <th>Actif ?</th>
-    <th>Titre</th>
-    <th>Date</th>
+    <th>Nom</th>
+    <th>Début</th>
+    <th>Fin</th>
     <th>Actions</th>
 {% endblock %}
 
 {% block entity_table_content %}
     <td>{% if entity.isHidden %}Désactivé{% else %}Activé{% endif %}</td>
     <td>{{ entity.title }}</td>
-    <td>{{ entity.dueAt|date('d-m-Y') }}</td>
+    <td>{{ entity.startAt|date('d-m-Y') }}</td>
+    <td>{{ entity.endAt|date('d-m-Y') }}</td>
     <td>
-        <div><a href='{{ path('pay_utc_admin_event_show', { 'id': entity.id }) }}'>Détail</a></div>
-        <div><a href='{{ path('pay_utc_admin_event_edit', { 'id': entity.id }) }}'>Editer</a></div>
+        <div><a href='{{ path('payutc_admin_event_show', { 'id': entity.id }) }}'>Détail</a></div>
+        <div><a href='{{ path('payutc_admin_event_edit', { 'id': entity.id }) }}'>Editer</a></div>
         {% if entity.isHidden %}
-            <div><a href='{{ path('pay_utc_admin_event_activate', { 'id': entity.id }) }}'>Activer</a></div>
+            <div><a href='{{ path('payutc_admin_event_activate', { 'id': entity.id }) }}'>Activer</a></div>
         {% else %}
-            <div><a href='{{ path('pay_utc_admin_event_unactivate', { 'id': entity.id }) }}'>Désactiver</a></div>
+            <div><a href='{{ path('payutc_admin_event_unactivate', { 'id': entity.id }) }}'>Désactiver</a></div>
         {% endif %}
     </td>
 {% endblock %}
 
 {% block extra_after_list %}{% endblock %}
 
-{% block entity_add_path_2 %}href='{{ path('pay_utc_admin_event_new') }}'{% endblock %}
+{% block entity_add_path_2 %}href='{{ path('payutc_admin_event_new') }}'{% endblock %}
 
 {% block entity_add_label_2 %}Ajouter un événement{% endblock %}

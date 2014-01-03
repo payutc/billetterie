@@ -1,27 +1,43 @@
-pay_utc_admin_homepage:
+payutc_admin_homepage:
     pattern:  /
     defaults:
         _controller: PayutcAdminBundle:Home:index
     requirements:
         _method: get
 
-pay_utc_admin_login:
+payutc_admin_login:
     pattern:  /login
     defaults:
         _controller: PayutcAdminBundle:Authentication:login
     requirements:
         _method: get
 
-pay_utc_admin_login_check:
+payutc_admin_login_check:
     pattern:  /login_check
     requirements:
         _method: post
 
-pay_utc_admin_logout:
+payutc_admin_logout:
     pattern:  /logout
     requirements:
         _method: get
 
-pay_utc_admin_crud_events:
+payutc_admin_crud_users:
+    resource: "@PayutcAdminBundle/Resources/config/routing/entities/users.yml"
+    prefix: /users
+
+payutc_admin_crud_usergroups:
+    resource: "@PayutcAdminBundle/Resources/config/routing/entities/usergroups.yml"
+    prefix:   /usergroups
+
+payutc_admin_crud_prices:
+    resource: "@PayutcAdminBundle/Resources/config/routing/entities/prices.yml"
+    prefix:   /prices
+
+payutc_admin_crud_events:
     resource: "@PayutcAdminBundle/Resources/config/routing/entities/events.yml"
     prefix:   /events
+
+payutc_admin_crud_tickets:
+    resource: "@PayutcAdminBundle/Resources/config/routing/entities/tickets.yml"
+    prefix:   /tickets

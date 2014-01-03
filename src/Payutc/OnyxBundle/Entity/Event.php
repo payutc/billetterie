@@ -85,7 +85,7 @@ class Event extends BaseEntity
     /**
      * @Assert\File(maxSize="3000000")
      */
-    public $thumbnailFile;
+    private $thumbnailFile;
 
     /**
      * @var string
@@ -97,7 +97,7 @@ class Event extends BaseEntity
     /**
      * @Assert\File(maxSize="3000000")
      */
-    public $headerPictureFile;
+    private $headerPictureFile;
 
     /**
      * @var string
@@ -149,6 +149,16 @@ class Event extends BaseEntity
     public function toString()
     {
         return $this->title;
+    }
+
+    /**
+     * Entity has been removed or not ?
+     *
+     * @return boolean 
+     */
+    public function isDeleted()
+    {
+        return is_null($this->removedAt);
     }
 
 
@@ -209,6 +219,29 @@ class Event extends BaseEntity
     }
 
     /**
+     * Set removedAt
+     *
+     * @param \DateTime $removedAt
+     * @return Event
+     */
+    public function setRemovedAt($removedAt)
+    {
+        $this->removedAt = $removedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get removedAt
+     *
+     * @return \DateTime 
+     */
+    public function getRemovedAt()
+    {
+        return $this->removedAt;
+    }
+
+    /**
      * Set isHidden
      *
      * @param boolean $isHidden
@@ -229,16 +262,6 @@ class Event extends BaseEntity
     public function getIsHidden()
     {
         return $this->isHidden;
-    }
-
-    /**
-     * Get isDeleted (alias)
-     *
-     * @return boolean 
-     */
-    public function isDeleted()
-    {
-        return $this->isDeleted;
     }
 
     /**
@@ -265,26 +288,49 @@ class Event extends BaseEntity
     }
 
     /**
-     * Set dueAt
+     * Set startAt
      *
-     * @param \DateTime $dueAt
+     * @param \DateTime $startAt
      * @return Event
      */
-    public function setDueAt($dueAt)
+    public function setStartAt($startAt)
     {
-        $this->dueAt = $dueAt;
+        $this->startAt = $startAt;
     
         return $this;
     }
 
     /**
-     * Get dueAt
+     * Get startAt
      *
      * @return \DateTime 
      */
-    public function getDueAt()
+    public function getStartAt()
     {
-        return $this->dueAt;
+        return $this->startAt;
+    }
+
+    /**
+     * Set endAt
+     *
+     * @param \DateTime $endAt
+     * @return Event
+     */
+    public function setEndAt($endAt)
+    {
+        $this->endAt = $endAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get endAt
+     *
+     * @return \DateTime 
+     */
+    public function getEndAt()
+    {
+        return $this->endAt;
     }
 
     /**
@@ -311,6 +357,29 @@ class Event extends BaseEntity
     }
 
     /**
+     * Set thumbnailFile
+     *
+     * @param string $thumbnailFile
+     * @return Event
+     */
+    public function setThumbnailFile($thumbnailFile)
+    {
+        $this->thumbnailFile = $thumbnailFile;
+    
+        return $this;
+    }
+
+    /**
+     * Get thumbnailFile
+     *
+     * @return string 
+     */
+    public function getThumbnailFile()
+    {
+        return $this->thumbnailFile;
+    }
+
+    /**
      * Set headerPicture
      *
      * @param string $headerPicture
@@ -334,6 +403,29 @@ class Event extends BaseEntity
     }
 
     /**
+     * Set headerPictureFile
+     *
+     * @param string $headerPictureFile
+     * @return Event
+     */
+    public function setHeaderPictureFile($headerPictureFile)
+    {
+        $this->headerPictureFile = $headerPictureFile;
+    
+        return $this;
+    }
+
+    /**
+     * Get headerPictureFile
+     *
+     * @return string 
+     */
+    public function getHeaderPictureFile()
+    {
+        return $this->headerPictureFile;
+    }
+
+    /**
      * Set content
      *
      * @param string $content
@@ -354,6 +446,75 @@ class Event extends BaseEntity
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Set capacity
+     *
+     * @param integer $capacity
+     * @return Event
+     */
+    public function setCapacity($capacity)
+    {
+        $this->capacity = $capacity;
+    
+        return $this;
+    }
+
+    /**
+     * Get capacity
+     *
+     * @return integer 
+     */
+    public function getCapacity()
+    {
+        return $this->capacity;
+    }
+
+    /**
+     * Set maxPlacesForUser
+     *
+     * @param integer $maxPlacesForUser
+     * @return Event
+     */
+    public function setMaxPlacesForUser($maxPlacesForUser)
+    {
+        $this->maxPlacesForUser = $maxPlacesForUser;
+    
+        return $this;
+    }
+
+    /**
+     * Get maxPlacesForUser
+     *
+     * @return integer 
+     */
+    public function getMaxPlacesForUser()
+    {
+        return $this->maxPlacesForUser;
+    }
+
+    /**
+     * Set fundationId
+     *
+     * @param integer $fundationId
+     * @return Event
+     */
+    public function setFundationId($fundationId)
+    {
+        $this->fundationId = $fundationId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fundationId
+     *
+     * @return integer 
+     */
+    public function getFundationId()
+    {
+        return $this->fundationId;
     }
 
     //
@@ -479,143 +640,5 @@ class Event extends BaseEntity
         if ($headerPicture = $this->getHeaderPictureAbsolutePath()) {
             unlink($headerPicture);
         }
-    }
-
-    /**
-     * Set removedAt
-     *
-     * @param \DateTime $removedAt
-     * @return Event
-     */
-    public function setRemovedAt($removedAt)
-    {
-        $this->removedAt = $removedAt;
-    
-        return $this;
-    }
-
-    /**
-     * Get removedAt
-     *
-     * @return \DateTime 
-     */
-    public function getRemovedAt()
-    {
-        return $this->removedAt;
-    }
-
-    /**
-     * Set startAt
-     *
-     * @param \DateTime $startAt
-     * @return Event
-     */
-    public function setStartAt($startAt)
-    {
-        $this->startAt = $startAt;
-    
-        return $this;
-    }
-
-    /**
-     * Get startAt
-     *
-     * @return \DateTime 
-     */
-    public function getStartAt()
-    {
-        return $this->startAt;
-    }
-
-    /**
-     * Set endAt
-     *
-     * @param \DateTime $endAt
-     * @return Event
-     */
-    public function setEndAt($endAt)
-    {
-        $this->endAt = $endAt;
-    
-        return $this;
-    }
-
-    /**
-     * Get endAt
-     *
-     * @return \DateTime 
-     */
-    public function getEndAt()
-    {
-        return $this->endAt;
-    }
-
-    /**
-     * Set capacity
-     *
-     * @param integer $capacity
-     * @return Event
-     */
-    public function setCapacity($capacity)
-    {
-        $this->capacity = $capacity;
-    
-        return $this;
-    }
-
-    /**
-     * Get capacity
-     *
-     * @return integer 
-     */
-    public function getCapacity()
-    {
-        return $this->capacity;
-    }
-
-    /**
-     * Set fundationId
-     *
-     * @param integer $fundationId
-     * @return Event
-     */
-    public function setFundationId($fundationId)
-    {
-        $this->fundationId = $fundationId;
-    
-        return $this;
-    }
-
-    /**
-     * Get fundationId
-     *
-     * @return integer 
-     */
-    public function getFundationId()
-    {
-        return $this->fundationId;
-    }
-
-    /**
-     * Set maxPlacesForUser
-     *
-     * @param integer $maxPlacesForUser
-     * @return Event
-     */
-    public function setMaxPlacesForUser($maxPlacesForUser)
-    {
-        $this->maxPlacesForUser = $maxPlacesForUser;
-    
-        return $this;
-    }
-
-    /**
-     * Get maxPlacesForUser
-     *
-     * @return integer 
-     */
-    public function getMaxPlacesForUser()
-    {
-        return $this->maxPlacesForUser;
     }
 }

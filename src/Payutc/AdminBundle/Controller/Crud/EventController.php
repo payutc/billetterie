@@ -37,7 +37,7 @@ class EventController extends CrudController
      */
     public function createAction(Request $request)
     {
-        return $this->createEntity($request, new Event(), new EventType(), 'Event', 'PayutcAdminBundle', 'pay_utc_admin_event_show');
+        return $this->createEntity($request, new Event(), new EventType(), 'Event', 'PayutcAdminBundle', 'payutc_admin_event_show');
     }
 
     /**
@@ -55,7 +55,7 @@ class EventController extends CrudController
      */
     public function activateAction($id)
     {
-        return $this->activateEntity($id, 'Event', 'PayutcOnyxBundle', 'pay_utc_admin_events');
+        return $this->activateEntity($id, 'Event', 'PayutcOnyxBundle', 'payutc_admin_events');
     }
 
     /**
@@ -64,7 +64,7 @@ class EventController extends CrudController
      */
     public function unactivateAction($id)
     {
-        return $this->unactivateEntity($id, 'Event', 'PayutcOnyxBundle', 'pay_utc_admin_events');
+        return $this->unactivateEntity($id, 'Event', 'PayutcOnyxBundle', 'payutc_admin_events');
     }
 
     /**
@@ -82,15 +82,15 @@ class EventController extends CrudController
      */
     public function updateAction(Request $request, $id)
     {
-        return $this->updateEntity($request, $id, new EventType(), 'Event', 'PayutcOnyxBundle', 'PayutcAdminBundle', 'pay_utc_admin_events');
+        return $this->updateEntity($request, $id, new EventType(), 'Event', 'PayutcOnyxBundle', 'PayutcAdminBundle', 'payutc_admin_events');
     }
 
     /**
-     * Deletes a Event entity.
+     * Removes a Event entity.
      *
      */
-    public function deleteAction(Request $request, $id)
+    public function removeAction(Request $request, $id)
     {
-        return $this->deleteEntity($request, $id, 'Event', 'PayutcOnyxBundle', 'pay_utc_admin_events');
+        return $this->removeEntity($request, $id, 'Event', 'PayutcOnyxBundle', 'payutc_admin_events');
     }
 }

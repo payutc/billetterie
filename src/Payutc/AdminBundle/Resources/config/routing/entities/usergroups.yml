@@ -1,0 +1,62 @@
+payutc_admin_usergroups:
+    pattern:  /
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/UserGroup:index'
+    requirements:
+        _method: get
+
+payutc_admin_usergroup_new:
+    pattern:  /new
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/UserGroup:new'
+    requirements:
+        _method: get
+
+payutc_admin_usergroup_create:
+    pattern:  /create
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/UserGroup:create'
+    requirements:
+        _method: post
+
+payutc_admin_usergroup_show:
+    pattern:  /{id}/show
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/UserGroup:show'
+    requirements:
+        _method: get
+
+payutc_admin_usergroup_edit:
+    pattern:  /{id}/edit
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/UserGroup:edit'
+    requirements:
+        _method: get
+
+payutc_admin_usergroup_activate:
+    pattern:  /{id}/activate
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/UserGroup:activate'
+    requirements:
+        _method: get
+
+payutc_admin_usergroup_unactivate:
+    pattern:  /{id}/unactivate
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/UserGroup:unactivate'
+    requirements:
+        _method: get
+
+payutc_admin_usergroup_update:
+    pattern:  /{id}/update
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/UserGroup:update'
+    requirements:
+        _method: post|put
+
+payutc_admin_usergroup_remove:
+    pattern:  /{id}/remove
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/UserGroup:remove'
+    requirements:
+        _method: post|delete

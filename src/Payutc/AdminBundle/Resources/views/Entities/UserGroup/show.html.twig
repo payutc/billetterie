@@ -1,0 +1,36 @@
+{% extends 'PayutcAdminBundle:Entities:show.html.twig' %}
+
+{% block entity_title %}Groupe d'utilisateur{% endblock %}
+
+{% block entity_table %}
+	<tr>
+		<th>Id</th>
+		<td>{{ entity.id }}</td>
+	</tr>
+	<tr>
+		<th>Créé le</th>
+		<td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+	</tr>
+	<tr>
+		<th>Modifié le</th>
+		<td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
+	</tr>
+	<tr>
+		<th>Actif ?</th>
+		<td>{{ entity.isHidden }}</td>
+	</tr>
+	<tr>
+		<th>Nom</th>
+		<td>{{ entity.title }}</td>
+	</tr>
+	<tr>
+		<th>Informations (JSON - pour la méthode User:getMyGroups)</th>
+		<td>{{ entity.informations }}</td>
+	</tr>
+{% endblock %}
+		
+{% block entity_list_path %}href="{{ path('payutc_admin_usergroups') }}"{% endblock %}
+
+{% block entity_edit_path %}href="{{ path('payutc_admin_usergroup_edit', { 'id': entity.id }) }}"{% endblock %}
+
+{% block entity_delete_path %}action="{{ path('payutc_admin_usergroup_remove', { 'id': entity.id }) }}"{% endblock %}

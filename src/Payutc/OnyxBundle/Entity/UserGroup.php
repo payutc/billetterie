@@ -89,6 +89,16 @@ class UserGroup extends BaseEntity
         return $this->getTitle();
     }
 
+    /**
+     * Entity has been removed or not ?
+     *
+     * @return boolean 
+     */
+    public function isDeleted()
+    {
+        return is_null($this->removedAt);
+    }
+
 
     /**
      * Get id

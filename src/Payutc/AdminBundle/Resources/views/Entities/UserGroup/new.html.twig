@@ -1,0 +1,7 @@
+{% extends 'PayutcAdminBundle:Entities:new.html.twig' %}
+
+{% block entity_title %}Ajout d'un groupe d'utilisateurs{% endblock %}
+
+{% block entity_create_path %}action='{{ path('payutc_admin_usergroup_create') }}'{% endblock %}
+
+{% block entity_list_path %}href='{{ path('payutc_admin_usergroups') }}'{% endblock %}

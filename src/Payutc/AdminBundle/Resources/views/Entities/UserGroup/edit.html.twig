@@ -1,0 +1,11 @@
+{% extends 'PayutcAdminBundle:Entities:edit.html.twig' %}
+
+{% block entity_title %}Edition d'un groupe d'utilisateurs{% endblock %}
+
+{% block entity_update_path %}action='{{ path('payutc_admin_usergroup_update', { 'id': entity.id }) }}'{% endblock %}
+
+{% block entity_list_path %}href='{{ path('payutc_admin_usergroups') }}'{% endblock %}
+
+{% block entity_show_path %}href='{{ path('payutc_admin_usergroup_show', { 'id': entity.id }) }}'{% endblock %}
+
+{% block entity_delete_path %}action='{{ path('payutc_admin_usergroup_remove', { 'id': entity.id }) }}'{% endblock %}

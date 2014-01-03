@@ -1,0 +1,62 @@
+payutc_admin_tickets:
+    pattern:  /
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Ticket:index'
+    requirements:
+        _method: get
+
+payutc_admin_ticket_new:
+    pattern:  /new
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Ticket:new'
+    requirements:
+        _method: get
+
+payutc_admin_ticket_create:
+    pattern:  /create
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Ticket:create'
+    requirements:
+        _method: post
+
+payutc_admin_ticket_show:
+    pattern:  /{id}/show
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Ticket:show'
+    requirements:
+        _method: get
+
+payutc_admin_ticket_edit:
+    pattern:  /{id}/edit
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Ticket:edit'
+    requirements:
+        _method: get
+
+payutc_admin_ticket_activate:
+    pattern:  /{id}/activate
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Ticket:activate'
+    requirements:
+        _method: get
+
+payutc_admin_ticket_unactivate:
+    pattern:  /{id}/unactivate
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Ticket:unactivate'
+    requirements:
+        _method: get
+
+payutc_admin_ticket_update:
+    pattern:  /{id}/update
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Ticket:update'
+    requirements:
+        _method: post|put
+
+payutc_admin_ticket_remove:
+    pattern:  /{id}/remove
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/Ticket:remove'
+    requirements:
+        _method: post|delete

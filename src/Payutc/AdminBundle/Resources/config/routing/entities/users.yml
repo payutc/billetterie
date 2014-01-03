@@ -1,0 +1,41 @@
+payutc_admin_users:
+    pattern:  /
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/User:index'
+    requirements:
+        _method: get
+
+payutc_admin_user_new:
+    pattern:  /new
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/User:new'
+    requirements:
+        _method: get
+
+payutc_admin_user_create:
+    pattern:  /create
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/User:create'
+    requirements:
+        _method: post
+
+payutc_admin_user_show:
+    pattern:  /{id}/show
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/User:show'
+    requirements:
+        _method: get
+
+payutc_admin_user_edit:
+    pattern:  /{id}/edit
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/User:edit'
+    requirements:
+        _method: get
+
+payutc_admin_user_update:
+    pattern:  /{id}/update
+    defaults:
+        _controller: 'PayutcAdminBundle:Crud/User:update'
+    requirements:
+        _method: post|put

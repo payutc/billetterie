@@ -45,12 +45,12 @@ security:
             pattern: ^/admin
             provider: static
             form_login:
-                login_path: pay_utc_admin_login
-                check_path: pay_utc_admin_login_check
+                login_path: payutc_admin_login
+                check_path: payutc_admin_login_check
                 default_target_path: pay_utc_admin_homepage
                 post_only: true
             logout:
-                path: pay_utc_admin_logout
+                path: payutc_admin_logout
                 target: /
                 invalidate_session: false
 

@@ -1,62 +1,62 @@
-pay_utc_admin_events:
+payutc_admin_events:
     pattern:  /
     defaults:
-        _controller: "PayutcAdminBundle:Crud/Event:index"
+        _controller: 'PayutcAdminBundle:Crud/Event:index'
     requirements:
         _method: get
 
-pay_utc_admin_event_new:
+payutc_admin_event_new:
     pattern:  /new
     defaults:
-        _controller: "PayutcAdminBundle:Crud/Event:new"
+        _controller: 'PayutcAdminBundle:Crud/Event:new'
     requirements:
         _method: get
 
-pay_utc_admin_event_create:
+payutc_admin_event_create:
     pattern:  /create
     defaults:
-        _controller: "PayutcAdminBundle:Crud/Event:create"
+        _controller: 'PayutcAdminBundle:Crud/Event:create'
     requirements:
         _method: post
 
-pay_utc_admin_event_show:
+payutc_admin_event_show:
     pattern:  /{id}/show
     defaults:
-        _controller: "PayutcAdminBundle:Crud/Event:show"
+        _controller: 'PayutcAdminBundle:Crud/Event:show'
     requirements:
         _method: get
 
-pay_utc_admin_event_edit:
+payutc_admin_event_edit:
     pattern:  /{id}/edit
     defaults:
-        _controller: "PayutcAdminBundle:Crud/Event:edit"
+        _controller: 'PayutcAdminBundle:Crud/Event:edit'
     requirements:
         _method: get
 
-pay_utc_admin_event_activate:
+payutc_admin_event_activate:
     pattern:  /{id}/activate
     defaults:
-        _controller: "PayutcAdminBundle:Crud/Event:activate"
+        _controller: 'PayutcAdminBundle:Crud/Event:activate'
     requirements:
         _method: get
 
-pay_utc_admin_event_unactivate:
+payutc_admin_event_unactivate:
     pattern:  /{id}/unactivate
     defaults:
-        _controller: "PayutcAdminBundle:Crud/Event:unactivate"
+        _controller: 'PayutcAdminBundle:Crud/Event:unactivate'
     requirements:
         _method: get
 
-pay_utc_admin_event_update:
+payutc_admin_event_update:
     pattern:  /{id}/update
     defaults:
-        _controller: "PayutcAdminBundle:Crud/Event:update"
+        _controller: 'PayutcAdminBundle:Crud/Event:update'
     requirements:
         _method: post|put
 
-pay_utc_admin_event_delete:
-    pattern:  /{id}/delete
+payutc_admin_event_remove:
+    pattern:  /{id}/remove
     defaults:
-        _controller: "PayutcAdminBundle:Crud/Event:delete"
+        _controller: 'PayutcAdminBundle:Crud/Event:remove'
     requirements:
         _method: post|delete
