@@ -9,26 +9,21 @@
 {% block extra_before_list %}{% endblock %}
 
 {% block entity_table_headers %}
-    <th>Actif ?</th>
     <th>Code bar</th>
     <th>Acheteur</th>
+    <th>Vendeur</th>
     <th>Tarif</th>
     <th>Actions</th>
 {% endblock %}
 
 {% block entity_table_content %}
-    <td>{% if entity.isHidden %}Désactivé{% else %}Activé{% endif %}</td>
     <td>{{ entity.barcode }}</td>
-    <td>{{ entity.user }}</td>
+    <td>{{ entity.buyer }}</td>
+    <td>{{ entity.seller }}</td>
     <td>{{ entity.price }}</td>
     <td>
         <div><a href='{{ path('payutc_admin_ticket_show', { 'id': entity.id }) }}'>Détail</a></div>
         <div><a href='{{ path('payutc_admin_ticket_edit', { 'id': entity.id }) }}'>Editer</a></div>
-        {% if entity.isHidden %}
-            <div><a href='{{ path('payutc_admin_ticket_activate', { 'id': entity.id }) }}'>Activer</a></div>
-        {% else %}
-            <div><a href='{{ path('payutc_admin_ticket_unactivate', { 'id': entity.id }) }}'>Désactiver</a></div>
-        {% endif %}
     </td>
 {% endblock %}
 

@@ -1,3 +1,17 @@
 {% extends 'PayutcAdminBundle::base.html.twig' %}
 
-{% block app_content %}{% endblock %}
+{% block app_content %}
+	<section class='jumbotron'>
+		<h1>Onyx</h1>
+		<p>Bienvenue ! Cette plateforme vous permet d'administrer la billeterie Onyx.</p>
+	</section>
+	<section class='well'>
+		<ul class='nav nav-pills nav-justified' role='navigation'>
+			<li><a href='{{ path('payutc_admin_events') }}' class='btn btn-primary'>Evènements</a></li>
+			<li><a href='{{ path('payutc_admin_prices') }}' class='btn btn-primary'>Tarifs</a></li>
+			<li><a href='{{ path('payutc_admin_tickets') }}' class='btn btn-primary'>Tickets</a></li>
+			<li><a href='{{ path('payutc_admin_users') }}' class='btn btn-primary'>Utilisateurs</a></li>
+			<li><a href='{{ path('payutc_admin_usergroups') }}' class='btn btn-primary'>Groupes d'utilisateurs</a></li>
+		</ul>
+	</section>
+{% endblock %}
