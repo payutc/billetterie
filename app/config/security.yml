@@ -25,12 +25,10 @@ security:
             entity:
                 class: Payutc\OnyxBundle\Entity\User
                 property: email
-        cas:
-            id: cas_user_provider
 
         full_provider:
             chain:
-                providers: [static, local, cas]
+                providers: [static, local]
 
     firewalls:
         dev:
@@ -77,6 +75,7 @@ security:
                 lifetime: 86400
                 always_remember_me: true
                 remember_me_parameter: _remember_me
+            cas: true
 
     access_control:
         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
