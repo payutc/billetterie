@@ -16,10 +16,6 @@
 		<td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
 	</tr>
 	<tr>
-		<th>Actif ?</th>
-		<td>{{ entity.isHidden }}</td>
-	</tr>
-	<tr>
 		<th>Code bar</th>
 		<td>{{ entity.barcode }}</td>
 	</tr>
@@ -41,7 +37,11 @@
 	</tr>
 	<tr>
 		<th>Acheteur</th>
-		<td>{{ entity.user }}</td>
+		<td>{{ entity.buyer }}</td>
+	</tr>
+	<tr>
+		<th>Vendeur</th>
+		<td>{{ entity.seller }}</td>
 	</tr>
 	<tr>
 		<th>Tarif</th>
@@ -49,8 +49,8 @@
 	</tr>
 {% endblock %}
 		
-{% block entity_list_path %}href="{{ path('payutc_admin_events') }}"{% endblock %}
+{% block entity_list_path %}href="{{ path('payutc_admin_tickets') }}"{% endblock %}
 
-{% block entity_edit_path %}href="{{ path('payutc_admin_event_edit', { 'id': entity.id }) }}"{% endblock %}
+{% block entity_edit_path %}href="{{ path('payutc_admin_ticket_edit', { 'id': entity.id }) }}"{% endblock %}
 
-{% block entity_delete_path %}action="{{ path('payutc_admin_event_remove', { 'id': entity.id }) }}"{% endblock %}
+{% block entity_delete_path %}action="{{ path('payutc_admin_ticket_remove', { 'id': entity.id }) }}"{% endblock %}

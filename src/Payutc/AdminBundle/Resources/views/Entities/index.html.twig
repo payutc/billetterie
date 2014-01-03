@@ -1,7 +1,9 @@
 {% extends 'PayutcAdminBundle::base.html.twig' %}
 
 {% block app_content %}
-	<h1>{% block entity_title %}{% endblock %}</h1>
+	<div class='page-header'>
+		<h1>{% block entity_title %}{% endblock %}</h1>
+	</div>
 	
 	{% block entity_add_link %}
 		<div class='link-wrapper'>

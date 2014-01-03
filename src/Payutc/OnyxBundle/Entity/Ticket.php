@@ -79,9 +79,15 @@ class Ticket
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="buyer_id", referencedColumnName="id")
      */
-    private $user;
+    private $buyer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="seller_id", referencedColumnName="id")
+     */
+    private $seller;
 
     /**
      * @ORM\ManyToOne(targetEntity="Price")
@@ -102,12 +108,12 @@ class Ticket
 
     public function __toString()
     {
-        return $this->getTitle();
+        return $this->getBarcode();
     }
 
     public function toString()
     {
-        return $this->getTitle();
+        return $this->getBarcode();
     }
 
     /**
@@ -315,26 +321,49 @@ class Ticket
     }
 
     /**
-     * Set user
+     * Set buyer
      *
-     * @param User $user
+     * @param User $buyer
      * @return Ticket
      */
-    public function setUser(User $user = null)
+    public function setBuyer(User $buyer = null)
     {
-        $this->user = $user;
+        $this->buyer = $buyer;
     
         return $this;
     }
 
     /**
-     * Get user
+     * Get buyer
      *
      * @return User 
      */
-    public function getUser()
+    public function getBuyer()
     {
-        return $this->user;
+        return $this->buyer;
+    }
+
+    /**
+     * Set seller
+     *
+     * @param User $seller
+     * @return Ticket
+     */
+    public function setSeller(User $seller = null)
+    {
+        $this->seller = $seller;
+    
+        return $this;
+    }
+
+    /**
+     * Get seller
+     *
+     * @return User 
+     */
+    public function getSeller()
+    {
+        return $this->seller;
     }
 
     /**

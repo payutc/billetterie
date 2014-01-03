@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TicketType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -20,7 +20,8 @@ class TicketType extends AbstractType
             ->add('lastname', 'text', array('label' => 'Nom', 'required' => false))
             ->add('paidAt', 'datetime', array('label' => 'Date de paiement', 'required' => false, 'input' => 'datetime', 'widget' => 'single_text', 'format' => 'yyyy-MM-dd HH:mm:ss', 'attr' => array('data-format' => 'YYYY-MM-DD hh:mm:ss')))
             ->add('paidPrice', 'integer', array('label' => 'Prix payé', 'required' => true))
-            ->add('user', 'entity', array('label' => 'Acheteur', 'required' => true, 'class' => 'PayutcOnyxBundle:User'))
+            ->add('buyer', 'entity', array('label' => 'Acheteur', 'required' => true, 'class' => 'PayutcOnyxBundle:User'))
+            ->add('seller', 'entity', array('label' => 'Vendeur', 'required' => true, 'class' => 'PayutcOnyxBundle:User'))
             ->add('price', 'entity', array('label' => 'Tarif', 'required' => true, 'class' => 'PayutcOnyxBundle:Price'))
         ;
     }
