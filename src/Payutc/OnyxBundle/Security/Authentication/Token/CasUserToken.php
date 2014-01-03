@@ -6,10 +6,6 @@ use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 
 class CasUserToken extends AbstractToken
 {
-    public $created;
-    public $digest;
-    public $nonce;
-
     public function __construct(array $roles = array())
     {
         parent::__construct($roles);

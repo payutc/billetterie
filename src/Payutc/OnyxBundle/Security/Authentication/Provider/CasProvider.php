@@ -26,6 +26,10 @@ class CasProvider implements AuthenticationProviderInterface
 
     public function authenticate(TokenInterface $token)
     {
+        if($token->getUser() instanceof User) {
+            return $token;
+        }
+    
         // Call Ginger
         # TODO :: Mettre la config de ginger dans un fichier de config
         $ginger = new GingerClient("fauxginger", "http://localhost/faux-ginger/index.php/v1/");
@@ -54,6 +58,7 @@ class CasProvider implements AuthenticationProviderInterface
         if ($user) {
             $authenticatedToken = new CasUserToken($user->getRoles());
             $authenticatedToken->setUser($user);
+            $authenticatedToken->cas_checked = true;
 
             return $authenticatedToken;
         }
