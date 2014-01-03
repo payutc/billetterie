@@ -22,7 +22,3 @@ app/config/parameters.yml
 composer.phar
 composer.lock
 bin/*
-
-# Front utils : FloSchieldBobby
-src/Payutc/OnyxBundle/Resources/public/front-webapp
-src/Payutc/OnyxBundle/Resources/public/Gruntfile.js
