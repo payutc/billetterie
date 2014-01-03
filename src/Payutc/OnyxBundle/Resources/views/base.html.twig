@@ -3,7 +3,6 @@
 {% block title %}Onyx{% endblock %}
 
 {% block stylesheets %}
-    <link rel='stylesheet' href='{{ asset('bundles/payutconyx/css/vendor/bootstrap/bootstrap-3.0.0.min.css') }}' />
 	<link rel='stylesheet' href='{{ asset('bundles/payutconyx/css/app.min.css') }}' />
 {% endblock %}
 
@@ -14,37 +13,38 @@
 {% block body %}
 	<nav class='navbar navbar-default navbar-fixed-top' role='navigation'>
 		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class='navbar-header'>
-			<button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#bs-example-navbar-collapse-1'>
-				<span class='sr-only'>Contrôleur de navigation</span>
-				<span class='icon-bar'></span>
-				<span class='icon-bar'></span>
-				<span class='icon-bar'></span>
-			</button>
-		</div>
+			
 		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class='collapse navbar-collapse container' id='bs-example-navbar-collapse-1'>
-			<ul class='nav navbar-nav'>
-				<li class='active'><a class='navbar-brand' href='{{ path('pay_utc_onyx_home_page') }}'>Onyx</a></li>
-			</ul>
-			<ul class='nav navbar-nav navbar-right'>
-				<li class='dropdown'>
-					{% if app.user %}
-						<a href='#' class='dropdown-toggle' data-toggle='dropdown'>{{ app.user.username }} <b class='caret'></b></a>
-						<ul class='dropdown-menu'>
-							<li><a href='#'>Tableau de bord</a></li>
-							<li><a href='{{ path('pay_utc_onyx_logout_page') }}'>Se déconnecter</a></li>
-						</ul>
-					{% else %}
-						<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Mon compte <b class='caret'></b></a>
-						<ul class='dropdown-menu'>
-							<li><a href='{{ path('pay_utc_onyx_login_page') }}'>Se connecter</a></li>
-							<li><a href='{{ path('pay_utc_onyx_registration_page') }}'>S'inscrire</a></li>
-						</ul>
-					{% endif %}
-				</li>
-			</ul>
-		</div><!-- /.navbar-collapse -->
+		<div class='container'>
+			<div class='navbar-header'>
+				<button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#app-navbar'>
+					<span class='sr-only'>Contrôleur de navigation</span>
+					<span class='icon-bar'></span>
+					<span class='icon-bar'></span>
+					<span class='icon-bar'></span>
+				</button>
+				<a class='navbar-brand' href='{{ path('pay_utc_onyx_home_page') }}'>Onyx</a>
+			</div>
+			<div class='collapse navbar-collapse container' id='app-navbar'>
+				<ul class='nav navbar-nav navbar-right'>
+					<li class='dropdown'>
+						{% if app.user %}
+							<a href='#' class='dropdown-toggle' data-toggle='dropdown'>{{ app.user.username }} <b class='caret'></b></a>
+							<ul class='dropdown-menu'>
+								<li><a href='#'>Tableau de bord</a></li>
+								<li><a href='{{ path('pay_utc_onyx_logout_page') }}'>Se déconnecter</a></li>
+							</ul>
+						{% else %}
+							<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Mon compte <b class='caret'></b></a>
+							<ul class='dropdown-menu'>
+								<li><a href='{{ path('pay_utc_onyx_login_page') }}'>Se connecter</a></li>
+								<li><a href='{{ path('pay_utc_onyx_registration_page') }}'>S'inscrire</a></li>
+							</ul>
+						{% endif %}
+					</li>
+				</ul>
+			</div>
+		</div>
 	</nav>
 	<section id='app-onyx-wrapper' class='container'>
 		{% for type, message in app.session.flashbag.all %}

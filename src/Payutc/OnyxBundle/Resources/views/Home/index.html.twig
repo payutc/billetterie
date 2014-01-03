@@ -1,8 +1,8 @@
 {% extends 'PayutcOnyxBundle::base.html.twig' %}
 
 {% block app_content %}
-    <div class='jumbotron'>
-        <h1>Onyx</h1>
+    <section id='connection' class='jumbotron'>
+        <h1>Billeterie UTC</h1>
         {% if app.user %}
             <p>Connecté en tant que : {{ app.user.username }}</p>
             <a href='{{ path('pay_utc_onyx_logout_page') }}' class='btn btn-info'>Se déconnecter</a>
@@ -10,5 +10,22 @@
             <a href='{{ path('pay_utc_onyx_login_page') }}' class='btn btn-info'>Se connecter</a>
             <a href='{{ CAS_url }}' class='btn btn-info'>Login CAS</a>
         {% endif %}
-    </div>
+    </section>
+    <section id='events' class='well row'>
+        {% for event in events %}
+            <div class='event-wrapper col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                <article class='event'>
+                    <figure class='event-thumbnail'>
+                        <img class='event-picture' src='{{ event.getThumbnailWebPath }}' alt='{{ event.title }}' />
+                        <figcaption class='event-places'>{{ event.capacity }} places</figcaption>
+                        <div class='event-booking-link-wrapper'>
+                            <a href='#booking' class='btn btn-sm btn-default'>Réserver</a>
+                        </div>
+                    </figure>
+                    <h4 class='event-title'>{{ event.title }}</h4>
+                    <h6 class='event-date'>Du {{ event.startAt|date('d-m-Y') }} jusqu'au {{ event.endAt|date('d-m-Y') }}</h4>
+                </article>
+            </div>
+        {% endfor %}
+    </section>
 {% endblock %}

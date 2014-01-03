@@ -16,7 +16,17 @@ use Payutc\OnyxBundle\Entity\Deletable\DeletableEntityRepositoryInterface;
 class EventRepository extends EntityRepository implements DeletableEntityRepositoryInterface
 {
 	/**
-     * Find all entities that have is_deleted property set up to false.
+     * Find all entities that have removed_at set up to null.
+     *
+     * @return array
+     */
+	public function findAll()
+	{
+		return $this->findAllNotDeleted();
+	}
+
+	/**
+     * Find all entities that have removed_at set up to null.
      *
      * @return array
      */
@@ -26,15 +36,14 @@ class EventRepository extends EntityRepository implements DeletableEntityReposit
 
 		$qb->select('e')
 			->from('PayutcOnyxBundle:Event', 'e')
-			->where('e.isDeleted = :isDeleted')
-			->setParameter('isDeleted', false)
+			->where($qb->expr()->isNull('e.removedAt'))
 		;
 
 		return $qb->getQuery()->getResult();
 	}
 
 	/**
-     * Find all entities that have is_deleted and is_hidden property set up to false.
+     * Find all entities that have removed_at set up to null and is_hidden property set up to false.
      *
      * @return array
      */
@@ -44,9 +53,8 @@ class EventRepository extends EntityRepository implements DeletableEntityReposit
 
 		$qb->select('e')
 			->from('PayutcOnyxBundle:Event', 'e')
-			->where('e.isDeleted = :isDeleted')
+			->where($qb->expr()->isNull('e.removedAt'))
 			->andWhere('e.isHidden = :isHidden')
-			->setParameter('isDeleted', false)
 			->setParameter('isHidden', false)
 		;
 
@@ -54,7 +62,28 @@ class EventRepository extends EntityRepository implements DeletableEntityReposit
 	}
 
 	/**
-     * Find one entity by id that have is_deleted and is_hidden property set up to false.
+     * Find all entities that have removed_at set up to null and is_hidden property set up to false.
+     *
+     * @return array
+     */
+	public function findAllNextActive()
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('e')
+			->from('PayutcOnyxBundle:Event', 'e')
+			->where($qb->expr()->isNull('e.removedAt'))
+			->andWhere('e.isHidden = :isHidden')
+			->andWhere('e.endAt > :endAt')
+			->setParameter('isHidden', false)
+			->setParameter('endAt', new \DateTime())
+		;
+
+		return $qb->getQuery()->getResult();
+	}
+
+	/**
+     * Find one entity by id that have removed_at set up to null and is_hidden property set up to false.
      *
      * @return Event
      */
@@ -66,9 +95,8 @@ class EventRepository extends EntityRepository implements DeletableEntityReposit
 
 		$qb->select('e')
 			->from('PayutcOnyxBundle:Event', 'e')
-			->where('e.isDeleted = :isDeleted')
+			->where($qb->expr()->isNull('e.removedAt'))
 			->andWhere('e.isHidden = :isHidden')
-			->setParameter('isDeleted', false)
 			->setParameter('isHidden', false)
 		;
 
