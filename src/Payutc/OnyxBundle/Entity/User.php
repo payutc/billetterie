@@ -3,6 +3,8 @@
 namespace Payutc\OnyxBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="Payutc\OnyxBundle\Entity\UserRepository")
+ * @UniqueEntity(fields="email", message="Cet email est déjà utilisé.")
  */
 class User implements UserInterface, \Serializable
 {
@@ -33,6 +36,7 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @Assert\Email()
      */
     private $email;
 
