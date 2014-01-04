@@ -2,6 +2,8 @@
 
 namespace Payutc\OnyxBundle\Controller\Entities;
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Payutc\OnyxBundle\Controller\FrontController;
 use Payutc\OnyxBundle\Entity\User;
 use Payutc\OnyxBundle\Form\UserType;
@@ -31,6 +33,18 @@ class UserController extends FrontController
             $factory = $this->get('security.encoder_factory');
             $user->encryptPassword($factory->getEncoder($user));
             $em->persist($user);
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Billeterie UTC - Inscription')
+                ->setFrom('noreply@utc.fr')
+                ->setTo($user->getEmail())
+                ->setBody($this->renderView('PayutcOnyxBundle:Entities/Users:registration.mail.html.twig', array(
+                    'firstname' => $user->getFirstname(),
+                    'name' => $user->getName()
+                )), 'text/html')
+            ;
+            $this->get('mailer')->send($message);
+
             $em->flush();
             
             $request->getSession()->getFlashBag()->add('success', 'Vous enregistrement est terminé, vous pouvez dès à présent vous connecter !');

@@ -1,0 +1,13 @@
+node_modules
+dist
+.tmp
+.sass-cache
+components
+.jshintrc
+.bowerrc
+.gitattributes
+.editorconfig
+package.json
+bower.json
+front-webapp
+Gruntfile.js
