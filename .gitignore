@@ -1,10 +1,6 @@
 # Bootstrap
 app/bootstrap*
 
-# Local session and crons
-app/var
-app/cron
-
 # Symfony directories
 vendor/*
 */logs/*
