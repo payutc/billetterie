@@ -39,6 +39,13 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      *
+     * @ORM\Column(name="login", type="string", length=255, nullable=true)
+     */
+    private $login;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
@@ -175,7 +182,7 @@ class User implements UserInterface, \Serializable
     public function getRegistredAt()
     {
         return $this->registredAt;
-    } 
+    }
 
     /**
      * Set email
@@ -198,6 +205,29 @@ class User implements UserInterface, \Serializable
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set login
+     *
+     * @param string $login
+     * @return User
+     */
+    public function setLogin($login)
+    {
+        $this->login = $login;
+    
+        return $this;
+    }
+
+    /**
+     * Get login
+     *
+     * @return string 
+     */
+    public function getLogin()
+    {
+        return $this->login;
     }
 
     /**
