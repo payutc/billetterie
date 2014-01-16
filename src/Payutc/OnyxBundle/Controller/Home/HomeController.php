@@ -11,9 +11,10 @@ class HomeController extends FrontController
     public function indexAction()
     {
     	$em = $this->getDoctrine()->getManager();
-    	
-        # TODO Put CAS url in config
-        $cas = new Cas("https://cas.utc.fr/cas/");
+
+        $casParameters = $this->container->getParameter('cas');
+        $cas = new Cas($casParameters['base_url']);
+        
         $events = $em->getRepository('PayutcOnyxBundle:Event')->findAllNextActive();
 
         return $this->render('PayutcOnyxBundle:Home:index.html.twig', array(
