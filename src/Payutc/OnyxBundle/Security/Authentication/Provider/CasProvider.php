@@ -52,7 +52,7 @@ class CasProvider implements AuthenticationProviderInterface
         }
     
         // Call Ginger
-        $ginger = new GingerClient($this->configuration['cas']['ginger']['name'], $this->configuration['cas']['ginger']['url']);
+        $ginger = new GingerClient($this->configuration['ginger']['name'], $this->configuration['ginger']['url']);
 		$userInfo = $ginger->getUser($token->getUsername());
 
         try {
