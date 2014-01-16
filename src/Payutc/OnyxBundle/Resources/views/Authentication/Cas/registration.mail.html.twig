@@ -1,0 +1,23 @@
+{% extends 'PayutcOnyxBundle::mail.html.twig' %}
+
+{% block page_title %}Billeterie UTC - Inscription{% endblock %}
+
+{% block app_content %}
+	<p>
+		Bonjour {{ firstname|title }} {{ name|title }},
+		<br />
+		vous venez de vous connecter sur la billeterie de l'UTC.
+		<br />
+	</p>
+	<p>
+		Nous vous avons créé un compte pour vous connecter directement la prochaine fois :
+		<br />
+		Votre login : {{ login }}
+		<br />
+		Votre mot de passe : {{ password }}
+		<br />
+		Cependant, il vous sera toujours possible de vous connecter à l'aide de votre compte UTC si vous préférez !
+	</p>
+	<p>Vous pouvez dès à présent utiliser ce compte sur la <a href='{{ path('pay_utc_onyx_home_page') }}' target='_blank'>billeterie de l'UTC</a>.</p>
+	<p>En espérant vous voir très vite !</p>
+{% endblock %}
