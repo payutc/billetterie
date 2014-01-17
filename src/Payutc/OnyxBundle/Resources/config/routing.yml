@@ -25,3 +25,7 @@ pay_utc_onyx_logout_page:
 pay_utc_onyx_users:
     resource: "@PayutcOnyxBundle/Resources/config/routing/entities/users.yml"
     prefix: /users
+
+pay_utc_onyx_events:
+    resource: "@PayutcOnyxBundle/Resources/config/routing/entities/events.yml"
+    prefix: /events

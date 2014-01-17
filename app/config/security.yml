@@ -8,8 +8,9 @@ security:
             iterations:           1000
 
     role_hierarchy:
+        ROLE_USER:        ROLE_CONNECTION
         ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN: [ROLE_CONNECTION, ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
         local:
