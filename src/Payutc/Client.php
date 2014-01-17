@@ -16,10 +16,11 @@ class Client extends AutoJsonClient
         $this->apiKey = $apiKey;
         $this->session = $session;
         $cookie = $session->get('payutc_cookie');
-        $status = $session->get('payutc_status');
+        $this->status = $session->get('payutc_status');
         parent::__construct($url, $service, array(), "Payutc Json PHP Client", $cookie);
         if(!$cookie) {
             $this->connectApp();
+            $this->session->set("payutc_cookie", $this->cookie);
         }
     }
 
@@ -31,7 +32,7 @@ class Client extends AutoJsonClient
         $status = $this->getStatus();
         if(!$status->application) {
             $return = $this->loginApp(array("key" => $this->apiKey));
-            $this->getStatus();
+            $this->getStatus(true);
             return $return;
         }
         return true;
@@ -40,10 +41,11 @@ class Client extends AutoJsonClient
     /*
         Create a cache for getStatus
     */
-    public function getStatus()
+    public function getStatus($force=false)
     {
-        if(!$this->status) {
+        if(!$this->status || $force) {
             $this->status = parent::getStatus();
+            $this->session->set("payutc_status", $this->status);
         }
         return $this->status;
     }
@@ -65,16 +67,10 @@ class Client extends AutoJsonClient
     {
         $status = $this->getStatus();
         if(!$status->user) {
-            $return = $this->loginCas(array("ticket" => $ticket, "service" => $service));
-            $this->getStatus();
+            $return = parent::loginCas(array("ticket" => $ticket, "service" => $service));
+            $this->getStatus(true);
             return $return;
         }
         return $status->user;
-    }
-
-    public function __destruct()
-    {
-        $this->session->set("payutc_cookie", $this->cookie);
-        $this->session->set("payutc_status", $this->status);
     }
 }
