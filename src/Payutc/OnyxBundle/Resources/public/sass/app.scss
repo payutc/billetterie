@@ -1,12 +1,22 @@
 $icon-font-path: '../components/sass-bootstrap/fonts/';
+$fa-css-prefix: 'glyphicon';
+$fa-font-path: '../components/font-awesome/fonts';
 
 @import 'bourbon/bourbon';
 @import '../components/sass-bootstrap/lib/bootstrap';
+@import '../components/font-awesome/scss/font-awesome';
 @import 'utils/colors';
 
 html {
 	body {
 		padding: 80px 0 0 0;
+		.marged {
+			margin: 20px 0 0 0;
+		}
+		.link-wrapper {
+			padding: 10px 0;
+			text-align: center;
+		}
 		#events {
 			.event-wrapper {
 				padding: 15px;
