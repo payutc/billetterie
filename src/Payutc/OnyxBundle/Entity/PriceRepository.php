@@ -12,4 +12,43 @@ use Doctrine\ORM\EntityRepository;
  */
 class PriceRepository extends EntityRepository
 {
+	/**
+     * Find all entities that have removed_at set up to null and is_hidden property set up to false.
+     *
+     * @return array
+     */
+	public function findAllActive()
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('p')
+			->from('PayutcOnyxBundle:Price', 'p')
+			->where($qb->expr()->isNull('p.removedAt'))
+			->andWhere('p.isHidden = :isHidden')
+			->setParameter('isHidden', false)
+		;
+
+		return $qb->getQuery()->getResult();
+	}
+
+	/**
+     * Find all entities that have removed_at set up to null and is_hidden property set up to false.
+     *
+     * @return array
+     */
+	public function findAllActiveByEvent($event)
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('p')
+			->from('PayutcOnyxBundle:Price', 'p')
+			->where($qb->expr()->isNull('p.removedAt'))
+			->andWhere('p.isHidden = :isHidden')
+			->andWhere('p.event = :event')
+			->setParameter('isHidden', false)
+			->setParameter('event', $event)
+		;
+
+		return $qb->getQuery()->getResult();
+	}
 }
