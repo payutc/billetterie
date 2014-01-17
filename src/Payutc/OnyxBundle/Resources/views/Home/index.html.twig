@@ -16,10 +16,10 @@
             <div class='event-wrapper col-lg-6 col-md-6 col-sm-6 col-xs-12'>
                 <article class='event'>
                     <figure class='event-thumbnail'>
-                        <img class='event-picture' src='{{ event.getThumbnailWebPath }}' alt='{{ event.title }}' />
+                        <img class='event-picture' src='{{ asset(event.getThumbnailWebPath) }}' alt='{{ event.title }}' />
                         <figcaption class='event-places'>{{ event.capacity }} places</figcaption>
                         <div class='event-booking-link-wrapper'>
-                            <a href='#booking' class='btn btn-sm btn-default'>Réserver</a>
+                            <a href='{{ path('pay_utc_onyx_event_page', { 'id': event.id }) }}' class='btn btn-sm btn-default'>Détail</a>
                         </div>
                     </figure>
                     <h4 class='event-title'>{{ event.title }}</h4>
