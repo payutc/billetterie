@@ -20,9 +20,11 @@ class EventController extends FrontController
 		$buyer = $this->getUser();
 		$tickets = array();
 
-		if ($buyer) {
-			foreach ($prices as $price) {
-				$tickets = array_merge($tickets, $em->getRepository('PayutcOnyxBundle:Ticket')->findAllActiveByPriceAndBuyer($price, $buyer));
+		if ($this->get('security.context')->isGranted('ROLE_USER')) {
+			if ($buyer) {
+				foreach ($prices as $price) {
+					$tickets = array_merge($tickets, $em->getRepository('PayutcOnyxBundle:Ticket')->findAllActiveByPriceAndBuyer($price, $buyer));
+				}
 			}
 		}
 

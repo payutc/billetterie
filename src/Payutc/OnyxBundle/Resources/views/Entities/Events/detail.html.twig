@@ -51,6 +51,8 @@
 								</tbody>
 							</table>
 						{% endif %}
+					{% elseif is_granted('ROLE_CONNECTION') %}
+						<p>Malheureusement, ce login de test ne peut acheter de ticket. Connectez-vous avec un compte Onyx pour réserver des places !</p>
 					{% else %}
 						<p><a href='{{ path('pay_utc_onyx_login_page') }}'>Connectez-vous</a> pour voir vos places et les tarifs qui vous sont proposés !</p>
 					{% endif %}
