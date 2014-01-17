@@ -5,3 +5,6 @@ services:
 #    payutc_admin.example:
 #        class: %payutc_admin.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+    payutc_admin.payutc_client:
+        class: Payutc\Client
+        arguments: [@session, %payutc_api_key%, %payutc_api_url%, "GESARTICLE"]

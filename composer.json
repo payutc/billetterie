@@ -26,7 +26,8 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
         "nategood/httpful": "*",
-        "ginger/client": "dev-master"
+        "ginger/client": "dev-master",
+        "payutc/php-client": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
