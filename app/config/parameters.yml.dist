@@ -13,3 +13,11 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+    
+    cas_url: https://cas.utc.fr/cas/
+    
+    payutc_api_key: onyxkey
+    payutc_api_url: http://localhost/server/web
+    
+    ginger_url: http://localhost/faux-ginger/index.php/v1/
+    ginger_key: fauxginger
