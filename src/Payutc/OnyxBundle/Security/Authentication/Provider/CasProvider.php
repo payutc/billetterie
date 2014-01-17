@@ -25,7 +25,7 @@ class CasProvider implements AuthenticationProviderInterface
     private $containerInterface;
     protected $configuration;
 
-    public function __construct(UserProviderInterface $userProvider, $cacheDir, $entityManager, $encoderFactory, $containerInterface)
+    public function __construct(UserProviderInterface $userProvider, $cacheDir, $entityManager, $encoderFactory, $containerInterface, $gingerConfig, $mailerConfig)
     {
         $this->userProvider = $userProvider;
         $this->cacheDir     = $cacheDir;
@@ -33,16 +33,7 @@ class CasProvider implements AuthenticationProviderInterface
         $this->encoderFactory = $encoderFactory;
         $this->containerInterface = $containerInterface;
 
-        // Parse the bundle config file
-        $yamlParser = new Parser();
-        try {
-            $params = $yamlParser->parse(file_get_contents($this->containerInterface->get('kernel')->locateResource('@PayutcOnyxBundle/Resources/config/parameters.yml')));
-        }
-        catch (ParseException $e) {
-            die(printf('Unable to parse the configuration file of PayutcOnyxBundle\Security\Provider\CasProvider : %s', $e->getMessage()));
-        }
-
-        $this->configuration = $params['parameters'];
+        $this->configuration = array_merge(array('ginger' => $gingerConfig), array('mailer' => $mailerConfig));
     }
 
     public function authenticate(TokenInterface $token)

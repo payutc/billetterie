@@ -11,5 +11,18 @@ parameters:
     mailer_password:   ~
     locale:            fr
     secret:            onyx
-    dev_base_url: http://localhost/Onyx/web
-    dev_swiftmailer_delivery_address: test@example.com
+    dev_swiftmailer_delivery_address: florent.schildknecht@gmail.com
+    dev:
+        base_url: http://localhost/onyx/web
+    mailer:
+        from:
+            name: Billeterie UTC
+            email: noreply@utc.fr
+        subjects:
+            cas_authentication: Billeterie UTC - Inscription
+            registration: Billeterie UTC - Inscription
+    cas:
+        base_url: https://cas.utc.fr/cas/
+    ginger:
+        api_key: fauxginger
+        url: http://localhost/faux-ginger/index.php/v1/
