@@ -9,5 +9,5 @@ parameters:
     cas:
         base_url: https://cas.utc.fr/cas/
     ginger:
-        name: fauxginger
+        api_key: fauxginger
         url: http://localhost/faux-ginger/index.php/v1/
