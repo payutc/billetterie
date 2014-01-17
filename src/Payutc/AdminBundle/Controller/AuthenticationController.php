@@ -4,6 +4,7 @@ namespace Payutc\AdminBundle\Controller;
 
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Payutc\OnyxBundle\Security\Cas;
 
 class AuthenticationController extends Controller
 {
@@ -11,19 +12,8 @@ class AuthenticationController extends Controller
     {
         $request = $this->getRequest();
         $session = $request->getSession();
-
-        // get the login error if there is one
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
-        } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
-        }
-
-        return $this->render('PayutcAdminBundle:Authentication:login.html.twig', array(
-            // last username entered by the user
-            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-            'error'         => $error,
-        ));
+        $payutcClient = $this->get('payutc_admin.payutc_client');
+        $cas = new Cas($payutcClient->getCasUrl());
+        return $this->redirect($cas->getLoginUrl($this->generateUrl('payutc_admin_homepage', array("admin"=>1), true)));
     }
 }
