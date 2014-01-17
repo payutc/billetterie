@@ -31,6 +31,7 @@ class UserController extends FrontController
 			$factory = $this->get('security.encoder_factory');
 			$user->encryptPassword($factory->getEncoder($user));
 			$em->persist($user);
+            $em->flush();
 
 			$mailerParameters = $this->container->getParameter('mailer');
 			$message = \Swift_Message::newInstance()
@@ -39,12 +40,12 @@ class UserController extends FrontController
 				->setTo($user->getEmail())
 				->setBody($this->renderView('PayutcOnyxBundle:Entities/Users:registration.mail.html.twig', array(
 					'firstname' => $user->getFirstname(),
-					'name' => $user->getName()
+					'name' => $user->getName(),
+                    'encryptedId' => base64_encode($user->getId()),
+                    'encryptedToken' => base64_encode($user->getToken())                    
 				)), 'text/html')
 			;
 			$this->get('mailer')->send($message);
-
-			$em->flush();
 			
 			$request->getSession()->getFlashBag()->add('success', 'Vous enregistrement est terminé, vous pouvez dès à présent vous connecter !');
 
@@ -55,4 +56,40 @@ class UserController extends FrontController
 			'registrationForm' => $form->createView()
 		));
 	}
+
+    public function emailValidationAction($encryptedId, $encryptedToken)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('PayutcOnyxBundle:User')->findOneWithUnvalidatedEmail(base64_decode($encryptedId));
+
+        if (!$user) {
+            throw $this->createNotFoundException('Oops, un problème vient d\'arriver... Veuillez vérifier le lien reçu par email, ou contacter l\'association.');
+        }
+
+        if ($user->getToken() !== base64_decode($encryptedToken)) {
+            throw new BadTokenException('Le jeton reçu est invalide. Veuillez vérifier le lien reçu par email ou contacter l\'association.');
+        }
+
+        $user->setIsEmailValidated(true);
+        $user->setToken(null);
+        $em->persist($user);
+        $em->flush();
+
+        $mailerParameters = $this->container->getParameter('mailer');
+        $message = \Swift_Message::newInstance()
+            ->setSubject($mailerParameters['subjects']['email_validation'])
+            ->setFrom(array($mailerParameters['from']['email'] => $mailerParameters['from']['name']))
+            ->setTo($user->getEmail())
+            ->setBody($this->renderView('PayutcOnyxBundle:Entities/Users:email-validation.mail.html.twig', array(
+                'firstname' => $user->getFirstname(),
+                'name' => $user->getName()
+            )), 'text/html')
+        ;
+        $this->get('mailer')->send($message);
+
+        $this->getRequest()->getSession()->getFlashBag()->add('success', 'Votre adresse email est validée. Vous pouvez vous connecter en utilisant votre email et le mot de passe que vous avez choisi !');
+        
+        return $this->redirect($this->generateUrl('pay_utc_onyx_home_page'));
+    }
 }

@@ -6,6 +6,7 @@ parameters:
         subjects:
             cas_authentication: Billeterie UTC - Inscription
             registration: Billeterie UTC - Inscription
+            email_validation: Billeterie UTC - Validation de votre adresse e-mail
     cas:
         base_url: https://cas.utc.fr/cas/
     ginger:

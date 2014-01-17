@@ -11,3 +11,10 @@ pay_utc_onyx_registration_check_page:
         _controller: PayutcOnyxBundle:Entities/User:registrationCheck
     requirements:
         _method: post
+
+pay_utc_onyx_user_email_validation_page:
+    pattern:  /email-validation/{encryptedId}/{encryptedToken}
+    defaults:
+        _controller: PayutcOnyxBundle:Entities/User:emailValidation
+    requirements:
+        _method: get
