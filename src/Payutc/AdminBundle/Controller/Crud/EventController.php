@@ -37,7 +37,24 @@ class EventController extends CrudController
      */
     public function createAction(Request $request)
     {
-        return $this->createEntity($request, new Event(), new EventType(), 'Event', 'PayutcAdminBundle', 'payutc_admin_event_show');
+        $entity = new Event();
+
+        return $this->createEntity($request, $entity, new EventType(), 'Event', 'PayutcAdminBundle', 'payutc_admin_event_show', array(), function ($entity) {
+            if ($entity->getThumbnail()) {
+                $this->get('image.handling')
+                    ->open($entity->getThumbnailAbsolutePath())
+                    ->scaleResize(300, 300)
+                    ->save($entity->getThumbnailAbsolutePath())
+                ;
+            }
+            if ($entity->getHeaderPicture()) {
+                $this->get('image.handling')
+                    ->open($entity->getHeaderPictureAbsolutePath())
+                    ->scaleResize(825, 200)
+                    ->save($entity->getHeaderPictureAbsolutePath())
+                ;
+            }
+        });
     }
 
     /**
@@ -82,7 +99,22 @@ class EventController extends CrudController
      */
     public function updateAction(Request $request, $id)
     {
-        return $this->updateEntity($request, $id, new EventType(), 'Event', 'PayutcOnyxBundle', 'PayutcAdminBundle', 'payutc_admin_events');
+        return $this->updateEntity($request, $id, new EventType(), 'Event', 'PayutcOnyxBundle', 'PayutcAdminBundle', 'payutc_admin_events', array(), function ($entity) {
+            if ($entity->getThumbnail()) {
+                $this->get('image.handling')
+                    ->open($entity->getThumbnailAbsolutePath())
+                    ->scaleResize(300, 300)
+                    ->save($entity->getThumbnailAbsolutePath())
+                ;
+            }
+            if ($entity->getHeaderPicture()) {
+                $this->get('image.handling')
+                    ->open($entity->getHeaderPictureAbsolutePath())
+                    ->scaleResize(825, 200)
+                    ->save($entity->getHeaderPictureAbsolutePath())
+                ;
+            }
+        });
     }
 
     /**
