@@ -30,7 +30,7 @@ class CasProvider implements AuthenticationProviderInterface
     private $mailerFromEmail;
     private $mailerSubject;
 
-    public function __construct(UserProviderInterface $userProvider, $cacheDir, $entityManager, $encoderFactory, $casUrl, $gingerUrl, $gingerKey, $payutcClient, $mailerFromName, $mailerFromName, $mailerSubject)
+    public function __construct(UserProviderInterface $userProvider, $cacheDir, $entityManager, $encoderFactory, $casUrl, $gingerUrl, $gingerKey, $payutcClient, $mailerFromName, $mailerFromEmail, $mailerSubject)
     {
         $this->userProvider     = $userProvider;
         $this->cacheDir         = $cacheDir;
