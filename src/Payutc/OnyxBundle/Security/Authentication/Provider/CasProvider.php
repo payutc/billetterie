@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Payutc\OnyxBundle\Entity\User;
 use Ginger\Client\GingerClient;
 use Payutc\OnyxBundle\Security\Cas;
+use \Payutc\Client\JsonException;
 
 class CasProvider implements AuthenticationProviderInterface
 {
@@ -56,8 +57,14 @@ class CasProvider implements AuthenticationProviderInterface
             // SUPERADMIN => GESARTICLE sur toutes les fundations
             if($this->payutcClient->isAdmin()) {
                 $role = array("ROLE_SUPER_ADMIN");
-            } else if(count($this->payutcClient->getFundations()) > 0) {
-                $role = array("ROLE_ADMIN");
+            } else {
+                try {
+                    if(count($this->payutcClient->getFundations()) > 0) {
+                        $role = array("ROLE_ADMIN");
+                    }
+                } catch (JsonException $e) {
+                    $role = array("ROLE_USER");
+                }
             }
             
             
