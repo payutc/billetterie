@@ -2,8 +2,8 @@
 
 namespace Payutc;
 
-use \Payutc\Client\AutoJsonClient;
-use \Payutc\Client\JsonException;
+use Payutc\Client\AutoJsonClient;
+use Payutc\Client\JsonException;
 
 class Client extends AutoJsonClient
 {

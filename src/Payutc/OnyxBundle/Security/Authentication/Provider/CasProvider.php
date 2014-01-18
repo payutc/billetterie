@@ -6,12 +6,12 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\NonceExpiredException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Payutc\OnyxBundle\Security\Authentication\Token\CasToken;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Payutc\OnyxBundle\Entity\User;
 use Ginger\Client\GingerClient;
+use Payutc\Client\JsonException;
+use Payutc\OnyxBundle\Security\Authentication\Token\CasToken;
 use Payutc\OnyxBundle\Security\Cas;
-use \Payutc\Client\JsonException;
+use Payutc\OnyxBundle\Entity\User;
 
 class CasProvider implements AuthenticationProviderInterface
 {
