@@ -12,12 +12,11 @@ class HomeController extends FrontController
     {
     	$em = $this->getDoctrine()->getManager();
     	
-        # TODO Put CAS url in config
-        $cas = new Cas("https://cas.utc.fr/cas/");
+        $cas = new Cas($this->container->getParameter('cas_url'));
         $events = $em->getRepository('PayutcOnyxBundle:Event')->findAllNextActive();
 
         return $this->render('PayutcOnyxBundle:Home:index.html.twig', array(
-        	"CAS_url" => $cas->getLoginUrl("http://localhost".$this->generateUrl('pay_utc_onyx_home_page')),
+        	"CAS_url" => $cas->getLoginUrl($this->generateUrl('pay_utc_onyx_home_page', array(), true)),
         	'events' => $events
         ));
     }

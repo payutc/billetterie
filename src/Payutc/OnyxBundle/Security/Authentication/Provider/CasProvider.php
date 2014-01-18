@@ -6,10 +6,12 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\NonceExpiredException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Payutc\OnyxBundle\Security\Authentication\Token\CasUserToken;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Payutc\OnyxBundle\Entity\User;
 use Ginger\Client\GingerClient;
+use Payutc\Client\JsonException;
+use Payutc\OnyxBundle\Security\Authentication\Token\CasToken;
+use Payutc\OnyxBundle\Security\Cas;
+use Payutc\OnyxBundle\Entity\User;
 
 class CasProvider implements AuthenticationProviderInterface
 {
@@ -17,13 +19,21 @@ class CasProvider implements AuthenticationProviderInterface
     private $cacheDir;
     private $entityManager;
     private $encoderFactory;
+    private $casUrl;
+    private $gingerUrl;
+    private $gingerKey;
+    private $payutcClient;
 
-    public function __construct(UserProviderInterface $userProvider, $cacheDir, $entityManager, $encoderFactory)
+    public function __construct(UserProviderInterface $userProvider, $cacheDir, $entityManager, $encoderFactory, $casUrl, $gingerUrl, $gingerKey, $payutcClient)
     {
         $this->userProvider = $userProvider;
         $this->cacheDir     = $cacheDir;
         $this->entityManager = $entityManager;
         $this->encoderFactory = $encoderFactory;
+        $this->casUrl = $casUrl;
+        $this->gingerUrl = $gingerUrl;
+        $this->gingerKey = $gingerKey;
+        $this->payutcClient = $payutcClient;
     }
 
     public function authenticate(TokenInterface $token)
@@ -31,11 +41,44 @@ class CasProvider implements AuthenticationProviderInterface
         if ($token->getUser() instanceof User) {
             return $token;
         }
+        
+        $role = array("ROLE_USER");
+        
+        if($token->admin) {
+            try {
+                $userLogin = $this->payutcClient->loginCas($token->ticket, $token->service);
+            } catch (\Exception $e) {
+                throw new AuthenticationException('The CAS authentication failed.');
+            }
+            
+            // Define role (USER/ADMIN/SUPER_ADMIN)
+            // USER => Pas de droit GESARTICLE
+            // ADMIN => GESARTICLE sur certaines fundations
+            // SUPERADMIN => GESARTICLE sur toutes les fundations
+            if($this->payutcClient->isAdmin()) {
+                $role = array("ROLE_SUPER_ADMIN");
+            } else {
+                try {
+                    if(count($this->payutcClient->getFundations()) > 0) {
+                        $role = array("ROLE_ADMIN");
+                    }
+                } catch (JsonException $e) {
+                    $role = array("ROLE_USER");
+                }
+            }
+            
+            
+        } else {
+            $cas = new Cas($this->casUrl);
+            try {
+                $userLogin = $cas->authenticate($token->ticket, $token->service);
+            } catch (\Exception $e) {
+                throw new AuthenticationException('The CAS authentication failed (ticket validation). $token->ticket, $token->service');
+            }
+        }
     
-        // Call Ginger
-        # TODO :: Mettre la config de ginger dans un fichier de config
-        $ginger = new GingerClient("fauxginger", "http://localhost/faux-ginger/index.php/v1/");
-		$userInfo = $ginger->getUser($token->getUsername());
+        $ginger = new GingerClient($this->gingerKey, $this->gingerUrl);
+		$userInfo = $ginger->getUser($userLogin);
 
         try {
             $user = $this->userProvider->loadUserByUsername($userInfo->mail);
@@ -45,6 +88,7 @@ class CasProvider implements AuthenticationProviderInterface
             $user->setEmail($userInfo->mail);
             $user->setFirstname($userInfo->prenom);
             $user->setName($userInfo->nom);
+            $user->setLogin($userLogin);
 
             $password = $this->generatePassword(8);
             $user->setPassword($password);
@@ -72,9 +116,9 @@ class CasProvider implements AuthenticationProviderInterface
         }
         
         if ($user) {
-            $authenticatedToken = new CasUserToken($user->getRoles());
+            //$authenticatedToken = new CasToken($user->getRoles());
+            $authenticatedToken = new CasToken($role);
             $authenticatedToken->setUser($user);
-            $authenticatedToken->cas_checked = true;
 
             return $authenticatedToken;
         }
@@ -96,6 +140,6 @@ class CasProvider implements AuthenticationProviderInterface
 
     public function supports(TokenInterface $token)
     {
-        return $token instanceof CasUserToken;
+        return $token instanceof CasToken;
     }
 }

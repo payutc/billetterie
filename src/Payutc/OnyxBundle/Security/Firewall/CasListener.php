@@ -7,8 +7,7 @@ use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
-use Payutc\OnyxBundle\Security\Authentication\Token\CasUserToken;
-use Payutc\OnyxBundle\Security\Cas;
+use Payutc\OnyxBundle\Security\Authentication\Token\CasToken;
 
 class CasListener implements ListenerInterface
 {
@@ -27,46 +26,32 @@ class CasListener implements ListenerInterface
 
         // Check ticket CAS, if OK analyze it, if not, return;
         $ticket = $request->get('ticket');
-        if($ticket) {
-            # TODO PUT CAS URL + Service URL in config
-            $cas = new Cas("https://cas.utc.fr/cas/");
-            try {
-                $user = $cas->authenticate($ticket, "http://localhost/onyx/web/");
-            } catch (\Exception $e) {
-                # TODO Log error + check exception, it's not really 403.
-                // Deny authentication with a '403 Forbidden' HTTP response
-                $response = new Response();
-                $response->setStatusCode(403);
-                $event->setResponse($response);
-                return;
-            }
-        } else {
+        if(!$ticket) {
             return;
         }
         
-
-        $token = new CasUserToken();
-        $token->setUser($user);
+        $admin = $request->get('admin');
+        
+        $token = new CasToken();
+        $token->ticket = $ticket;
+        
+        if($admin) {
+            $token->admin = true;
+        }
+        
+        // Remove the ticket parameters to get the ticket
+        $service = $request->getUri();
+        $service = preg_replace('/&?\??ticket=[^&]*/', '', $service);
+        
+        $token->service = $service;
 
         try {
             $authToken = $this->authenticationManager->authenticate($token);
-
             $this->securityContext->setToken($authToken);
         } catch (AuthenticationException $failed) {
-            echo "Failed<pre>";
-            var_dump($failed);
-            die();
-            // ... you might log something here
-
             // To deny the authentication clear the token. This will redirect to the login page.
-            // $this->securityContext->setToken(null);
-            // return;
-
-            // Deny authentication with a '403 Forbidden' HTTP response
-            $response = new Response();
-            $response->setStatusCode(403);
-            $event->setResponse($response);
-
+            //$this->securityContext->setToken(null);
+            //return;
         }
     }
 }
