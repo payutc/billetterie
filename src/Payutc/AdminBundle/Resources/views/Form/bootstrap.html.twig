@@ -66,40 +66,46 @@
 
 {% block datetime_row %}
 {% spaceless %}
-	{{ form_label(form) }}
-	{{ form_errors(form) }}
-	<div class='input-group datetimepicker'>
-		{{ form_widget(form) }}
-		<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+	<div class='form-group'>
+		{{ form_label(form) }}
+		{{ form_errors(form) }}
+		<div class='input-group datetimepicker'>
+			{{ form_widget(form) }}
+			<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+		</div>
 	</div>
 {% endspaceless %}
 {% endblock datetime_row %}
 
 {% block date_row %}
 {% spaceless %}
-	{{ form_label(form) }}
-	{{ form_errors(form) }}
-	<div class='input-group datepicker'>
-		{{ form_widget(form) }}
-		<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+	<div class='form-group'>
+		{{ form_label(form) }}
+		{{ form_errors(form) }}
+		<div class='input-group datepicker'>
+			{{ form_widget(form) }}
+			<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+		</div>
 	</div>
 {% endspaceless %}
 {% endblock date_row %}
 
 {% block time_row %}
 {% spaceless %}
-	{{ form_label(form) }}
-	{{ form_errors(form) }}
-	<div class='input-group timepicker'>
-		{{ form_widget(form) }}
-		<span class='input-group-addon'><span class='glyphicon glyphicon-time'></span></span>
+	<div class='form-group'>
+		{{ form_label(form) }}
+		{{ form_errors(form) }}
+		<div class='input-group timepicker'>
+			{{ form_widget(form) }}
+			<span class='input-group-addon'><span class='glyphicon glyphicon-time'></span></span>
+		</div>
 	</div>
 {% endspaceless %}
 {% endblock time_row %}
 
 {% block checkbox_row %}
 {% spaceless %}
-	<div class='checkbox'>
+	<div class='form-group checkbox'>
 		{{ form_widget(form) }}
 		{{ form_label(form) }}
 		{{ form_errors(form) }}
@@ -109,7 +115,7 @@
 
 {% block radio_row %}
 {% spaceless %}
-	<div class='radio'>
+	<div class='form-group radio'>
 		{{ form_widget(form) }}
 		{{ form_label(form) }}
 		{{ form_errors(form) }}
