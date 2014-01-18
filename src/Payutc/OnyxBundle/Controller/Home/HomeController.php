@@ -8,16 +8,16 @@ use Payutc\OnyxBundle\Security\Cas;
 
 class HomeController extends FrontController
 {
-	public function indexAction()
-	{
-		$em = $this->getDoctrine()->getManager();
-		
-		$cas = new Cas($this->container->getParameter('cas_url'));
-		$events = $em->getRepository('PayutcOnyxBundle:Event')->findAllNextActive();
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $cas = new Cas($this->container->getParameter('cas_url'));
+        $events = $em->getRepository('PayutcOnyxBundle:Event')->findAllNextActive();
 
-		return $this->render('PayutcOnyxBundle:Home:index.html.twig', array(
-			'CAS_url' => $cas->getLoginUrl($this->generateUrl('pay_utc_onyx_home_page', array(), true)),
-			'events'  => $events
-		));
-	}
+        return $this->render('PayutcOnyxBundle:Home:index.html.twig', array(
+            'CAS_url' => $cas->getLoginUrl($this->generateUrl('pay_utc_onyx_home_page', array(), true)),
+            'events'  => $events
+        ));
+    }
 }
