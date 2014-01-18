@@ -26,17 +26,23 @@ class CasProvider implements AuthenticationProviderInterface
     private $gingerUrl;
     private $gingerKey;
     private $payutcClient;
+    private $mailerFromName;
+    private $mailerFromEmail;
+    private $mailerSubject;
 
-    public function __construct(UserProviderInterface $userProvider, $cacheDir, $entityManager, $encoderFactory, $casUrl, $gingerUrl, $gingerKey, $payutcClient)
+    public function __construct(UserProviderInterface $userProvider, $cacheDir, $entityManager, $encoderFactory, $casUrl, $gingerUrl, $gingerKey, $payutcClient, $mailerFromName, $mailerFromName, $mailerSubject)
     {
-        $this->userProvider = $userProvider;
-        $this->cacheDir     = $cacheDir;
-        $this->entityManager = $entityManager;
-        $this->encoderFactory = $encoderFactory;
-        $this->casUrl = $casUrl;
-        $this->gingerUrl = $gingerUrl;
-        $this->gingerKey = $gingerKey;
-        $this->payutcClient = $payutcClient;
+        $this->userProvider     = $userProvider;
+        $this->cacheDir         = $cacheDir;
+        $this->entityManager    = $entityManager;
+        $this->encoderFactory   = $encoderFactory;
+        $this->casUrl           = $casUrl;
+        $this->gingerUrl        = $gingerUrl;
+        $this->gingerKey        = $gingerKey;
+        $this->payutcClient     = $payutcClient;
+        $this->mailerFromName   = $mailerFromName;
+        $this->mailerFromEmail  = $mailerFromEmail;
+        $this->mailerSubject    = $mailerSubject;
     }
 
     public function authenticate(TokenInterface $token)
@@ -44,7 +50,8 @@ class CasProvider implements AuthenticationProviderInterface
         if ($token->getUser() instanceof User) {
             return $token;
         }
-        
+
+        // #### HEAD ####
         $role = array("ROLE_USER");
         
         if($token->admin) {
@@ -82,6 +89,8 @@ class CasProvider implements AuthenticationProviderInterface
         $ginger = new GingerClient($this->gingerKey, $this->gingerUrl);
         $userInfo = $ginger->getUser($userLogin);
 
+        // #### CONFIG ####
+
         try {
             $user = $this->userProvider->loadUserByUsername($userInfo->mail);
         } catch (UsernameNotFoundException $e) {
@@ -94,17 +103,14 @@ class CasProvider implements AuthenticationProviderInterface
 
             $password = $this->generatePassword(8);
             $user->setPassword($password);
-            
-            $encoder = $this->encoderFactory->getEncoder($user);
-            $user->encryptPassword($encoder);
+            $user->encryptPassword($this->encoderFactory->getEncoder($user));
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
-            // TODO :: pass "subject" and "from" vars as config global vars
             $message = \SwiftMessage::newInstance()
-                ->setSubject($this->configuration['mailer']['subjects']['cas_authentication'])
-                ->setFrom(array($this->configuration['mailer']['from']['email'] => $this->configuration['mailer']['from']['name']))
+                ->setSubject($this->mailerSubject)
+                ->setFrom(array($this->mailerFromEmail => $this->mailerFromName))
                 ->setTo($user->getEmail())
                 ->setBody($this->renderView('PayutcOnyxBundle:Authentication/Cas:registration.mail.html.twig', array(
                     'firstname' => $user->getFirstname(),

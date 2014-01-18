@@ -8,8 +8,6 @@ use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
-use Symfony\Component\Yaml\Parser;
-use Symfony\Component\Yaml\Exception\ParseException;
 
 use Payutc\OnyxBundle\Security\Authentication\Token\CasToken;
 
@@ -17,30 +15,37 @@ class CasListener implements ListenerInterface
 {
     protected $securityContext;
     protected $authenticationManager;
-    protected $containerInterface;
-    protected $configuration;
+    protected $casUrl;
+    protected $devBaseUrl;
 
-    public function __construct(SecurityContextInterface $securityContext, AuthenticationManagerInterface $authenticationManager, $containerInterface)
+    public function __construct(SecurityContextInterface $securityContext, AuthenticationManagerInterface $authenticationManager, $casUrl, $devBaseUrl)
     {
         $this->securityContext = $securityContext;
         $this->authenticationManager = $authenticationManager;
-        $this->containerInterface = $containerInterface;
-
-        // Parse the bundle config file
-        $yamlParser = new Parser();
-        try {
-            $params = $yamlParser->parse(file_get_contents($this->containerInterface->get('kernel')->locateResource('@PayutcOnyxBundle/Resources/config/parameters.yml')));
-        }
-        catch (ParseException $e) {
-            die(printf('Unable to parse the configuration file of PayutcOnyxBundle\Security\Firewall\CasListener : %s', $e->getMessage()));
-        }
-
-        $this->configuration = $params['parameters'];
+        $this->casUrl = $casUrl;
+        $this->devBaseUrl = $devBaseUrl;
     }
 
     public function handle(GetResponseEvent $event)
     {
         $request = $event->getRequest();
+
+        // Check ticket CAS, if OK analyze it, if not, return;
+        $ticket = $request->get('ticket');
+        if ($ticket) {
+            $cas = new Cas($this->casUrl);
+            try {
+                $user = $cas->authenticate($ticket, $this->devBaseUrl);
+            } catch (\Exception $e) {
+                // Deny authentication with a '403 Forbidden' HTTP response
+                $response = new Response();
+                $response->setStatusCode(403);
+                $event->setResponse($response);
+                return;
+            }
+        } else {
+            return;
+        }
 
         // Check ticket CAS, if OK analyze it, if not, return;
         $ticket = $request->get('ticket');
