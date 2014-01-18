@@ -5,11 +5,13 @@
 		<h1>{% block entity_title %}{% endblock %}</h1>
 	</div>
 
-	<table class='record_properties table table-stripped table-bordered table-condensed'>
+	{% block extra_before_detail %}{% endblock %}
+	<table class='record_properties table table-stripped table-bordered table-condensed table-hover'>
 		<tbody>
 			{% block entity_table %}{% endblock %}
 		</tbody>
 	</table>
+	{% block extra_after_detail %}{% endblock %}
 	
 	<div class='link-wrapper'>
 		{% block entity_list_link %}
