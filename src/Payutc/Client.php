@@ -46,6 +46,9 @@ class Client extends AutoJsonClient
         if(!$this->status || $force) {
             $this->status = parent::getStatus();
             $this->session->set("payutc_status", $this->status);
+            if(!$this->status->application) {
+                $this->connectApp();
+            }
         }
         return $this->status;
     }
@@ -66,11 +69,8 @@ class Client extends AutoJsonClient
     public function loginCas($ticket, $service)
     {
         $status = $this->getStatus();
-        if(!$status->user) {
-            $return = parent::loginCas(array("ticket" => $ticket, "service" => $service));
-            $this->getStatus(true);
-            return $return;
-        }
-        return $status->user;
+        $return = parent::loginCas(array("ticket" => $ticket, "service" => $service));
+        $this->getStatus(true);
+        return $return;
     }
 }
