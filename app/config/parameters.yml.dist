@@ -27,3 +27,4 @@ parameters:
     mailer_from_email: noreply@utc.fr
     mailer_subjects_cas_authentication: Billeterie UTC - Inscription
     mailer_subjects_registration:       Billeterie UTC - Inscription
+    mailer_subjects_email_validation:   Billeterie UTC - Validation de votre adresse e-mail

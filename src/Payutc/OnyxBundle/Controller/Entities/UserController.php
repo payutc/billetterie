@@ -2,6 +2,9 @@
 
 namespace Payutc\OnyxBundle\Controller\Entities;
 
+use \Swift_Message;
+
+use Payutc\OnyxBundle\Exception\BadTokenException;
 use Payutc\OnyxBundle\Controller\FrontController;
 use Payutc\OnyxBundle\Entity\User;
 use Payutc\OnyxBundle\Form\UserType;
@@ -33,10 +36,9 @@ class UserController extends FrontController
 			$em->persist($user);
             $em->flush();
 
-			$mailerParameters = $this->container->getParameter('mailer');
-			$message = \Swift_Message::newInstance()
-				->setSubject($mailerParameters['subjects']['registration'])
-				->setFrom(array($mailerParameters['from']['email'] => $mailerParameters['from']['name']))
+			$message = Swift_Message::newInstance()
+				->setSubject($this->container->getParameter('mailer_subjects_registration'))
+				->setFrom(array($this->container->getParameter('mailer_from_email') => $this->container->getParameter('mailer_from_name')))
 				->setTo($user->getEmail())
 				->setBody($this->renderView('PayutcOnyxBundle:Entities/Users:registration.mail.html.twig', array(
 					'firstname' => $user->getFirstname(),
@@ -47,7 +49,7 @@ class UserController extends FrontController
 			;
 			$this->get('mailer')->send($message);
 			
-			$request->getSession()->getFlashBag()->add('success', 'Vous enregistrement est terminé, vous pouvez dès à présent vous connecter !');
+			$request->getSession()->getFlashBag()->add('info', 'Vous enregistrement est terminé, vous pourrez vous connecter dès que vous aurez validé votre compte en cliquant sur le lien dans le mail envoyé à votre adresse !');
 
 			return $this->redirect($this->generateUrl('pay_utc_onyx_home_page'));
 		}
@@ -76,10 +78,9 @@ class UserController extends FrontController
         $em->persist($user);
         $em->flush();
 
-        $mailerParameters = $this->container->getParameter('mailer');
-        $message = \Swift_Message::newInstance()
-            ->setSubject($mailerParameters['subjects']['email_validation'])
-            ->setFrom(array($mailerParameters['from']['email'] => $mailerParameters['from']['name']))
+        $message = Swift_Message::newInstance()
+            ->setSubject($this->container->getParameter('mailer_subjects_email_validation'))
+            ->setFrom(array($this->container->getParameter('mailer_from_email') => $this->container->getParameter('mailer_from_name')))
             ->setTo($user->getEmail())
             ->setBody($this->renderView('PayutcOnyxBundle:Entities/Users:email-validation.mail.html.twig', array(
                 'firstname' => $user->getFirstname(),
