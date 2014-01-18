@@ -1,5 +1,10 @@
 {% extends 'PayutcOnyxBundle::base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel='stylesheet' href='{{ asset('bundles/payutconyx/css/home.min.css') }}' />
+{% endblock %}
+
 {% block app_content %}
     <section id='connection' class='jumbotron'>
         <h1>Billeterie UTC</h1>
@@ -15,13 +20,16 @@
         {% for event in events %}
             <div class='event-wrapper col-lg-6 col-md-6 col-sm-6 col-xs-12'>
                 <article class='event'>
-                    <figure class='event-thumbnail'>
-                        <img class='event-picture' src='{{ asset(event.getThumbnailWebPath) }}' alt='{{ event.title }}' />
-                        <figcaption class='event-places'>{{ event.capacity }} places</figcaption>
+                    <div class='event-thumbnail-wrapper'>
+                        <div class='event-thumbnail-background'></div>
+                        <figure class='event-thumbnail'>
+                            <img class='event-picture' src='{{ asset(event.getThumbnailWebPath) }}' alt='{{ event.title }}' />
+                        </figure>
+                        <p class='event-places'>{{ event.capacity }} places</p>
                         <div class='event-booking-link-wrapper'>
                             <a href='{{ path('pay_utc_onyx_event_page', { 'id': event.id }) }}' class='btn btn-sm btn-default'>Détail</a>
                         </div>
-                    </figure>
+                    </div>
                     <h4 class='event-title'>{{ event.title }}</h4>
                     <h6 class='event-date'>Du {{ event.startAt|date('d-m-Y') }} jusqu'au {{ event.endAt|date('d-m-Y') }}</h4>
                 </article>
