@@ -17,7 +17,11 @@
 {% endblock %}
 
 {% block entity_table_content %}
-    <td>{% if entity.isHidden %}Désactivé{% else %}Activé{% endif %}</td>
+    {% if entity.isHidden %}
+        <td class='text-muted'>Désactivé</td>
+    {% else %}
+        <td class='text-success'>Activé</td>
+    {% endif %}
     <td>{{ entity.title }}</td>
     <td>{{ entity.event }}</td>
     <td>{{ entity.price }}</td>

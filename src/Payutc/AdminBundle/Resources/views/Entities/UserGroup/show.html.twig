@@ -15,10 +15,10 @@
 		<th>Modifié le</th>
 		<td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
 	</tr>
-	<tr>
-		<th>Actif ?</th>
-		<td>{{ entity.isHidden }}</td>
-	</tr>
+    <tr class='{% if entity.isHidden %}text-muted{% else %}text-info{% endif %}'>
+        <th>Actif ?</th>
+        <td>{% if entity.isHidden %}Non{% else %}Oui{% endif %}</td>
+    </tr>
 	<tr>
 		<th>Nom</th>
 		<td>{{ entity.title }}</td>

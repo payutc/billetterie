@@ -15,7 +15,11 @@
 {% endblock %}
 
 {% block entity_table_content %}
-    <td>{% if entity.isHidden %}Désactivé{% else %}Activé{% endif %}</td>
+    {% if entity.isHidden %}
+        <td class='text-muted'>Désactivé</td>
+    {% else %}
+        <td class='text-success'>Activé</td>
+    {% endif %}
     <td>{{ entity.title }}</td>
     <td>
         <div><a href='{{ path('payutc_admin_usergroup_show', { 'id': entity.id }) }}'>Détail</a></div>

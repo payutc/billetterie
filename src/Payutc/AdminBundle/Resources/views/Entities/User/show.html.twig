@@ -9,7 +9,7 @@
 	</tr>
 	<tr>
 		<th>Enregistré le</th>
-		<td>{{ entity.registredAt|date('Y-m-d H:i:s') }}</td>
+		<td>{{ entity.registredAt|date('d-m-Y H:i:s') }}</td>
 	</tr>
 	<tr>
 		<th>Prénom</th>
@@ -22,6 +22,14 @@
 	<tr>
 		<th>Email</th>
 		<td>{{ entity.email }}</td>
+	</tr>
+    <tr class='{% if entity.isEmailValidated %}text-info{% else %}text-muted{% endif %}'>
+        <th>Email validé ?</th>
+        <td>{% if entity.isEmailValidated %}Oui{% else %}Non{% endif %}</td>
+    </tr>
+	<tr>
+		<th>Login</th>
+		<td>{{ entity.login }}</td>
 	</tr>
 {% endblock %}
 
