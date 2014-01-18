@@ -16,7 +16,7 @@ class CasFactory implements SecurityFactoryInterface
             ->setDefinition($providerId, new DefinitionDecorator('cas.security.authentication.provider'))
             ->replaceArgument(0, new Reference($userProvider))
         ;
-
+        
         $listenerId = 'security.authentication.listener.cas.'.$id;
         $listener = $container->setDefinition($listenerId, new DefinitionDecorator('cas.security.authentication.listener'));
 
@@ -30,7 +30,7 @@ class CasFactory implements SecurityFactoryInterface
 
     public function getKey()
     {
-        return 'cas';
+        return 'casauth';
     }
 
     public function addConfiguration(NodeDefinition $node)

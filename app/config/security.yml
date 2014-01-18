@@ -8,26 +8,14 @@ security:
             iterations:           1000
 
     role_hierarchy:
+        ROLE_USER:        ROLE_CONNECTION
         ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN: [ROLE_CONNECTION, ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        static:
-            memory:
-                users:
-                    login:
-                        password: password
-                        roles: [ 'ROLE_USER' ]
-                    admin:
-                        password: password
-                        roles: [ 'ROLE_ADMIN' ]
         local:
             entity:
                 class: Payutc\OnyxBundle\Entity\User
-
-        full_provider:
-            chain:
-                providers: [static, local]
 
     firewalls:
         dev:
@@ -40,16 +28,17 @@ security:
 
         admin_area:
             pattern: ^/admin
-            provider: static
+            provider: local
             form_login:
                 login_path: payutc_admin_login
                 check_path: payutc_admin_login_check
-                default_target_path: pay_utc_admin_homepage
+                default_target_path: payutc_admin_homepage
                 post_only: true
             logout:
                 path: payutc_admin_logout
                 target: /
                 invalidate_session: false
+            casauth: true
 
         front_login:
             pattern: ^/login$
@@ -57,7 +46,7 @@ security:
 
         front_area:
             pattern: ^/
-            provider: full_provider
+            provider: local
             anonymous: ~
             form_login:
                 login_path: pay_utc_onyx_login_page
@@ -74,7 +63,7 @@ security:
                 lifetime: 86400
                 always_remember_me: true
                 remember_me_parameter: _remember_me
-            cas: true
+            casauth: true
 
     access_control:
         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

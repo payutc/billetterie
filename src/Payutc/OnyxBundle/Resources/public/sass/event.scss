@@ -1,0 +1,37 @@
+@import 'bourbon/bourbon';
+@import 'utils/colors';
+
+html {
+	body {
+		#event-detail-header {
+			margin: 0;
+			#event-detail-title {
+				margin: 0;
+				text-align: center;
+			}
+		}
+		#event-detail-dates {
+			margin: 10px 0;
+		}
+		#event-detail {
+			margin: 20px 0;
+			#event-detail-header-figure {
+				#event-detail-header-figure-picture {
+					display: block;
+					width: 100%;
+					max-height: 200px;
+					margin: auto;
+				}
+			}
+			#event-detail-description {
+				#event-detail-description-picture {
+					width: 100%;
+				}
+			}
+			#event-detail-dates {
+				margin: 10px 0;
+				text-align: left;
+			}
+		}
+	}
+}

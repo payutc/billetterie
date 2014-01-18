@@ -12,4 +12,103 @@ use Doctrine\ORM\EntityRepository;
  */
 class TicketRepository extends EntityRepository
 {
+	/**
+     * Find all entities that have removed_at set up to null.
+     *
+     * @return array
+     */
+	public function findAllActive()
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('t')
+			->from('PayutcOnyxBundle:Ticket', 't')
+			->where($qb->expr()->isNull('t.removedAt'))
+		;
+
+		return $qb->getQuery()->getResult();
+	}
+
+	/**
+     * Find all entities that have removed_at set up to null and a defined price.
+     *
+     * @param Price $price
+     * @return array
+     */
+	public function findAllActiveByPrice($price)
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('t')
+			->from('PayutcOnyxBundle:Ticket', 't')
+			->where($qb->expr()->isNull('t.removedAt'))
+			->andWhere('t.price = :price')
+			->setParameter('price', $price)
+		;
+
+		return $qb->getQuery()->getResult();
+	}
+
+	/**
+     * Find all entities that have removed_at set up to null and a defined seller.
+     *
+     * @param User $seller
+     * @return array
+     */
+	public function findAllActiveBySeller($seller)
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('t')
+			->from('PayutcOnyxBundle:Ticket', 't')
+			->where($qb->expr()->isNull('t.removedAt'))
+			->andWhere('t.seller = :seller')
+			->setParameter('seller', $seller)
+		;
+
+		return $qb->getQuery()->getResult();
+	}
+
+	/**
+     * Find all entities that have removed_at set up to null and a defined buyer.
+     *
+     * @param User $buyer
+     * @return array
+     */
+	public function findAllActiveByBuyer($buyer)
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('t')
+			->from('PayutcOnyxBundle:Ticket', 't')
+			->where($qb->expr()->isNull('t.removedAt'))
+			->andWhere('t.buyer = :buyer')
+			->setParameter('buyer', $buyer)
+		;
+
+		return $qb->getQuery()->getResult();
+	}
+
+	/**
+     * Find all entities that have removed_at set up to null, a defined price and a defined buyer.
+     *
+     * @param Price $price
+     * @param User $buyer
+     * @return array
+     */
+	public function findAllActiveByPriceAndBuyer($price, $buyer)
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('t')
+			->from('PayutcOnyxBundle:Ticket', 't')
+			->where($qb->expr()->isNull('t.removedAt'))
+			->andWhere('t.price = :price')
+			->andWhere('t.buyer = :buyer')
+			->setParameter('price', $price)
+			->setParameter('buyer', $buyer)
+		;
+
+		return $qb->getQuery()->getResult();
+	}
 }

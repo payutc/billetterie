@@ -1,0 +1,6 @@
+pay_utc_onyx_event_page:
+    pattern:  /{id}
+    defaults:
+        _controller: PayutcOnyxBundle:Entities/Event:detail
+    requirements:
+        _method: get

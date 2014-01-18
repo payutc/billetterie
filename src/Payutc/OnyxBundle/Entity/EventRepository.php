@@ -87,7 +87,7 @@ class EventRepository extends EntityRepository implements DeletableEntityReposit
      *
      * @return Event
      */
-	public function findOneActive(int $id)
+	public function findOneActive($id)
 	{
 		$event = null;
 
@@ -97,7 +97,9 @@ class EventRepository extends EntityRepository implements DeletableEntityReposit
 			->from('PayutcOnyxBundle:Event', 'e')
 			->where($qb->expr()->isNull('e.removedAt'))
 			->andWhere('e.isHidden = :isHidden')
+			->andWhere('e.id = :id')
 			->setParameter('isHidden', false)
+			->setParameter('id', $id)
 		;
 
 		try {
