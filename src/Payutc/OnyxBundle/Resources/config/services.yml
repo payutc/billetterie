@@ -1,8 +1,14 @@
-services:
-  cas.security.authentication.provider:
-    class:  Payutc\OnyxBundle\Security\Authentication\Provider\CasProvider
-    arguments: ['', %kernel.cache_dir%/security/nonces, @doctrine.orm.entity_manager, @security.encoder_factory]
+parameters:
+    cas.security.authentication.provider.ginger: %ginger%
+    cas.security.authentication.provider.mailer: %mailer%
+    cas.security.authentication.listener.dev: %dev%
+    cas.security.authentication.listener.cas: %cas%
 
-  cas.security.authentication.listener:
-    class:  Payutc\OnyxBundle\Security\Firewall\CasListener
-    arguments: [@security.context, @security.authentication.manager]
+services:
+    cas.security.authentication.provider:
+        class:  Payutc\OnyxBundle\Security\Authentication\Provider\CasProvider
+        arguments: ['', %kernel.cache_dir%/security/nonces, @doctrine.orm.entity_manager, @security.encoder_factory, @service_container, '%cas.security.authentication.provider.ginger%', '%cas.security.authentication.provider.mailer%']
+
+    cas.security.authentication.listener:
+        class:  Payutc\OnyxBundle\Security\Firewall\CasListener
+        arguments: [@security.context, @security.authentication.manager, @service_container, '%cas.security.authentication.listener.dev%', '%cas.security.authentication.listener.cas%']

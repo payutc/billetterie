@@ -1,4 +1,5 @@
 <?php
+
 namespace Payutc\OnyxBundle\Security\Authentication\Provider;
 
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
@@ -6,10 +7,14 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\NonceExpiredException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Payutc\OnyxBundle\Security\Authentication\Token\CasUserToken;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Payutc\OnyxBundle\Entity\User;
+use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Yaml\Exception\ParseException;
+
 use Ginger\Client\GingerClient;
+
+use Payutc\OnyxBundle\Security\Authentication\Token\CasUserToken;
+use Payutc\OnyxBundle\Entity\User;
 
 class CasProvider implements AuthenticationProviderInterface
 {
@@ -17,13 +22,18 @@ class CasProvider implements AuthenticationProviderInterface
     private $cacheDir;
     private $entityManager;
     private $encoderFactory;
+    private $containerInterface;
+    protected $configuration;
 
-    public function __construct(UserProviderInterface $userProvider, $cacheDir, $entityManager, $encoderFactory)
+    public function __construct(UserProviderInterface $userProvider, $cacheDir, $entityManager, $encoderFactory, $containerInterface, $gingerConfig, $mailerConfig)
     {
         $this->userProvider = $userProvider;
         $this->cacheDir     = $cacheDir;
         $this->entityManager = $entityManager;
         $this->encoderFactory = $encoderFactory;
+        $this->containerInterface = $containerInterface;
+
+        $this->configuration = array_merge(array('ginger' => $gingerConfig), array('mailer' => $mailerConfig));
     }
 
     public function authenticate(TokenInterface $token)
@@ -33,8 +43,7 @@ class CasProvider implements AuthenticationProviderInterface
         }
     
         // Call Ginger
-        # TODO :: Mettre la config de ginger dans un fichier de config
-        $ginger = new GingerClient("fauxginger", "http://localhost/faux-ginger/index.php/v1/");
+        $ginger = new GingerClient($this->configuration['ginger']['api_key'], $this->configuration['ginger']['url']);
 		$userInfo = $ginger->getUser($token->getUsername());
 
         try {
@@ -57,8 +66,8 @@ class CasProvider implements AuthenticationProviderInterface
 
             // TODO :: pass "subject" and "from" vars as config global vars
             $message = \SwiftMessage::newInstance()
-                ->setSubject('Billeterie UTC - Inscription')
-                ->setFrom('noreply@utc.fr')
+                ->setSubject($this->configuration['mailer']['subjects']['cas_authentication'])
+                ->setFrom(array($this->configuration['mailer']['from']['email'] => $this->configuration['mailer']['from']['name']))
                 ->setTo($user->getEmail())
                 ->setBody($this->renderView('PayutcOnyxBundle:Authentication/Cas:registration.mail.html.twig', array(
                     'firstname' => $user->getFirstname(),
