@@ -18,6 +18,13 @@
 			<a class='btn btn-info' {% block entity_list_path %}{% endblock %}>Revenir à la liste</a>
 		{% endblock %}
 		<a class='btn btn-info' {% block entity_edit_path %}{% endblock %}>Editer</a>
+		{% block entity_state_link %}
+			{% if entity.isHidden %}
+				<a class='btn btn-info' {% block entity_activate_path %}{% endblock %}>Activer</a>
+			{% else %}
+				<a class='btn btn-info' {% block entity_unactivate_path %}{% endblock %}>Désactiver</a>
+			{% endif %}
+		{% endblock %}
 		{% block entity_delete_form %}
 			<form {% block entity_delete_path %}{% endblock %} class='inline-block' method='post'>
 				{{ form_widget(delete_form) }}

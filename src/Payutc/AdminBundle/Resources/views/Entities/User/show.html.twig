@@ -1,6 +1,6 @@
 {% extends 'PayutcAdminBundle:Entities:show.html.twig' %}
 
-{% block entity_title %}Ticket{% endblock %}
+{% block entity_title %}Utilisateur{% endblock %}
 
 {% block entity_table %}
 	<tr>
@@ -24,6 +24,8 @@
 		<td>{{ entity.email }}</td>
 	</tr>
 {% endblock %}
+
+{% block entity_state_link %}{% endblock %}
 		
 {% block entity_list_path %}href="{{ path('payutc_admin_users') }}"{% endblock %}
 

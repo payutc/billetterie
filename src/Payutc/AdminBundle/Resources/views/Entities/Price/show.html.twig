@@ -76,6 +76,10 @@
 		</td>
 	</tr>
 {% endblock %}
+
+{% block entity_activate_path %}href="{{ path('payutc_admin_price_activate', { 'id': entity.id }) }}"{% endblock %}
+
+{% block entity_unactivate_path %}href="{{ path('payutc_admin_price_unactivate', { 'id': entity.id }) }}"{% endblock %}
 		
 {% block entity_list_path %}href="{{ path('payutc_admin_prices') }}"{% endblock %}
 

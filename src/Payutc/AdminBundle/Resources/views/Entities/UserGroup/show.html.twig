@@ -28,6 +28,10 @@
 		<td>{{ entity.informations }}</td>
 	</tr>
 {% endblock %}
+
+{% block entity_activate_path %}href="{{ path('payutc_admin_usergroup_activate', { 'id': entity.id }) }}"{% endblock %}
+
+{% block entity_unactivate_path %}href="{{ path('payutc_admin_usergroup_unactivate', { 'id': entity.id }) }}"{% endblock %}
 		
 {% block entity_list_path %}href="{{ path('payutc_admin_usergroups') }}"{% endblock %}
 
