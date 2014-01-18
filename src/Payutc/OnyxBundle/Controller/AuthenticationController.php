@@ -7,7 +7,7 @@ use Payutc\OnyxBundle\Security\Cas;
 
 class AuthenticationController extends FrontController
 {
-	public function loginAction()
+    public function loginAction()
     {
         $request = $this->getRequest();
         $session = $request->getSession();
@@ -26,7 +26,7 @@ class AuthenticationController extends FrontController
             // last username entered by the user
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
-            'CAS_url'     => $cas->getLoginUrl($this->generateUrl('pay_utc_onyx_home_page', array(), true))
+            'CAS_url'       => $cas->getLoginUrl($this->generateUrl('pay_utc_onyx_home_page', array(), true))
         ));
     }
 }

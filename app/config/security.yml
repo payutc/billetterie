@@ -16,7 +16,6 @@ security:
         local:
             entity:
                 class: Payutc\OnyxBundle\Entity\User
-                property: email
 
     firewalls:
         dev:

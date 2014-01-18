@@ -1,0 +1,12 @@
+{% extends 'PayutcOnyxBundle::mail.html.twig' %}
+
+{% block page_title %}Billeterie UTC - Validation de votre adresse email{% endblock %}
+
+{% block app_content %}
+	<div class='jumbotron'>
+		<h1>Bonjour {{ firstname|title }} {{ name|title }}</h1>
+	</div>
+	<p>Votre email est à présent validé !</p>
+	<p>Vous pouvez dès à présent utiliser votre compte pour <a href='{{ url('pay_utc_onyx_home_page') }}' target='_blank'>réserver un évènement</a>, avec votre email et le mot de passe que vous avez choisi.</p>
+	<p>En espérant vous voir très vite !</p>
+{% endblock %}

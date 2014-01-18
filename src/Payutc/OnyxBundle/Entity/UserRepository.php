@@ -9,6 +9,8 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 
+use Payutc\OnyxBundle\Exception\UnvalidatedEmailException;
+
 /**
  * UserRepository
  *
@@ -17,6 +19,12 @@ use Doctrine\ORM\NoResultException;
  */
 class UserRepository extends EntityRepository implements UserProviderInterface
 {
+    /**
+     * Find a user instance from a username in the EntityRepository.
+     *
+     * @param string $username
+     * @return User
+     */
 	public function loadUserByUsername($username)
     {
         $user = null;
@@ -39,6 +47,12 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         return $user;
     }
 
+    /**
+     * Refresh the given user instance from EntityRepository.
+     *
+     * @param UserInterface $user
+     * @return User
+     */
     public function refreshUser(UserInterface $user)
     {
         if (!$this->supportsClass(get_class($user))) {
@@ -47,9 +61,42 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
         return $this->find($user->getId());
     }
-
+    
+    /**
+     * Define if a given classname is a subclass of this entity or not.
+     *
+     * @param string $class
+     * @return boolean
+     */
     public function supportsClass($class)
     {
         return ($class === $this->getEntityName() || is_subclass_of($class, $this->getEntityName()));
+    }
+
+    /**
+     * Find one entity by id that have is_email_validated property set up to false.
+     *
+     * @return User
+     */
+    public function findOneWithUnvalidatedEmail($id)
+    {
+        $user = null;
+
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('u')
+            ->from('PayutcOnyxBundle:User', 'u')
+            ->where('u.id = :id')
+            ->andWhere('u.isEmailValidated = :isEmailValidated')
+            ->setParameter('id', $id)
+            ->setParameter('isEmailValidated', false)
+        ;
+
+        try {
+            $user = $qb->getQuery()->getSingleResult();
+        }
+        catch (NoResultException $e) {}
+
+        return $user;
     }
 }

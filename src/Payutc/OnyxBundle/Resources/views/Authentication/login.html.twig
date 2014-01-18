@@ -4,7 +4,7 @@
 	<div class='well'>
 		{% if error %}
 			<div class='alert alert-danger'>
-				<p><strong>Erreur !</strong> <span>{{ error.message }}</span></p>
+				<p><strong>Erreur !</strong> <span>{{ error.message|trans }}</span></p>
 			</div>
 		{% endif %}
 		<form action='{{ path('pay_utc_onyx_login_check_page') }}' method='post' class='form-horizontal'>

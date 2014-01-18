@@ -2,10 +2,12 @@
 
 namespace Payutc\OnyxBundle\Entity;
 
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
+
+use Payutc\OnyxBundle\Entity\Base\BaseEntity;
 
 /**
  * User
@@ -14,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Payutc\OnyxBundle\Entity\UserRepository")
  * @UniqueEntity(fields="email", message="Cet email est déjà utilisé.")
  */
-class User implements UserInterface, \Serializable
+class User extends BaseEntity implements AdvancedUserInterface, \Serializable
 {
     /**
      * @var integer
@@ -39,6 +41,13 @@ class User implements UserInterface, \Serializable
      * @Assert\Email()
      */
     private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="is_email_validated", type="boolean")
+     */
+    private $isEmailValidated;
 
     /**
      * @var string
@@ -76,12 +85,21 @@ class User implements UserInterface, \Serializable
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="token", type="string", length=255, nullable=true)
+     */
+    private $token;
+
+    /**
      * Magic constructor
      */
     public function __construct()
     {
         $this->registredAt = new \DateTime();
         $this->salt = sha1(uniqid(null, true));
+        $this->isEmailValidated = false;
+        $this->generateToken();
 
         return $this;
     }
@@ -212,6 +230,39 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Set isEmailValidated
+     *
+     * @param boolean $isEmailValidated
+     * @return User
+     */
+    public function setIsEmailValidated($isEmailValidated)
+    {
+        $this->isEmailValidated = $isEmailValidated;
+
+        return $this;
+    }
+
+    /**
+     * Get isEmailValidated
+     *
+     * @return boolean
+     */
+    public function getIsEmailValidated()
+    {
+        return $this->isEmailValidated;
+    }
+
+    /**
+     * Get isEmailValidated alias
+     *
+     * @return boolean
+     */
+    public function isEmailValidated()
+    {
+        return $this->getIsEmailValidated();
+    }
+
+    /**
      * Set login
      *
      * @param string $login
@@ -324,5 +375,82 @@ class User implements UserInterface, \Serializable
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set token
+     *
+     * @param string $token
+     * @return User
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    
+        return $this;
+    }
+
+    /**
+     * Get token
+     *
+     * @return string 
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * Generate an user token
+     *
+     * @return User
+     */
+    public function generateToken()
+    {
+        return $this->setToken(sha1(microtime(TRUE) . rand(0, 100000)));
+    }
+
+    /**
+     * [UNUSED] check if user account has expired or not
+     * Required as implementation of AdvancedUserInterface
+     *
+     * @return boolean
+     */
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    /**
+     * [UNUSED] check if user account is locked or not
+     * Required as implementation of AdvancedUserInterface
+     *
+     * @return boolean
+     */
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    /**
+     * [UNUSED] check if user password has expired or not
+     * Required as implementation of AdvancedUserInterface
+     *
+     * @return boolean
+     */
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    /**
+     * check if user account is enabled or not
+     * Required as implementation of AdvancedUserInterface
+     *
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        return $this->isEmailValidated();
     }
 }

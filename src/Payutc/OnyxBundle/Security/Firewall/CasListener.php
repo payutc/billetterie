@@ -50,8 +50,8 @@ class CasListener implements ListenerInterface
             $this->securityContext->setToken($authToken);
         } catch (AuthenticationException $failed) {
             // To deny the authentication clear the token. This will redirect to the login page.
-            //$this->securityContext->setToken(null);
-            //return;
+            $this->securityContext->setToken(null);
+            return;
         }
     }
 }
