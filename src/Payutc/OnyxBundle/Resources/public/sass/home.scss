@@ -1,0 +1,112 @@
+@import 'bourbon/bourbon';
+@import 'utils/mixins';
+@import 'utils/colors';
+
+html {
+	body {
+		#events {
+			.event-wrapper {
+				padding: 15px;
+				.event {
+					position: relative;
+					height: 200px;
+					@include transform-style(preserve-3d);
+					background: $light-blue;
+					color: $dark-blue;
+					@include transition(background 0.4s);
+					overflow: hidden;
+					.event-thumbnail-wrapper {
+						position: relative;
+						left: -10px;
+						width: 225px;
+						height: 100%;
+						@include transform(translateX(-200px));
+						-webkit-transition: -webkit-transform 0.4s;
+						-moz-transition: -moz-transform 0.4s;
+						transition: transform 0.4s;
+						@include transform-origin(0 0);
+						@include backface-visibility(hidden);
+						z-index: 10;
+						.event-thumbnail-background {
+							width: 240px;
+							height: 100%;
+							background: $dark-blue;
+							@include transform(skewX(8deg));
+							@include transition(skew 0.3s);
+						}
+						.event-thumbnail {
+							position: absolute;
+							top: 36px;
+							left: -25px;
+							height: 118px;
+							width: 256px;
+							overflow: hidden;
+							@include transform(skewX(8deg));
+							@include transform-origin(0 0);
+							.event-picture {
+								display: block;
+								position: relative;
+								@include square(300px);
+								margin: -50px 0 0 -25px;
+								@include transform(skewX(-8deg));
+								@include opacity(0);
+								@include transition(opacity 0.25s);
+							}
+						}
+						.event-places {
+							position: absolute;
+							top: 0;
+							left: 0;
+							width: 100%;
+							font-size: 14px;
+							text-align: center;
+							padding: 8px 10px;
+							background: $dark-blue;
+							color: $white;
+						}
+						.event-booking-link-wrapper {
+							position: absolute;
+							bottom: 0;
+							left: 0;
+							width: 100%;
+							text-align: center;
+							padding: 8px 10px;
+							background: $dark-blue;
+						}
+					}
+					.event-title {
+						position: absolute;
+						top: 30px;
+						width: 100%;
+						padding: 0 20px;
+						@include box-sizing(border-box);
+						text-align: center;
+						font-size: 24px;
+						text-transform: uppercase;
+					}
+					.event-date {
+						position: absolute;
+						bottom: 0;
+						width: 100%;
+						padding: 0 20px;
+						@include box-sizing(border-box);
+						font-size: 14px;
+						text-align: right;
+					}
+					&:hover {
+						background: darken($light-blue, 8%);
+						.event-thumbnail-wrapper {
+							@include transform(translateX(0));
+							.event-thumbnail {
+								@include transform(translateX(0) skewX(8deg));
+								.event-picture {
+									@include opacity(1);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
