@@ -15,15 +15,31 @@ html {
 					color: $dark-blue;
 					@include transition(background 0.4s);
 					overflow: hidden;
+					text-align: center;
+					.event-title {
+						display: inline-block;
+						width: 250px;
+						padding: 0 20px;
+						@include box-sizing(border-box);
+						text-align: center;
+						font-size: 24px;
+						line-height: 24px;
+						text-transform: uppercase;
+						@include transform(translateX(0) translateY(0));
+						-webkit-transition: -webkit-transform 0.4s ease-in-out;
+						-moz-transition: -moz-transform 0.4s ease-in-out;
+						transition: transform 0.4s ease-in-out;
+					}
 					.event-thumbnail-wrapper {
-						position: relative;
+						position: absolute;
+						top: 0;
 						left: -10px;
 						width: 225px;
 						height: 100%;
 						@include transform(translateX(-200px));
-						-webkit-transition: -webkit-transform 0.4s;
-						-moz-transition: -moz-transform 0.4s;
-						transition: transform 0.4s;
+						-webkit-transition: -webkit-transform 0.4s ease-in-out;
+						-moz-transition: -moz-transform 0.4s ease-in-out;
+						transition: transform 0.4s ease-in-out;
 						@include transform-origin(0 0);
 						@include backface-visibility(hidden);
 						z-index: 10;
@@ -32,7 +48,7 @@ html {
 							height: 100%;
 							background: $dark-blue;
 							@include transform(skewX(8deg));
-							@include transition(skew 0.3s);
+							@include transition(skew 0.3s ease-in-out);
 						}
 						.event-thumbnail {
 							position: absolute;
@@ -50,7 +66,7 @@ html {
 								margin: -50px 0 0 -25px;
 								@include transform(skewX(-8deg));
 								@include opacity(0);
-								@include transition(opacity 0.25s);
+								@include transition(opacity 0.25s ease-in-out);
 							}
 						}
 						.event-places {
@@ -74,19 +90,10 @@ html {
 							background: $dark-blue;
 						}
 					}
-					.event-title {
-						position: absolute;
-						top: 30px;
-						width: 100%;
-						padding: 0 20px;
-						@include box-sizing(border-box);
-						text-align: center;
-						font-size: 24px;
-						text-transform: uppercase;
-					}
 					.event-date {
 						position: absolute;
 						bottom: 0;
+						right: 0;
 						width: 100%;
 						padding: 0 20px;
 						@include box-sizing(border-box);
@@ -95,6 +102,9 @@ html {
 					}
 					&:hover {
 						background: darken($light-blue, 8%);
+						.event-title {
+							@include transform(translateX(100px) translateY(5px));
+						}
 						.event-thumbnail-wrapper {
 							@include transform(translateX(0));
 							.event-thumbnail {
