@@ -1,6 +1,6 @@
 <?php
 
-namespace Payutc\OnyxBundle\Entity\Deletable;
+namespace Payutc\OnyxBundle\Entity\Activable;
 
 /**
  * DeletableEntityRepositoryInterface
@@ -8,12 +8,12 @@ namespace Payutc\OnyxBundle\Entity\Deletable;
  * Contains mandatory methods for all repositories of entities with a is_deleted property.
  * @author Florent SCHILDKNECHT
  */
-interface DeletableEntityRepositoryInterface
+interface ActivableEntityRepositoryInterface
 {
      /**
-     * Find all entities that have is_deleted property set up to false.
+     * Find all entities that have is_deleted and is_hidden property set up to false.
      *
      * @return array
      */
-     public function findAllNotDeleted();
+     public function findAllActive();
 }
