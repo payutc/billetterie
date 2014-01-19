@@ -12,6 +12,7 @@ use Payutc\OnyxBundle\Entity\Base\BaseEntity;
  *
  * @ORM\Table(name="prices")
  * @ORM\Entity(repositoryClass="Payutc\OnyxBundle\Entity\PriceRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Price extends BaseEntity
 {
@@ -584,5 +585,14 @@ class Price extends BaseEntity
     public function getEvent()
     {
         return $this->event;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function prePersist()
+    {
+        $this->setUpdatedAt(new \DateTime());
     }
 }

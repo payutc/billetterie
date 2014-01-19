@@ -597,6 +597,7 @@ class Event extends BaseEntity
      */
     public function preUpload()
     {
+        $this->setUpdatedAt(new \DateTime());
         if (!is_null($this->thumbnailFile)) {
             $this->thumbnail = sha1(uniqid(mt_rand(), true)) . '.' . $this->thumbnailFile->guessExtension();
         }

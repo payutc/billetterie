@@ -11,6 +11,7 @@ use Payutc\OnyxBundle\Entity\Base\BaseEntity;
  *
  * @ORM\Table(name="user_groups")
  * @ORM\Entity(repositoryClass="Payutc\OnyxBundle\Entity\UserGroupRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class UserGroup extends BaseEntity
 {
@@ -246,5 +247,14 @@ class UserGroup extends BaseEntity
     public function getInformations()
     {
         return $this->informations;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function prePersist()
+    {
+        $this->setUpdatedAt(new \DateTime());
     }
 }
