@@ -1,10 +1,12 @@
 {
-    "name": "symfony/framework-standard-edition",
+    "name": "Onyx - Billeterie de Payutc",
     "license": "MIT",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "Application web - Billeterie d'évènements associatifs de l'Université de Technologie de Compiègne",
     "autoload": {
-        "psr-0": { "": "src/" }
+        "psr-0": {
+            "": "src/"
+        }
     },
     "repositories": [
         {
