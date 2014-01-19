@@ -1,6 +1,6 @@
 <?php
 
-namespace Payutc\OnyxBundle\Entity\Activable;
+namespace Payutc\OnyxBundle\Entity\Base\Activable;
 
 /**
  * DeletableEntityRepositoryInterface

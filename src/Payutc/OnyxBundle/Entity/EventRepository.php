@@ -5,8 +5,8 @@ namespace Payutc\OnyxBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 
-use Payutc\OnyxBundle\Entity\Deletable\DeletableEntityRepositoryInterface;
-use Payutc\OnyxBundle\Entity\Activable\ActivableEntityRepositoryInterface;
+use Payutc\OnyxBundle\Entity\Base\Deletable\DeletableEntityRepositoryInterface;
+use Payutc\OnyxBundle\Entity\Base\Activable\ActivableEntityRepositoryInterface;
 
 /**
  * EventRepository
