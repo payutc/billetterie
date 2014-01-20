@@ -4,13 +4,16 @@ namespace Payutc\OnyxBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Payutc\OnyxBundle\Entity\Base\BaseEntity;
+
 /**
  * Ticket
  *
  * @ORM\Table(name="tickets")
  * @ORM\Entity(repositoryClass="Payutc\OnyxBundle\Entity\TicketRepository")
+ * @ORM\HasLifecycleCallbacks
  */
-class Ticket
+class Ticket extends BaseEntity
 {
     /**
      * @var integer
@@ -387,5 +390,14 @@ class Ticket
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function prePersist()
+    {
+        $this->setUpdatedAt(new \DateTime());
     }
 }
