@@ -23,7 +23,7 @@ class EventController extends FrontController
 		if ($this->get('security.context')->isGranted('ROLE_USER')) {
 			if ($buyer) {
 				foreach ($prices as $price) {
-					$tickets = array_merge($tickets, $em->getRepository('PayutcOnyxBundle:Ticket')->findAllActiveByPriceAndBuyer($price, $buyer));
+					$tickets = array_merge($tickets, $em->getRepository('PayutcOnyxBundle:Ticket')->findAllNotDeletedByPriceAndBuyer($price, $buyer));
 				}
 			}
 		}
