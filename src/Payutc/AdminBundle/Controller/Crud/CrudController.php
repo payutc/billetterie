@@ -77,9 +77,11 @@ class CrudController extends Controller
      * @param string    $entityName             The Entity Name
      * @param string    $entityViewNamespace    The Entity View Namespace
      * @param string    $redirection            The route to redirect when the creation is done
+     * @param string    $additionnalParameters  Some eventual additionnal parameters for the redirection
+     * @param string    $postFlushCallback      An eventual callback to call after the database storage
      * @return Response
      */
-    public function createEntity($request, $entity, $form, $entityName, $entityViewNamespace, $redirection, $additionnalParameters = array())
+    public function createEntity($request, $entity, $form, $entityName, $entityViewNamespace, $redirection, $additionnalParameters = array(), $postFlushCallback = null)
     {
         $form = $this->createForm($form, $entity);
         $form->bind($request);
@@ -87,8 +89,12 @@ class CrudController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
-
             $em->flush();
+
+            if ($postFlushCallback && is_callable($postFlushCallback)) {
+                $postFlushCallback($entity);
+            }
+
             $this->getRequest()->getSession()->getFlashBag()->add('success', 'La nouvelle entité "' . $entityName . '": [' . $entity . '] a bien été créée.');
 
             if (array_key_exists('routeParams', $additionnalParameters)) {
@@ -259,9 +265,11 @@ class CrudController extends Controller
      * @param string    $entityRepositoryNamespace  The EntityRepository Namespace
      * @param string    $entityViewNamespace        The Entity View Namespace
      * @param string    $redirection                The route to redirect when the creation is done
+     * @param string    $additionnalParameters      Some eventual additionnal parameters for the redirection
+     * @param string    $postFlushCallback          An eventual callback to call after the database storage
      * @return Response
      */
-    public function updateEntity($request, $id, $form, $entityName, $entityRepositoryNamespace, $entityViewNamespace, $redirection, $additionnalParameters = array())
+    public function updateEntity($request, $id, $form, $entityName, $entityRepositoryNamespace, $entityViewNamespace, $redirection, $additionnalParameters = array(), $postFlushCallback = null)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -277,6 +285,10 @@ class CrudController extends Controller
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
+
+            if ($postFlushCallback && is_callable($postFlushCallback)) {
+                $postFlushCallback($entity);
+            }
 
             $this->getRequest()->getSession()->getFlashBag()->add('success', 'L\'entité "' . $entityName . '": [' . $entity . '] a bien été mise à jour.');
 
@@ -334,6 +346,7 @@ class CrudController extends Controller
             $entity->setRemovedAt(new \DateTime());
             $em->persist($entity);
             $em->flush();
+
             $this->getRequest()->getSession()->getFlashBag()->add('success', 'L\'entité "' . $entityName . '": [' . $entityDisplayName . '] a bien été supprimée.');
         } else {
             $this->getRequest()->getSession()->getFlashBag()->add('error', 'L\'entité "' . $entityName . '": [' . $entity . '] n\'a pas pu être supprimée.');
@@ -375,6 +388,7 @@ class CrudController extends Controller
 
             $em->remove($entity);
             $em->flush();
+
             $this->getRequest()->getSession()->getFlashBag()->add('success', 'L\'entité "' . $entityName . '": [' . $entityDisplayName . '] a bien été supprimée de la base de données.');
         } else {
             $this->getRequest()->getSession()->getFlashBag()->add('error', 'L\'entité "' . $entityName . '": [' . $entity . '] n\'a pas pu être supprimée de la base de données.');

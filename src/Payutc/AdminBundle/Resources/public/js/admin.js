@@ -10,10 +10,11 @@ $(function () {
         $('.btn-confirm').trigger('click', true);
     });
     $('.datetimepicker').datetimepicker();
-    // $('.datepicker').datetimepicker({
-    //     pickTime: false
-    // });
-    // $('.timepicker').datetimepicker({
-    //     pickDate: false
-    // });
+    $('.datepicker').datetimepicker({
+        pickTime: false
+    });
+    $('.timepicker').datetimepicker({
+        pickDate: false
+    });
+    $('.table-sorted').tablesorter();
 });

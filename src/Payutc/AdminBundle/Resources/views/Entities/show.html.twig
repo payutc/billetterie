@@ -5,17 +5,26 @@
 		<h1>{% block entity_title %}{% endblock %}</h1>
 	</div>
 
-	<table class='record_properties table table-stripped table-bordered table-condensed'>
+	{% block extra_before_detail %}{% endblock %}
+	<table class='record_properties table table-stripped table-bordered table-condensed table-hover'>
 		<tbody>
 			{% block entity_table %}{% endblock %}
 		</tbody>
 	</table>
+	{% block extra_after_detail %}{% endblock %}
 	
 	<div class='link-wrapper'>
 		{% block entity_list_link %}
 			<a class='btn btn-info' {% block entity_list_path %}{% endblock %}>Revenir à la liste</a>
 		{% endblock %}
 		<a class='btn btn-info' {% block entity_edit_path %}{% endblock %}>Editer</a>
+		{% block entity_state_link %}
+			{% if entity.isHidden %}
+				<a class='btn btn-info' {% block entity_activate_path %}{% endblock %}>Activer</a>
+			{% else %}
+				<a class='btn btn-info' {% block entity_unactivate_path %}{% endblock %}>Désactiver</a>
+			{% endif %}
+		{% endblock %}
 		{% block entity_delete_form %}
 			<form {% block entity_delete_path %}{% endblock %} class='inline-block' method='post'>
 				{{ form_widget(delete_form) }}

@@ -67,3 +67,8 @@ swiftmailer:
     spool:
         type: file
         path: %kernel.root_dir%/cron/mails/spool
+
+# Gregwar Image Configuration
+gregwar_image:
+    cache_dir:       %kernel.root_dir%/cache/gregwar
+    throw_exception: false

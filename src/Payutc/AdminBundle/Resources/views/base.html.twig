@@ -4,8 +4,9 @@
 
 {% block stylesheets %}
 	<link rel='stylesheet' href='{{ asset('bundles/payutcadmin/css/vendor/bootstrap/bootstrap-3.0.0.min.css') }}' />
-	<link rel='stylesheet' href='{{ asset('bundles/payutcadmin/css/vendor/bootstrap/bootstrap-file-input.css') }}' />
-	<link rel='stylesheet' href='{{ asset('bundles/payutcadmin/css/vendor/bootstrap/bootstrap-datetimepicker.min.css') }}' />
+	<link rel='stylesheet' href='{{ asset('bundles/payutcadmin/css/vendor/bootstrap/bootstrap.file-input.min.css') }}' />
+	<link rel='stylesheet' href='{{ asset('bundles/payutcadmin/css/vendor/bootstrap/bootstrap.datetimepicker-2.1.11.min.css') }}' />
+	<link rel='stylesheet' href='{{ asset('bundles/payutcadmin/css/vendor/jquery/jquery.tablesorter-2.0.min.css') }}' />
 	<link rel='stylesheet' href='{{ asset('bundles/payutcadmin/css/admin.min.css') }}' />
 {% endblock %}
 
@@ -83,13 +84,14 @@
 {% endblock %}
 
 {% block javascripts %}
-	<script src='{{ asset('bundles/payutcadmin/js/vendor/jquery-1.10.1.min.js') }}'></script>
-	<script src='{{ asset('bundles/payutcadmin/js/vendor/moment-2.3.1.js') }}'></script>
+	<script src='{{ asset('bundles/payutcadmin/js/vendor/jquery-1.10.2.min.js') }}'></script>
+	<script src='{{ asset('bundles/payutcadmin/js/vendor/moment-2.3.1.min.js') }}'></script>
 	<script src='{{ asset('bundles/payutcadmin/js/vendor/bootstrap/bootstrap-3.0.0.min.js') }}'></script>
-	<script src='{{ asset('bundles/payutcadmin/js/vendor/bootstrap/bootstrap-file-input.js') }}'></script>
-	<script src='{{ asset('bundles/payutcadmin/js/vendor/bootstrap/bootstrap-datetimepicker.js') }}'></script>
-	<script src='{{ asset('bundles/payutcadmin/js/vendor/bootstrap/bootstrap-modal-manager.js') }}'></script>
-	<script src='{{ asset('bundles/payutcadmin/js/vendor/bootstrap/bootbox.min.js') }}'></script>
+	<script src='{{ asset('bundles/payutcadmin/js/vendor/bootstrap/bootstrap.file-input.min.js') }}'></script>
+	<script src='{{ asset('bundles/payutcadmin/js/vendor/bootstrap/bootstrap.datetimepicker-2.1.11.min.js') }}'></script>
+	<script src='{{ asset('bundles/payutcadmin/js/vendor/bootstrap/bootstrap.modal-manager-2.1.min.js') }}'></script>
+	<script src='{{ asset('bundles/payutcadmin/js/vendor/bootstrap/bootbox-3.3.0.min.js') }}'></script>
+	<script src='{{ asset('bundles/payutcadmin/js/vendor/jquery/jquery.tablesorter-2.0.min.js') }}'></script>
 	<script src='{{ asset('bundles/payutcadmin/js/plugins.js') }}'></script>
 	<script src='{{ asset('bundles/payutcadmin/js/admin.js') }}'></script>
 {% endblock %}

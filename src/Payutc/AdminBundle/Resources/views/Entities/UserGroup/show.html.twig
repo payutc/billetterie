@@ -15,10 +15,10 @@
 		<th>Modifié le</th>
 		<td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
 	</tr>
-	<tr>
-		<th>Actif ?</th>
-		<td>{{ entity.isHidden }}</td>
-	</tr>
+    <tr class='{% if entity.isHidden %}text-muted{% else %}text-info{% endif %}'>
+        <th>Actif ?</th>
+        <td>{% if entity.isHidden %}Non{% else %}Oui{% endif %}</td>
+    </tr>
 	<tr>
 		<th>Nom</th>
 		<td>{{ entity.title }}</td>
@@ -28,6 +28,10 @@
 		<td>{{ entity.informations }}</td>
 	</tr>
 {% endblock %}
+
+{% block entity_activate_path %}href="{{ path('payutc_admin_usergroup_activate', { 'id': entity.id }) }}"{% endblock %}
+
+{% block entity_unactivate_path %}href="{{ path('payutc_admin_usergroup_unactivate', { 'id': entity.id }) }}"{% endblock %}
 		
 {% block entity_list_path %}href="{{ path('payutc_admin_usergroups') }}"{% endblock %}
 

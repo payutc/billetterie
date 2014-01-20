@@ -1,6 +1,6 @@
 {% extends 'PayutcAdminBundle:Entities:show.html.twig' %}
 
-{% block entity_title %}Ticket{% endblock %}
+{% block entity_title %}Utilisateur{% endblock %}
 
 {% block entity_table %}
 	<tr>
@@ -9,7 +9,7 @@
 	</tr>
 	<tr>
 		<th>Enregistré le</th>
-		<td>{{ entity.registredAt|date('Y-m-d H:i:s') }}</td>
+		<td>{{ entity.registredAt|date('d-m-Y H:i:s') }}</td>
 	</tr>
 	<tr>
 		<th>Prénom</th>
@@ -23,7 +23,17 @@
 		<th>Email</th>
 		<td>{{ entity.email }}</td>
 	</tr>
+    <tr class='{% if entity.isEmailValidated %}text-info{% else %}text-muted{% endif %}'>
+        <th>Email validé ?</th>
+        <td>{% if entity.isEmailValidated %}Oui{% else %}Non{% endif %}</td>
+    </tr>
+	<tr>
+		<th>Login</th>
+		<td>{{ entity.login }}</td>
+	</tr>
 {% endblock %}
+
+{% block entity_state_link %}{% endblock %}
 		
 {% block entity_list_path %}href="{{ path('payutc_admin_users') }}"{% endblock %}
 
