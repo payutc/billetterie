@@ -2,8 +2,8 @@
 
 namespace Payutc\OnyxBundle\Exception;
 
-use \Exception;
-use \RuntimeException;
+use Exception;
+use RuntimeException;
 
 class BadTokenException extends RuntimeException
 {

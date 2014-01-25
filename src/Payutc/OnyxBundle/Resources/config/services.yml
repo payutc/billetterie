@@ -6,3 +6,7 @@ services:
     cas.security.authentication.provider:
         class:  Payutc\OnyxBundle\Security\Authentication\Provider\CasProvider
         arguments: ['', %kernel.cache_dir%/security/nonces, @doctrine.orm.entity_manager, @security.encoder_factory, %cas_url%, %ginger_url%, %ginger_key%, @payutc_admin.payutc_client, %mailer_from_name%, %mailer_from_email%, %mailer_subjects_cas_authentication%]
+
+    onyx.basket:
+        class: Payutc\OnyxBundle\Basket\Basket
+        arguments: [@session, @security.context, @doctrine.orm.entity_manager]

@@ -81,6 +81,13 @@ class Ticket extends BaseEntity
     private $paidPrice;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="pdf", type="string", length=255, nullable=true)
+     */
+    private $PDF;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="buyer_id", referencedColumnName="id")
      */
@@ -393,11 +400,52 @@ class Ticket extends BaseEntity
     }
 
     /**
+     * Set PDF
+     *
+     * @param string $PDF
+     * @return Ticket
+     */
+    public function setPDF($PDF)
+    {
+        $this->PDF = $PDF;
+    
+        return $this;
+    }
+
+    /**
+     * Get PDF
+     *
+     * @return string 
+     */
+    public function getPDF()
+    {
+        return $this->PDF;
+    }
+
+    /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
     public function prePersist()
     {
         $this->setUpdatedAt(new \DateTime());
+    }
+
+    /**
+     * Validate Ticket
+     *
+     * @return Ticket
+     */
+    public function validate()
+    {
+        // Generate PDF and store it... https://github.com/KnpLabs/KnpSnappyBundle
+        // $pdf = rand(0, uniqid()) . '.pdf';
+        // $this->setPDF($pdf);
+
+        // Set Ticket as paid...
+        $this->setPaidAt(new \DateTime());
+        $this->setPaidPrice($this->getPrice()->getPrice());
+
+        return $this;
     }
 }
