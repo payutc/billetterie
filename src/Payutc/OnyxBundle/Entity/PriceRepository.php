@@ -83,4 +83,23 @@ class PriceRepository extends EntityRepository implements DeletableEntityReposit
 
 		return $qb->getQuery()->getResult();
 	}
+
+	public function getQBOfAvailableForEventAndUserGroups($event, $userGroups)
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('p')
+			->from('PayutcOnyxBundle:Price', 'p')
+			->leftJoin('p.userGroups', 'ug')
+			->where($qb->expr()->isNull('p.removedAt'))
+			->andWhere('p.isHidden = :isHidden')
+			->andWhere('p.event = :event')
+			// ->andWhere($qb->expr()->in('ug.id', ':userGroups'))
+			->setParameter('isHidden', false)
+			->setParameter('event', $event)
+			// ->setParameter('userGroups', $userGroups)
+		;
+
+		return $qb;
+	}
 }

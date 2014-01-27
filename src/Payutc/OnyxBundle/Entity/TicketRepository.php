@@ -199,4 +199,30 @@ class TicketRepository extends EntityRepository implements DeletableEntityReposi
 
 		return $qb->getQuery()->getSingleScalarResult();
 	}
+
+	/**
+     * Find one entity by id that have removed_at set up to null.
+     *
+     * @return Event
+     */
+	public function findOneNotDeleted($id)
+	{
+		$ticket = null;
+
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('t')
+			->from('PayutcOnyxBundle:Ticket', 't')
+			->where($qb->expr()->isNull('t.removedAt'))
+			->andWhere('t.id = :id')
+			->setParameter('id', $id)
+		;
+
+		try {
+			$ticket = $qb->getQuery()->getSingleResult();
+		}
+		catch (NoResultException $e) {}
+
+		return $ticket;
+	}
 }

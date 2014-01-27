@@ -76,7 +76,7 @@ class Ticket extends BaseEntity
     /**
      * @var integer
      *
-     * @ORM\Column(name="paid_price", type="integer")
+     * @ORM\Column(name="paid_price", type="integer", nullable=true)
      */
     private $paidPrice;
 
@@ -436,11 +436,9 @@ class Ticket extends BaseEntity
      *
      * @return Ticket
      */
-    public function validate()
+    public function validate($pdfName)
     {
-        // Generate PDF and store it... https://github.com/KnpLabs/KnpSnappyBundle
-        // $pdf = rand(0, uniqid()) . '.pdf';
-        // $this->setPDF($pdf);
+        $this->setPDF($pdfName);
 
         // Set Ticket as paid...
         $this->setPaidAt(new \DateTime());

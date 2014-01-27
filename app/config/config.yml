@@ -72,3 +72,14 @@ swiftmailer:
 gregwar_image:
     cache_dir:       %kernel.root_dir%/cache/gregwar
     throw_exception: false
+
+# Snappy PDF generation config
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltopdf
+        options:    []
+    image:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltoimage
+        options:    []

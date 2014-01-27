@@ -23,9 +23,42 @@
 
 {% block checkbox_widget %}
 {% spaceless %}
-	<input type='checkbox' {{ block('widget_attributes') }}{% if value is defined %} value='{{ value }}'{% endif %}{% if checked %} checked='checked'{% endif %} />
+	<input type='checkbox' {{ block('widget_attributes') }}{% if value is defined %} value='{{ value }}'{% endif %}{% if checked %} checked='checked'{% endif %} class='form-control' />
 {% endspaceless %}
 {% endblock checkbox_widget %}
+
+{% block choice_widget_expanded %}
+{% spaceless %}
+    <div {{ block('widget_container_attributes') }}>
+    {% for child in form %}
+        {{ form_widget(child) }}
+        {{ form_label(child) }}
+    {% endfor %}
+    </div>
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block choice_widget_collapsed %}
+{% spaceless %}
+    {% if required and empty_value is none and not empty_value_in_choices %}
+        {% set required = false %}
+    {% endif %}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class='form-control'>
+        {% if empty_value is not none %}
+            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
+        {% endif %}
+        {% if preferred_choices|length > 0 %}
+            {% set options = preferred_choices %}
+            {{ block('choice_widget_options') }}
+            {% if choices|length > 0 and separator is not none %}
+                <option disabled="disabled">{{ separator }}</option>
+            {% endif %}
+        {% endif %}
+        {% set options = choices %}
+        {{ block('choice_widget_options') }}
+    </select>
+{% endspaceless %}
+{% endblock choice_widget_collapsed %}
 
 {% block radio_widget %}
 {% spaceless %}

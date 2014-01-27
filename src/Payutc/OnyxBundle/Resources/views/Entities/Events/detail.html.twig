@@ -45,7 +45,7 @@
 										<tr>
 											<td>{{ ticket.price.title }}</td>
 											<td>{{ ticket.paidAt|date('d/m/Y') }}</td>
-											<td>{{ ticket.paidPrice ~ '€' }} <a href='#print' class='pull-right'><i class='glyphicon glyphicon-print'></i></a></td>
+											<td>{{ ticket.paidPrice ~ '€' }} <a href='{{ path('pay_utc_onyx_ticket_send_page', { 'ticketId': ticket.id }) }}' class='pull-right'><i class='glyphicon glyphicon-print'></i></a></td>
 										</tr>
 									{% endfor %}
 								</tbody>
@@ -70,7 +70,7 @@
 						{% endif %}
 					{% endfor %}
 					<div class='link-wrapper'>
-						<a href='#booking' class='btn btn-info'>Réserver</a>
+						<a href='{{ path('pay_utc_onyx_ticket_book_page', { 'eventId': event.id }) }}' class='btn btn-info'>Réserver</a>
 					</div>
 				</div>
 			</div>

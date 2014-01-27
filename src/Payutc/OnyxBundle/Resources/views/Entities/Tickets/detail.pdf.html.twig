@@ -1,0 +1,17 @@
+{% extends 'PayutcOnyxBundle::pdf.html.twig' %}
+
+{% block app_content %}
+    <div class='page-title'>
+        <h1>Votre billet : {{ event.title }}</h1>
+    </div>
+    <p class='lead'>Bonjour {{ ticket.buyer.firstname }} {{ ticket.buyer.name }}</p>
+    <p>
+        Voici votre billet pour {{ event.title }}
+        <br />
+        Merci de l'imprimer et de le présenter avant l'entrée.
+        <br />
+        A très bientôt,
+        <br />
+        L'équipe Payutc.
+    </p>
+{% endblock %}

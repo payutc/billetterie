@@ -17,6 +17,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Gregwar\ImageBundle\GregwarImageBundle(),
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Payutc\OnyxBundle\PayutcOnyxBundle(),
             new Payutc\AdminBundle\PayutcAdminBundle(),
         );
