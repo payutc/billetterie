@@ -2,7 +2,10 @@
 
 namespace Payutc\OnyxBundle\Basket\Exception;
 
-class ExpiredPriceException extends BasketException
+use Exception;
+use RuntimeException;
+
+class BasketException extends RuntimeException
 {
     public function __construct($message = '', $code = 400, Exception $previous = null)
     {

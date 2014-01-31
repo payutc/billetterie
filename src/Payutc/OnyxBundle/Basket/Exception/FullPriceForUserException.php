@@ -2,10 +2,7 @@
 
 namespace Payutc\OnyxBundle\Basket\Exception;
 
-use Exception;
-use RuntimeException;
-
-class TooMuchPlacesOfPriceForUserException extends RuntimeException
+class FullPriceForUserException extends BasketException
 {
     public function __construct($message = '', $code = 400, Exception $previous = null)
     {

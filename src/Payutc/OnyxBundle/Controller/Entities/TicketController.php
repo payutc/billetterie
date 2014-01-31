@@ -70,6 +70,7 @@ class TicketController extends FrontController
         }
 
         $ticket = new Ticket();
+        // TODO: generate Barcode and Payutc id ?
         // $ticket->setBarcode(null);
         $ticket->setBuyer($user);
         $ticketType = $this->createForm(new TicketType($event, $user), $ticket);
@@ -79,26 +80,31 @@ class TicketController extends FrontController
         if ($ticketType->isValid()) {
             $basket = $this->get('onyx.basket');
 
-            $pdf = $this->generatePDFName($user);
+            // TODO: generate PDF only AFTER paiement
+            // These commented lines will have to move to the paiement successfull redirection route.
+            //
+            // $pdf = $this->generatePDFName($user);
 
-            $this->get('knp_snappy.pdf')->generateFromHtml($this->renderView('PayutcOnyxBundle:Entities/Tickets:detail.pdf.html.twig', array(
-                'ticket'  => $ticket,
-                'event' => $event
-            )), $pdf);
+            // $this->get('knp_snappy.pdf')->generateFromHtml($this->renderView('PayutcOnyxBundle:Entities/Tickets:detail.pdf.html.twig', array(
+            //     'ticket'  => $ticket,
+            //     'event' => $event
+            // )), $pdf);
 
-            $ticket->validate($pdf);
+            // $ticket->validate($pdf);
 
-            $em->persist($ticket);
-            $em->flush();
+            if ($basket->add($ticket)) {
+                $em->persist($ticket);
+                $em->flush();
 
-            $basket->add($ticket);
+                $request->getSession()->getFlashBag()->add('success', 'Votre place est bien réservée !');
 
-            $request->getSession()->getFlashBag()->add('success', 'Votre place est bien réservée !');
-
-            if ($this->sendPDFByMail($ticket)) {
-                $request->getSession()->getFlashBag()->add('info', 'Votre place vient de vous être envoyée par mail.');
+                if ($this->sendPDFByMail($ticket)) {
+                    $request->getSession()->getFlashBag()->add('info', 'Votre place vient de vous être envoyée par mail.');
+                } else {
+                    $request->getSession()->getFlashBag()->add('danger', 'Votre place n\'a pas pu vous être envoyée par mail. Veuillez contacter l\'association à l\'origine de l\'évènement.');
+                }
             } else {
-                $request->getSession()->getFlashBag()->add('danger', 'Votre place n\'a pas pu vous être envoyée par mail. Veuillez contacter l\'association à l\'origine de l\'évènement.');
+                $request->getSession()->getFlashBag()->add('danger', 'Une erreur est survenue !');
             }
 
             return $this->redirect($this->generateUrl('pay_utc_onyx_event_page', array(
