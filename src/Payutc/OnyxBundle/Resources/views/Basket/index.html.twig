@@ -1,0 +1,48 @@
+{% extends 'PayutcOnyxBundle::base.html.twig' %}
+
+{#
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel='stylesheet' href='{{ asset('bundles/payutconyx/css/basket.min.css') }}' />
+{% endblock %}
+#}
+
+{% block app_content %}
+    <section id='connection' class='jumbotron'>
+        <h1>Votre panier</h1>
+        <p class='lead'>{{ tickets|length }} place{% if tickets|length > 1 %}s{% endif %} en cours de réservation</p>
+    </section>
+    <section id='tickets' class='well row'>
+        <table class='table table-hover table-condensed table-bordered table-responsive'>
+            <thead>
+                <tr>
+                    <th>Evènement</th>
+                    <th>Tarif</th>
+                    <th>Prix</th>
+                    <th>Pour</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                    {% if ticket and ticket.price and ticket.price.event %}
+                        <tr>
+                            <td>{{ ticket.price.event.title|capitalize }}<a href='{{ path('pay_utc_onyx_event_page', { 'id': ticket.price.event.id }) }}' class='pull-right'>Détail <span class='glyphicon glyphicon-file'></span></a></td>
+                            <td>{{ ticket.price.title }}</td>
+                            <td>{{ ticket.price.price }}€</td>
+                            <td>{{ ticket.firstname|title ~ ' ' ~ ticket.lastname|upper }}<a href='{{ path('pay_utc_onyx_basket_ticket_edit_page', { 'ticketId': ticket.id }) }}' class='pull-right'>Editer <span class='glyphicon glyphicon-pencil'></span></a></td>
+                        </tr>
+                    {% endif %}
+                {% else %}
+                    <tr class='info'>
+                        <td colspan='4'>Aucune place de réservée pour le moment.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if tickets|length > 0 %}
+            <div>
+                <a href='#PAYUTC_FOR_MATTGU74' class='btn btn-lg btn-success'>Valider et payer les tickets</a>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

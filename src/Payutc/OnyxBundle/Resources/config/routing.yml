@@ -33,3 +33,7 @@ pay_utc_onyx_events:
 pay_utc_onyx_tickets:
     resource: "@PayutcOnyxBundle/Resources/config/routing/entities/tickets.yml"
     prefix: /tickets
+
+pay_utc_onyx_basket:
+    resource: "@PayutcOnyxBundle/Resources/config/routing/basket/basket.yml"
+    prefix: /basket

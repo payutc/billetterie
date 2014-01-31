@@ -62,6 +62,7 @@ class Basket
             try {
                 if ($this->isTicketAvailable($ticket)) {
                     $this->collection->add($ticket);
+                    $this->store();
                     $ticketIsAdded = true;
                 }
             }
@@ -82,8 +83,25 @@ class Basket
     public function remove(Ticket $ticket)
     {
         $this->collection->removeElement($ticket);
+        $this->store();
 
         return $this;
+    }
+
+    /**
+     * Refresh the basket item in the session.
+     *
+     * @return Basket
+     */
+    public function refresh(Ticket $ticket)
+    {
+        $this->collection->forAll(function ($key, $item) use ($ticket) {
+            if ($item->getId() === $ticket->getId()) {
+                $this->collection->set($key, $ticket);
+            }
+        });
+
+        return $this->store();
     }
 
     /**
@@ -91,11 +109,21 @@ class Basket
      *
      * @return Basket
      */
-    public function store()
+    protected function store()
     {
         $this->session->set('onyxBasketCollection', $this->collection);
 
         return $this;
+    }
+
+    /**
+     * Count the basket items
+     *
+     * @return Basket
+     */
+    public function count()
+    {
+        return $this->getCollection()->count();
     }
 
     /**
@@ -237,5 +265,19 @@ class Basket
     public function getCollection()
     {
         return $this->collection;
+    }
+
+    /**
+     * Get collection
+     *
+     * @return Collcetion
+     */
+    public function getAllItems()
+    {
+        $items = array();
+        $this->collection->forAll(function ($key, $item) {
+            $items[] = $this->getEntityManager()->getRepository(get_class($item))->find($item->getId());
+        });
+        return $items;
     }
 }

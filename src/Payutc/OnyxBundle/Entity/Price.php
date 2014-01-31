@@ -2,6 +2,8 @@
 
 namespace Payutc\OnyxBundle\Entity;
 
+use Serializable;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -14,7 +16,7 @@ use Payutc\OnyxBundle\Entity\Base\BaseEntity;
  * @ORM\Entity(repositoryClass="Payutc\OnyxBundle\Entity\PriceRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Price extends BaseEntity
+class Price extends BaseEntity implements Serializable
 {
     /**
      * @var integer
@@ -164,6 +166,26 @@ class Price extends BaseEntity
     public function toString()
     {
         return $this->getTitle();
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
     }
 
     /**

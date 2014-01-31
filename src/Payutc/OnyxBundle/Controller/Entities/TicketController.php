@@ -92,17 +92,17 @@ class TicketController extends FrontController
 
             // $ticket->validate($pdf);
 
+            // if ($this->sendPDFByMail($ticket)) {
+            //     $request->getSession()->getFlashBag()->add('info', 'Votre place vient de vous être envoyée par mail.');
+            // } else {
+            //     $request->getSession()->getFlashBag()->add('danger', 'Votre place n\'a pas pu vous être envoyée par mail. Veuillez contacter l\'association à l\'origine de l\'évènement.');
+            // }
+
             if ($basket->add($ticket)) {
                 $em->persist($ticket);
                 $em->flush();
 
                 $request->getSession()->getFlashBag()->add('success', 'Votre place est bien réservée !');
-
-                if ($this->sendPDFByMail($ticket)) {
-                    $request->getSession()->getFlashBag()->add('info', 'Votre place vient de vous être envoyée par mail.');
-                } else {
-                    $request->getSession()->getFlashBag()->add('danger', 'Votre place n\'a pas pu vous être envoyée par mail. Veuillez contacter l\'association à l\'origine de l\'évènement.');
-                }
             } else {
                 $request->getSession()->getFlashBag()->add('danger', 'Une erreur est survenue !');
             }

@@ -1,0 +1,20 @@
+pay_utc_onyx_basket_page:
+    pattern:  /
+    defaults:
+        _controller: PayutcOnyxBundle:Basket/Basket:index
+    requirements:
+        _method: get
+
+pay_utc_onyx_basket_ticket_edit_page:
+    pattern:  /ticket/{ticketId}/edit
+    defaults:
+        _controller: PayutcOnyxBundle:Basket/Basket:edit
+    requirements:
+        _method: get
+
+pay_utc_onyx_basket_ticket_update_page:
+    pattern:  /ticket/{ticketId}/update
+    defaults:
+        _controller: PayutcOnyxBundle:Basket/Basket:update
+    requirements:
+        _method: post

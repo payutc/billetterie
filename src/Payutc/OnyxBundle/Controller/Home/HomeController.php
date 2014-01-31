@@ -3,7 +3,6 @@
 namespace Payutc\OnyxBundle\Controller\Home;
 
 use Payutc\OnyxBundle\Controller\FrontController;
-use Payutc\OnyxBundle\Form\UserType;
 use Payutc\OnyxBundle\Security\Cas;
 
 class HomeController extends FrontController

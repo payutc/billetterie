@@ -2,6 +2,8 @@
 
 namespace Payutc\OnyxBundle\Entity;
 
+use Serializable;
+
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -16,7 +18,7 @@ use Payutc\OnyxBundle\Entity\Base\BaseEntity;
  * @ORM\Entity(repositoryClass="Payutc\OnyxBundle\Entity\UserRepository")
  * @UniqueEntity(fields="email", message="Cet email est déjà utilisé.")
  */
-class User extends BaseEntity implements AdvancedUserInterface, \Serializable
+class User extends BaseEntity implements AdvancedUserInterface, Serializable
 {
     /**
      * @var integer

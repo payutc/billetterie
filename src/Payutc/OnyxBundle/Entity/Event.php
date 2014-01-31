@@ -2,6 +2,8 @@
 
 namespace Payutc\OnyxBundle\Entity;
 
+use Serializable;
+
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,7 +16,7 @@ use Payutc\OnyxBundle\Entity\Base\BaseEntity;
  * @ORM\Entity(repositoryClass="Payutc\OnyxBundle\Entity\EventRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Event extends BaseEntity
+class Event extends BaseEntity implements Serializable
 {
     /**
      * @var integer
@@ -149,6 +151,26 @@ class Event extends BaseEntity
     public function toString()
     {
         return $this->title;
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Payutc\OnyxBundle\Entity;
 
+use Serializable;
+
 use Doctrine\ORM\Mapping as ORM;
 
 use Payutc\OnyxBundle\Entity\Base\BaseEntity;
@@ -13,7 +15,7 @@ use Payutc\OnyxBundle\Entity\Base\BaseEntity;
  * @ORM\Entity(repositoryClass="Payutc\OnyxBundle\Entity\TicketRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Ticket extends BaseEntity
+class Ticket extends BaseEntity implements Serializable
 {
     /**
      * @var integer
@@ -118,12 +120,32 @@ class Ticket extends BaseEntity
 
     public function __toString()
     {
-        return $this->getBarcode();
+        return ($this->getBarcode() ? $this->getBarcode() : '');
     }
 
     public function toString()
     {
-        return $this->getBarcode();
+        return ($this->getBarcode() ? $this->getBarcode() : '');
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
     }
 
     /**
