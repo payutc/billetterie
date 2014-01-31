@@ -173,6 +173,31 @@ class TicketRepository extends EntityRepository implements DeletableEntityReposi
 	}
 
 	/**
+     * Get the count of all paid tickets for the given event.
+     *
+     * @param Event $event
+     * @param Price $price
+     * @return integer
+     */
+	public function countAllPaidForEventAndPrice($event, $price)
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select($qb->expr()->count('t.id'))
+			->from('PayutcOnyxBundle:Ticket', 't')
+			->leftJoin('t.price', 'p')
+			->where($qb->expr()->isNull('t.removedAt'))
+			->andWhere($qb->expr()->isNotNull('t.paidAt'))
+			->andWhere('t.price = :price')
+			->andWhere('p.event = :event')
+			->setParameter('price', $price)
+			->setParameter('event', $event)
+		;
+
+		return $qb->getQuery()->getSingleScalarResult();
+	}
+
+	/**
      * Get the count of all paid tickets for the given event and buyer.
      *
      * @param Event $event
@@ -190,11 +215,11 @@ class TicketRepository extends EntityRepository implements DeletableEntityReposi
 			->where($qb->expr()->isNull('t.removedAt'))
 			->andWhere($qb->expr()->isNotNull('t.paidAt'))
 			->andWhere('t.price = :price')
-			->andWhere('t.buyer = :buyer')
 			->andWhere('p.event = :event')
+			->andWhere('t.buyer = :buyer')
 			->setParameter('price', $price)
-			->setParameter('buyer', $buyer)
 			->setParameter('event', $event)
+			->setParameter('buyer', $buyer)
 		;
 
 		return $qb->getQuery()->getSingleScalarResult();
