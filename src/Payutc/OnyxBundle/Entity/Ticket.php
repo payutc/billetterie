@@ -57,14 +57,14 @@ class Ticket extends BaseEntity implements Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="firstname", type="string", length=100)
+     * @ORM\Column(name="firstname", type="string", length=100, nullable=true)
      */
     private $firstname;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastname", type="string", length=100)
+     * @ORM\Column(name="lastname", type="string", length=100, nullable=true)
      */
     private $lastname;
 
