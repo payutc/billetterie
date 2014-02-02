@@ -30,19 +30,19 @@ class Basket
      */
     public function __construct(Session $session, SecurityContext $context, EntityManager $em)
     {
+        $this->collection = new ArrayCollection();
+
         // Minimal ROLE to buy some places
         if (!$context->isGranted('ROLE_USER')) {
-            return;
+            return $this;
         }
 
         $this->session = $session;
         $this->em = $em;
         $this->user = $context->getToken()->getUser();
 
-        $this->collection = $this->session->get('onyxBasketCollection');
-
-        if (!$this->collection) {
-            $this->collection = new ArrayCollection();
+        if ($this->session->get('onyxBasketCollection') instanceof ArrayCollection) {
+            $this->collection = $this->session->get('onyxBasketCollection');
         }
 
         return $this;
@@ -67,6 +67,8 @@ class Basket
                 }
             }
             catch (BasketException $e) {
+                // echo '<pre>';
+                // exit(var_dump(get_class($e)));
                 $this->getSession()->getFlashBag()->add('warning', $e->getMessage());
             }
         }
@@ -145,7 +147,7 @@ class Basket
                 $this->remove($ticket);
             }
 
-            if ($availability) {                
+            if ($availability) {
                 // TODO: Paiement ???
 
                 $this->getEntityManager()->persist($ticket);
@@ -182,44 +184,44 @@ class Basket
         // Check the event global capacity
         $eventCapacity = $ticket->getPrice()->getEvent()->getCapacity();
         $eventPaidPlaces = $this->getEntityManager()->getRepository('PayutcOnyxBundle:Ticket')->countAllPaidForEvent($ticket->getPrice()->getEvent());
-        
+
         if ($eventCapacity <= $eventPaidPlaces) {
             $availability = false;
             throw new FullEventException();
         }
-        
+
         // Check the places allowed for the user
         $allowedPlacesForUser = $ticket->getPrice()->getEvent()->getMaxPlacesForUser();
         $eventPaidPlacesByUser = $this->getEntityManager()->getRepository('PayutcOnyxBundle:Ticket')->countAllPaidForEventAndBuyer($ticket->getPrice()->getEvent(), $this->getUser());
-        
+
         if ($allowedPlacesForUser <= $eventPaidPlacesByUser) {
             $availability = false;
             throw new FullEventForUserException();
         }
-        
+
         // Check the price capacity
         $priceCapacity = $ticket->getPrice()->getCapacity();
         $pricePaidPlaces = $this->getEntityManager()->getRepository('PayutcOnyxBundle:Ticket')->countAllPaidForEventAndPrice($ticket->getPrice()->getEvent(), $ticket->getPrice());
-        
+
         if ($priceCapacity <= $pricePaidPlaces) {
             $availability = false;
             throw new FullPriceException();
         }
-        
+
         // Check the places allowed by price for the user
         $allowedPlacesOfPriceForUser = $ticket->getPrice()->getMaxPlacesForUser();
         $pricePaidPlaces = $this->getEntityManager()->getRepository('PayutcOnyxBundle:Ticket')->countAllPaidForEventAndPriceAndBuyer($ticket->getPrice()->getEvent(), $ticket->getPrice(), $this->getUser());
-        
+
         if ($priceCapacity <= $pricePaidPlaces) {
             $availability = false;
             throw new FullPriceForUserException();
         }
-        
+
         // Check the price time expiration
         $priceEnd = $ticket->getPrice()->getEndAt();
         $now = new \DateTime();
-        
-        if ($now < $priceEnd) {
+
+        if ($now >= $priceEnd) {
             $availability = false;
             throw new ExpiredPriceException();
         }

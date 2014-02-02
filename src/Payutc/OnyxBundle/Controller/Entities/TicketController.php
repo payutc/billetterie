@@ -17,7 +17,7 @@ class TicketController extends FrontController
     /**
      * Booking check action
      *
-     * 
+     *
      */
     public function bookAction($eventId)
     {
@@ -50,7 +50,7 @@ class TicketController extends FrontController
     /**
      * Booking check action
      *
-     * 
+     *
      */
     public function bookCheckAction($eventId)
     {
@@ -148,7 +148,7 @@ class TicketController extends FrontController
     private function sendPDFByMail($ticket)
     {
         $pdf = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/' . $ticket->getPDF();
-        
+
         return $this->get('mailer')->send(Swift_Message::newInstance()
             ->setSubject($this->container->getParameter('mailer_subjects_book') . $ticket->getPrice()->getEvent()->getTitle())
             ->setFrom(array($this->container->getParameter('mailer_from_email') => $this->container->getParameter('mailer_from_name')))

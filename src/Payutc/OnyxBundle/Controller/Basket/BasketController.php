@@ -2,6 +2,8 @@
 
 namespace Payutc\OnyxBundle\Controller\Basket;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 use Payutc\OnyxBundle\Controller\FrontController;
 use Payutc\OnyxBundle\Entity\Ticket;
 use Payutc\OnyxBundle\Form\TicketEditType;
@@ -17,7 +19,7 @@ class BasketController extends FrontController
         foreach ($basket->getCollection() as $ticket) {
             $tickets[] = $em->getRepository(get_class($ticket))->find($ticket->getId());
         }
-        
+
         return $this->render('PayutcOnyxBundle:Basket:index.html.twig', array(
             'tickets' => $tickets
         ));

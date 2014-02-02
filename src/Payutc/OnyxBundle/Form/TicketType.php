@@ -37,7 +37,7 @@ class TicketType extends AbstractType
             }))
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

@@ -2,6 +2,8 @@
 
 namespace Payutc\OnyxBundle\Basket\Exception;
 
+use Exception;
+
 class FullEventException extends BasketException
 {
     public function __construct($message = '', $code = 400, Exception $previous = null)
