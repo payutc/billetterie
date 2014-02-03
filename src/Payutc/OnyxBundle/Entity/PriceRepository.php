@@ -2,6 +2,8 @@
 
 namespace Payutc\OnyxBundle\Entity;
 
+use DateTime;
+
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 
@@ -25,7 +27,7 @@ class PriceRepository extends EntityRepository implements DeletableEntityReposit
 	{
 		return $this->findAllNotDeleted();
 	}
-	
+
 	/**
      * Find all entities that have removed_at set up to null.
      *
@@ -93,12 +95,16 @@ class PriceRepository extends EntityRepository implements DeletableEntityReposit
 			->leftJoin('p.userGroups', 'ug')
 			->where($qb->expr()->isNull('p.removedAt'))
 			->andWhere('p.isHidden = :isHidden')
+            ->andWhere('p.endAt > :endAt')
 			->andWhere('p.event = :event')
-			// ->andWhere($qb->expr()->in('ug.id', ':userGroups'))
 			->setParameter('isHidden', false)
 			->setParameter('event', $event)
-			// ->setParameter('userGroups', $userGroups)
+            ->setParameter('endAt', new DateTime())
 		;
+
+        if (!(is_null($userGroups)) && count($userGroups) > 0) {
+            $qb->andWhere($qb->expr()->in('ug.id', ':userGroups'))->setParameter('userGroups', $userGroups);
+        }
 
 		return $qb;
 	}

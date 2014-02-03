@@ -228,7 +228,7 @@ class TicketRepository extends EntityRepository implements DeletableEntityReposi
 	/**
      * Find one entity by id that have removed_at set up to null.
      *
-     * @return Event
+     * @return Ticket
      */
 	public function findOneNotDeleted($id)
 	{

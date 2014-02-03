@@ -61,4 +61,32 @@ class UserGroupRepository extends EntityRepository implements DeletableEntityRep
 
 		return $qb->getQuery()->getResult();
 	}
+
+    /**
+     * Find one entity by id that have removed_at set up to null and is_hidden property set up to false.
+     *
+     * @return UserGroup
+     */
+    public function findOneActive($id)
+    {
+        $UserGroup = null;
+
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('ug')
+            ->from('PayutcOnyxBundle:UserGroup', 'ug')
+            ->where($qb->expr()->isNull('ug.removedAt'))
+            ->andWhere('ug.isHidden = :isHidden')
+            ->andWhere('ug.id = :id')
+            ->setParameter('isHidden', false)
+            ->setParameter('id', $id)
+        ;
+
+        try {
+            $UserGroup = $qb->getQuery()->getSingleResult();
+        }
+        catch (NoResultException $e) {}
+
+        return $UserGroup;
+    }
 }

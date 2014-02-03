@@ -13,10 +13,18 @@ class TicketType extends AbstractType
     private $event;
     private $user;
 
-    public function __construct($event, $user)
+    /**
+     * Public constructor
+     *
+     * @param Event $event
+     * @param User $user
+     * @param EntityManager $em
+     */
+    public function __construct($event, $user, $em)
     {
         $this->event = $event;
         $this->user = $user;
+        $this->em = $em;
     }
 
 	/**
@@ -26,13 +34,12 @@ class TicketType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $event = $this->event;
-        // TODO : get User UserGroups from anywhere...
-        $userGroups = array();
+        $userGroups = $this->user->getMyGroups($this->em);
 
         $builder
             ->add('firstname', 'text', array('label' => 'Prénom', 'required' => true))
             ->add('lastname', 'text', array('label' => 'Nom de famille', 'required' => true))
-            ->add('price', 'entity', array('label' => 'Tarif', 'required' => true, 'class' => 'PayutcOnyxBundle:Price', 'query_builder' => function (PriceRepository $er) use ($event, $userGroups) {
+            ->add('price', 'entity', array('label' => 'Tarif', 'required' => true, 'empty_value' => 'Veuillez séletionner un tarif', 'class' => 'PayutcOnyxBundle:Price', 'query_builder' => function (PriceRepository $er) use ($event, $userGroups) {
                 return $er->getQBOfAvailableForEventAndUserGroups($event, $userGroups);
             }))
         ;

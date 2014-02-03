@@ -39,7 +39,7 @@ class TicketController extends FrontController
 
         $ticket = new Ticket();
         $ticket->setBuyer($user);
-        $ticketType = $this->createForm(new TicketType($event, $user), $ticket);
+        $ticketType = $this->createForm(new TicketType($event, $user, $em), $ticket);
 
         return $this->render('PayutcOnyxBundle:Entities/Tickets:book.html.twig', array(
             'event' => $event,
@@ -73,7 +73,7 @@ class TicketController extends FrontController
         // TODO: generate Barcode and Payutc id ?
         // $ticket->setBarcode(null);
         $ticket->setBuyer($user);
-        $ticketType = $this->createForm(new TicketType($event, $user), $ticket);
+        $ticketType = $this->createForm(new TicketType($event, $user, $em), $ticket);
 
         $ticketType->handleRequest($request);
 
