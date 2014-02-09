@@ -2,7 +2,7 @@
 
 namespace Payutc\OnyxBundle\Controller\Entities;
 
-use \Swift_Message;
+use Swift_Message;
 
 use Payutc\OnyxBundle\Exception\BadTokenException;
 use Payutc\OnyxBundle\Controller\FrontController;

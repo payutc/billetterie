@@ -3,6 +3,7 @@
 {% block title %}Onyx{% endblock %}
 
 {% block stylesheets %}
+	<link rel='stylesheet' href='{{ asset('bundles/payutconyx/css/vendor/bootstrap/bootstrap-3.1.0.min.css') }}' />
 	<link rel='stylesheet' href='{{ asset('bundles/payutconyx/css/app.min.css') }}' />
 {% endblock %}
 
@@ -25,6 +26,11 @@
 			</div>
 			<div class='collapse navbar-collapse container' id='app-navbar'>
 				<ul class='nav navbar-nav navbar-right'>
+					{% if basket and basket.collection|length > 0 %}
+						<li>
+							<a href='{{ path('pay_utc_onyx_basket_page') }}'><span class='glyphicon glyphicon-shopping-cart'></span> Panier <span class='badge'>{{ basket.collection|length }}</span></a>
+						</li>
+					{% endif %}
 					<li class='dropdown'>
 						{% if app.user %}
 							<a href='#' class='dropdown-toggle' data-toggle='dropdown'>{{ app.user.username }} <b class='caret'></b></a>

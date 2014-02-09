@@ -2,6 +2,8 @@
 
 namespace Payutc\OnyxBundle\Entity;
 
+use Serializable;
+
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -16,7 +18,7 @@ use Payutc\OnyxBundle\Entity\Base\BaseEntity;
  * @ORM\Entity(repositoryClass="Payutc\OnyxBundle\Entity\UserRepository")
  * @UniqueEntity(fields="email", message="Cet email est déjà utilisé.")
  */
-class User extends BaseEntity implements AdvancedUserInterface, \Serializable
+class User extends BaseEntity implements AdvancedUserInterface, Serializable
 {
     /**
      * @var integer
@@ -121,11 +123,14 @@ class User extends BaseEntity implements AdvancedUserInterface, \Serializable
     /**
      * Get a list of the user's groups
      *
-     * 
+     * @param EntityManager $em
+     * @return array
      */
-    public function getMyGroups()
+    public function getMyGroups($em)
     {
-        return array();
+        return array(
+            $em->getRepository('PayutcOnyxBundle:UserGroup')->findOneActive(1)
+        );
     }
 
     /**
@@ -176,7 +181,7 @@ class User extends BaseEntity implements AdvancedUserInterface, \Serializable
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -192,14 +197,14 @@ class User extends BaseEntity implements AdvancedUserInterface, \Serializable
     public function setRegistredAt($registredAt)
     {
         $this->registredAt = $registredAt;
-    
+
         return $this;
     }
 
     /**
      * Get registredAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getRegistredAt()
     {
@@ -215,14 +220,14 @@ class User extends BaseEntity implements AdvancedUserInterface, \Serializable
     public function setEmail($email)
     {
         $this->email = $email;
-    
+
         return $this;
     }
 
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -271,14 +276,14 @@ class User extends BaseEntity implements AdvancedUserInterface, \Serializable
     public function setLogin($login)
     {
         $this->login = $login;
-    
+
         return $this;
     }
 
     /**
      * Get login
      *
-     * @return string 
+     * @return string
      */
     public function getLogin()
     {
@@ -294,14 +299,14 @@ class User extends BaseEntity implements AdvancedUserInterface, \Serializable
     public function setPassword($password)
     {
         $this->password = $password;
-    
+
         return $this;
     }
 
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -317,14 +322,14 @@ class User extends BaseEntity implements AdvancedUserInterface, \Serializable
     public function setSalt($salt)
     {
         $this->salt = $salt;
-    
+
         return $this;
     }
 
     /**
      * Get salt
      *
-     * @return string 
+     * @return string
      */
     public function getSalt()
     {
@@ -340,14 +345,14 @@ class User extends BaseEntity implements AdvancedUserInterface, \Serializable
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
-    
+
         return $this;
     }
 
     /**
      * Get firstname
      *
-     * @return string 
+     * @return string
      */
     public function getFirstname()
     {
@@ -363,14 +368,14 @@ class User extends BaseEntity implements AdvancedUserInterface, \Serializable
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -386,14 +391,14 @@ class User extends BaseEntity implements AdvancedUserInterface, \Serializable
     public function setToken($token)
     {
         $this->token = $token;
-    
+
         return $this;
     }
 
     /**
      * Get token
      *
-     * @return string 
+     * @return string
      */
     public function getToken()
     {

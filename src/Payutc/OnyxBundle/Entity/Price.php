@@ -2,6 +2,8 @@
 
 namespace Payutc\OnyxBundle\Entity;
 
+use Serializable;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -14,7 +16,7 @@ use Payutc\OnyxBundle\Entity\Base\BaseEntity;
  * @ORM\Entity(repositoryClass="Payutc\OnyxBundle\Entity\PriceRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Price extends BaseEntity
+class Price extends BaseEntity implements Serializable
 {
     /**
      * @var integer
@@ -156,20 +158,63 @@ class Price extends BaseEntity
         return $this;
     }
 
+    /**
+     * Magic __toString function
+     * Returns the title of the price
+     *
+     * @return string
+     */
     public function __toString()
     {
         return $this->getTitle();
     }
 
+    /**
+     * toString function
+     * Returns the title of the price
+     *
+     * @return string
+     */
     public function toString()
     {
         return $this->getTitle();
     }
 
     /**
+     * Get title and price
+     * Form helper
+     *
+     * @return string
+     */
+    public function getTitleAndPrice()
+    {
+        return $this->getTitle() . ' - ' . $this->getPrice() . '€';
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
+    }
+
+    /**
      * Entity has been removed or not ?
      *
-     * @return boolean 
+     * @return boolean
      */
     public function isDeleted()
     {
@@ -179,7 +224,7 @@ class Price extends BaseEntity
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -195,14 +240,14 @@ class Price extends BaseEntity
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -218,14 +263,14 @@ class Price extends BaseEntity
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -241,14 +286,14 @@ class Price extends BaseEntity
     public function setRemovedAt($removedAt)
     {
         $this->removedAt = $removedAt;
-    
+
         return $this;
     }
 
     /**
      * Get removedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getRemovedAt()
     {
@@ -264,14 +309,14 @@ class Price extends BaseEntity
     public function setIsHidden($isHidden)
     {
         $this->isHidden = $isHidden;
-    
+
         return $this;
     }
 
     /**
      * Get isHidden
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsHidden()
     {
@@ -287,14 +332,14 @@ class Price extends BaseEntity
     public function setStartAt($startAt)
     {
         $this->startAt = $startAt;
-    
+
         return $this;
     }
 
     /**
      * Get startAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getStartAt()
     {
@@ -310,14 +355,14 @@ class Price extends BaseEntity
     public function setEndAt($endAt)
     {
         $this->endAt = $endAt;
-    
+
         return $this;
     }
 
     /**
      * Get endAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEndAt()
     {
@@ -333,14 +378,14 @@ class Price extends BaseEntity
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -356,14 +401,14 @@ class Price extends BaseEntity
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -379,14 +424,14 @@ class Price extends BaseEntity
     public function setPrice($price)
     {
         $this->price = $price;
-    
+
         return $this;
     }
 
     /**
      * Get price
      *
-     * @return integer 
+     * @return integer
      */
     public function getPrice()
     {
@@ -402,14 +447,14 @@ class Price extends BaseEntity
     public function setIsNominativ($isNominativ)
     {
         $this->isNominativ = $isNominativ;
-    
+
         return $this;
     }
 
     /**
      * Get isNominativ
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsNominativ()
     {
@@ -425,14 +470,14 @@ class Price extends BaseEntity
     public function setCapacity($capacity)
     {
         $this->capacity = $capacity;
-    
+
         return $this;
     }
 
     /**
      * Get capacity
      *
-     * @return integer 
+     * @return integer
      */
     public function getCapacity()
     {
@@ -448,14 +493,14 @@ class Price extends BaseEntity
     public function setMaxPlacesForUser($maxPlacesForUser)
     {
         $this->maxPlacesForUser = $maxPlacesForUser;
-    
+
         return $this;
     }
 
     /**
      * Get maxPlacesForUser
      *
-     * @return integer 
+     * @return integer
      */
     public function getMaxPlacesForUser()
     {
@@ -471,14 +516,14 @@ class Price extends BaseEntity
     public function setIsUniqueForUser($isUniqueForUser)
     {
         $this->isUniqueForUser = $isUniqueForUser;
-    
+
         return $this;
     }
 
     /**
      * Get isUniqueForUser
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsUniqueForUser()
     {
@@ -494,14 +539,14 @@ class Price extends BaseEntity
     public function setPayutcId($payutcId)
     {
         $this->payutcId = $payutcId;
-    
+
         return $this;
     }
 
     /**
      * Get payutcId
      *
-     * @return integer 
+     * @return integer
      */
     public function getPayutcId()
     {
@@ -517,14 +562,14 @@ class Price extends BaseEntity
     public function setIsNominative($isNominative)
     {
         $this->isNominative = $isNominative;
-    
+
         return $this;
     }
 
     /**
      * Get isNominative
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsNominative()
     {
@@ -540,7 +585,7 @@ class Price extends BaseEntity
     public function addUserGroup(UserGroup $userGroup)
     {
         $this->userGroups[] = $userGroup;
-    
+
         return $this;
     }
 
@@ -573,14 +618,14 @@ class Price extends BaseEntity
     public function setEvent(Event $event = null)
     {
         $this->event = $event;
-    
+
         return $this;
     }
 
     /**
      * Get event
      *
-     * @return Event 
+     * @return Event
      */
     public function getEvent()
     {

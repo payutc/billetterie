@@ -1,0 +1,6 @@
+pay_utc_onyx_ticket_send_page:
+    pattern:  /{ticketId}/send
+    defaults:
+        _controller: PayutcOnyxBundle:Entities/Ticket:sendMail
+    requirements:
+        _method: get

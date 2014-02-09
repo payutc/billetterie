@@ -20,6 +20,7 @@ class FrontController extends Controller
 	{
 		$parameters['months'] = array(1 => 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
 		$parameters['days'] = array(1 => 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche');
+		$parameters['basket'] = $this->get('onyx.basket');
 
 		return $this->container->get('templating')->renderResponse($view, $parameters, $response);
 	}

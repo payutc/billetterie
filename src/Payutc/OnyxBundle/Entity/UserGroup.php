@@ -2,6 +2,8 @@
 
 namespace Payutc\OnyxBundle\Entity;
 
+use Serializable;
+
 use Doctrine\ORM\Mapping as ORM;
 
 use Payutc\OnyxBundle\Entity\Base\BaseEntity;
@@ -13,7 +15,7 @@ use Payutc\OnyxBundle\Entity\Base\BaseEntity;
  * @ORM\Entity(repositoryClass="Payutc\OnyxBundle\Entity\UserGroupRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class UserGroup extends BaseEntity
+class UserGroup extends BaseEntity implements Serializable
 {
     /**
      * @var integer
@@ -88,6 +90,26 @@ class UserGroup extends BaseEntity
     public function toString()
     {
         return $this->getTitle();
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
     }
 
     /**

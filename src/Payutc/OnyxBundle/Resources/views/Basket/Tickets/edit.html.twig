@@ -1,0 +1,19 @@
+{% extends 'PayutcOnyxBundle::base.html.twig' %}
+
+{% form_theme form 'PayutcOnyxBundle:Form:bootstrap.html.twig' %}
+
+{% block app_content %}
+    <header id='event-detail-header' class='page-header'>
+        <h1>{{ ticket.price.event.title }}</h1>
+    </header>
+    <h4>Edition d'un billet</h4>
+    <hr />
+    <section>
+        <form action='{{ path('pay_utc_onyx_basket_ticket_update_page', { 'ticketId': ticket.id }) }}' method='post' {{ form_enctype(form) }}>
+            {{ form_widget(form) }}
+            <div class='form-group'>
+                <input type='submit' class='btn btn-success' name='submit' value='Editer' />
+            </div>
+        </form>
+    </section>
+{% endblock %}

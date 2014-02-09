@@ -2,6 +2,8 @@
 
 namespace Payutc\OnyxBundle\Entity;
 
+use Serializable;
+
 use Doctrine\ORM\Mapping as ORM;
 
 use Payutc\OnyxBundle\Entity\Base\BaseEntity;
@@ -13,7 +15,7 @@ use Payutc\OnyxBundle\Entity\Base\BaseEntity;
  * @ORM\Entity(repositoryClass="Payutc\OnyxBundle\Entity\TicketRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Ticket extends BaseEntity
+class Ticket extends BaseEntity implements Serializable
 {
     /**
      * @var integer
@@ -55,14 +57,14 @@ class Ticket extends BaseEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="firstname", type="string", length=100)
+     * @ORM\Column(name="firstname", type="string", length=100, nullable=true)
      */
     private $firstname;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastname", type="string", length=100)
+     * @ORM\Column(name="lastname", type="string", length=100, nullable=true)
      */
     private $lastname;
 
@@ -76,9 +78,16 @@ class Ticket extends BaseEntity
     /**
      * @var integer
      *
-     * @ORM\Column(name="paid_price", type="integer")
+     * @ORM\Column(name="paid_price", type="integer", nullable=true)
      */
     private $paidPrice;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pdf", type="string", length=255, nullable=true)
+     */
+    private $PDF;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
@@ -111,12 +120,32 @@ class Ticket extends BaseEntity
 
     public function __toString()
     {
-        return $this->getBarcode();
+        return ($this->getBarcode() ? $this->getBarcode() : '');
     }
 
     public function toString()
     {
-        return $this->getBarcode();
+        return ($this->getBarcode() ? $this->getBarcode() : '');
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
     }
 
     /**
@@ -393,11 +422,50 @@ class Ticket extends BaseEntity
     }
 
     /**
+     * Set PDF
+     *
+     * @param string $PDF
+     * @return Ticket
+     */
+    public function setPDF($PDF)
+    {
+        $this->PDF = $PDF;
+    
+        return $this;
+    }
+
+    /**
+     * Get PDF
+     *
+     * @return string 
+     */
+    public function getPDF()
+    {
+        return $this->PDF;
+    }
+
+    /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
     public function prePersist()
     {
         $this->setUpdatedAt(new \DateTime());
+    }
+
+    /**
+     * Validate Ticket
+     *
+     * @return Ticket
+     */
+    public function validate($pdfName)
+    {
+        $this->setPDF($pdfName);
+
+        // Set Ticket as paid...
+        $this->setPaidAt(new \DateTime());
+        $this->setPaidPrice($this->getPrice()->getPrice());
+
+        return $this;
     }
 }
