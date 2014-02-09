@@ -9,7 +9,7 @@
     <h4>Réservation de billets</h4>
     <hr />
     <section>
-        <form action='{{ path('pay_utc_onyx_ticket_book_check_page', { 'eventId': event.id }) }}' method='post' {{ form_enctype(form) }}>
+        <form action='{{ path('pay_utc_onyx_event_ticket_book_check_page', { 'id': event.id }) }}' method='post' {{ form_enctype(form) }}>
             {{ form_widget(form) }}
             <div class='form-group'>
                 <input type='submit' class='btn btn-success' name='submit' value='Réserver' />

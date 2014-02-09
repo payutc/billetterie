@@ -39,7 +39,7 @@ class TicketType extends AbstractType
         $builder
             ->add('firstname', 'text', array('label' => 'Prénom', 'required' => true))
             ->add('lastname', 'text', array('label' => 'Nom de famille', 'required' => true))
-            ->add('price', 'entity', array('label' => 'Tarif', 'required' => true, 'empty_value' => 'Veuillez séletionner un tarif', 'class' => 'PayutcOnyxBundle:Price', 'query_builder' => function (PriceRepository $er) use ($event, $userGroups) {
+            ->add('price', 'entity', array('label' => 'Tarif', 'required' => true, 'empty_value' => 'Veuillez séletionner un tarif', 'class' => 'PayutcOnyxBundle:Price', 'property' => 'titleAndPrice', 'query_builder' => function (PriceRepository $er) use ($event, $userGroups) {
                 return $er->getQBOfAvailableForEventAndUserGroups($event, $userGroups);
             }))
         ;

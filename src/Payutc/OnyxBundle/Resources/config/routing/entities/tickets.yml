@@ -1,17 +1,3 @@
-pay_utc_onyx_ticket_book_page:
-    pattern:  /{eventId}/book
-    defaults:
-        _controller: PayutcOnyxBundle:Entities/Ticket:book
-    requirements:
-        _method: get
-
-pay_utc_onyx_ticket_book_check_page:
-    pattern:  /{eventId}/book-check
-    defaults:
-        _controller: PayutcOnyxBundle:Entities/Ticket:bookCheck
-    requirements:
-        _method: post
-
 pay_utc_onyx_ticket_send_page:
     pattern:  /{ticketId}/send
     defaults:

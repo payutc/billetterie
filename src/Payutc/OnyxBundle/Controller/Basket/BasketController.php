@@ -74,4 +74,45 @@ class BasketController extends FrontController
             'form' => $form->createView()
         ));
     }
+
+    /**
+     * Callback route after paiement
+     *
+     * Generate PDF places and send by email
+     */
+    public function callbackAfterPaiementAction()
+    {
+        $user = $this->getUser();
+        $basket = $this->get('onyx.basket');
+
+        $sent = true;
+
+        foreach ($basket->getCollection() as $ticket) {
+            // PDF generation
+            $pdf = $this->generatePDFName($user);
+
+            $this->get('knp_snappy.pdf')->generateFromHtml($this->renderView('PayutcOnyxBundle:Entities/Tickets:detail.pdf.html.twig', array(
+                'ticket'  => $ticket
+            )), $pdf);
+
+            $ticket->validate($pdf);
+
+            if (!$this->sendPDFByMail($ticket)) {
+                $sent = false;
+            }
+        }
+
+        if ($sent) {
+            $request->getSession()->getFlashBag()->add('info', 'Vos places viennent de vous être envoyées par mail.');
+        } else {
+            $request->getSession()->getFlashBag()->add('danger', 'Une erreur est survenue lors de l\'envoi des places... Veuillez contacter l\'association à l\'origine de l\'évènement.');
+        }
+
+        return $this->redirect($this->generateUrl('pay_utc_onyx_basket_page'));
+    }
+
+    private function generatePDFName($user)
+    {
+        return 'files/tickets/' . strtolower($user->getFirstname()) . '-' . strtolower($user->getName()) . '-' . time() . '.pdf';
+    }
 }
